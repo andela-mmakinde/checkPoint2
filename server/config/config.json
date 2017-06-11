@@ -2,21 +2,21 @@
   "development": {
     "username": "andeladeveloper",
     "password": null,
-    "database": "database_development",
+    "database": "DMS1",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "andeladeveloper",
     "password": null,
-    "database": "database_test",
+    "database": "DMS1",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "andeladeveloper",
     "password": null,
-    "database": "database_production",
+    "database": "DMS1",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }

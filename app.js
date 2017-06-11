@@ -10,10 +10,13 @@ app.use(logger('dev'));
 
 // parse incoming requests
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('*', (req, res) =>res.status(200).send({
+require('./server/routes/user')(app);
+require('./server/routes/document')(app);
+
+app.get('*', (req, res) => res.status(200).send({
   message: "welcome to Efe's corner"
 }));
 
-module.exports = app
+module.exports = app;
