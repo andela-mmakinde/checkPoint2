@@ -1,5 +1,5 @@
-const Document = require('../models').Document;
-const User = require('../models').User;
+import { User } from '../models';
+import { Document } from '../models';
 
 module.exports = {
   create(req, res) {

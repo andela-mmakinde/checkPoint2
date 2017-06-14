@@ -1,7 +1,11 @@
-const User = require('../models').User;
+import jwt from 'jsonwebtoken';
+import { User } from '../models'
+
+const createToken = (user) => {
+  return jwt.sign(user, 'secret', { expiresIn: '24h' });
+};
 
 module.exports = {
-
   create(req, res) {
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!emailRegex.test(req.body.email)) {
@@ -9,14 +13,11 @@ module.exports = {
         message: 'Email is not rightly formatted'
       });
     }
-    if (
-      !req.body.userName ||
-      !req.body.firstName ||
-      !req.body.lastName ||
-      !req.body.email ||
-      !req.body.password
-    ) {
+    if (!req.body.email || !req.body.password || !req.body.confirmPassword) {
       return res.status(401).json({ message: 'Enter all required field' });
+    }
+    if(req.body.password !== req.body.confirmPassword) {
+      return res.status(401).json({ message: 'Password doesn\'t match' });
     }
     User.findOne({
       where: {
@@ -29,13 +30,13 @@ module.exports = {
         });
       }
       return User.create({
-        userName: req.body.userName,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
       })
-        .then(user => res.status(201).send({ message: 'User created', user }))
+        .then((user) => {
+          const jsonToken = createToken({ existingUser });
+          res.status(201).send({ message: 'User created', user });
+        })
         .catch(err => res.status(400).send(err));
     });
   },
@@ -52,23 +53,21 @@ module.exports = {
         id: req.params.id
       }
     })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({
-          message: 'user Not Found'
-        });
-      }
-      return user
-        .update({
-          userName: req.body.userName || user.userName,
-          firstName: req.body.firstName || user.firstName,
-          lastName: req.body.lastName || user.lastName,
-          password: req.body.password || user.password
-        })
-        .then(updatedUser => res.status(200).send(updatedUser))
-        .catch(error => res.status(400).send(error));
-    })
-    .catch(error => res.status(400).send(error));
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'user Not Found'
+          });
+        }
+        return user
+          .update({
+            email: req.body.email || user.email,
+            password: req.body.password || user.password
+          })
+          .then(updatedUser => res.status(200).send(updatedUser))
+          .catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(400).send(error));
   },
 
   login(req, res) {
@@ -79,39 +78,45 @@ module.exports = {
       where: {
         email: req.body.email
       }
-    }).then((existingUser) => {
-      if (!existingUser || existingUser === null) {
-        return res.status(404).send({
-          message: 'User record not found!'
+    })
+      .then((existingUser) => {
+        if (!existingUser || existingUser === null) {
+          return res.status(404).send({
+            message: 'User record not found!'
+          });
+        }
+        if (existingUser && existingUser.password === req.body.password) {
+          const jsonToken = createToken({ existingUser });
+          return res.status(200).send({
+            message: 'Logged in!'
+          });
+        }
+        return res.status(401).send({
+          message: 'Invalid Password!'
         });
-      }
-      if (existingUser && existingUser.password === (req.body.password)) {
-        return res.status(200).send({
-          message: 'Logged in!'
-        });
-      }
-      return res.status(401).send({
-        message: 'Invalid Password!',
-      });
-    }).catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(400).send(error));
   },
 
   deleteRecord(req, res) {
-    return User
-      .find({
-        where: {
-          id: req.params.id,
-        },
-      })
+    return User.find({
+      where: {
+        id: req.params.id
+      }
+    })
       .then((user) => {
         if (!user) {
           return res.status(404).send({
-            message: 'User Not Found',
+            message: 'User Not Found'
           });
         }
         return user
           .destroy()
-          .then(() => res.status(201).send({ message: 'User details deleted successfully' }))
+          .then(() =>
+            res
+              .status(201)
+              .send({ message: 'User details deleted successfully' })
+          )
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));

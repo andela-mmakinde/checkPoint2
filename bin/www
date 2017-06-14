@@ -1,5 +1,5 @@
-const http = require('http');
-const app = require('../app.js');
+import http from 'http';
+import app from '../server/app'
 const port = 3000;
 
 app.set('port', port);

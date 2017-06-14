@@ -1,5 +1,4 @@
-const documentsController = require('../controllers/document');
-
+import documentsController from '../controllers/document';
 module.exports = (app) => {
   app.post('/documents', documentsController.create);
   app.get('/documents', documentsController.listAllDocuments);
