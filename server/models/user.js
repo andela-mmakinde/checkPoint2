@@ -1,18 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    userName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -29,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Document, {
           foreignKey: 'ownerId',
           as: 'documents',
+        });
+        User.belongsTo(models.Role, {
+          onDelete: 'CASCADE',
+          foreignkey: 'roleId'
         });
       }
     }
