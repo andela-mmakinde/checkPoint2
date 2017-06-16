@@ -7,4 +7,3 @@ module.exports = (app) => {
   app.delete('/documents/:id', documentsController.deleteDocument);
   app.get('/users/:id/documents', documentsController.specificUserDocument);
 };
-

@@ -11,15 +11,18 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: {
       allowNull: false,
       type: DataTypes.INTEGER,
+      references: {
+        model: 'User',
+        key: 'id',
+        as: 'ownerId',
+      },
     },
   }, {
     classMethods: {
       associate: (models) => {
         Document.belongsTo(models.User, {
-          as: 'owner',
-          foreignKey: {
-            allowNull: false,
-          },
+          // as: 'owner',
+          foreignKey: 'ownerId',
           onDelete: 'cascade',
         });
       }
