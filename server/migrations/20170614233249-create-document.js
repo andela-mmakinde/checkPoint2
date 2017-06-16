@@ -8,7 +8,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true        
       },
       content: {
         type: Sequelize.TEXT
@@ -24,6 +26,11 @@ module.exports = {
       ownerId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        // references: {
+        //   model: 'Users',
+        //   key: 'id',
+        //   as: 'ownerId',
+        // },
       },
     }),
   down: (queryInterface => queryInterface.dropTable('Documents'))

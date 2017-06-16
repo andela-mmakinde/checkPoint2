@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { User } from '../models'
 
 const createToken = (user) => {
@@ -59,10 +60,15 @@ module.exports = {
             message: 'user Not Found'
           });
         }
+        const salt = bcrypt.genSaltSync(10);
+        let password
+        if (req.body.password ) {
+          password = bcrypt.hashSync(req.body.password, salt)
+        }
         return user
           .update({
             email: req.body.email || user.email,
-            password: req.body.password || user.password
+            password: password || user.password
           })
           .then(updatedUser => res.status(200).send(updatedUser))
           .catch(error => res.status(400).send(error));
@@ -85,7 +91,7 @@ module.exports = {
             message: 'User record not found!'
           });
         }
-        if (existingUser && existingUser.password === req.body.password) {
+        if (existingUser && existingUser.verifyPassword(req.body.password)) {
           const jsonToken = createToken({ existingUser });
           return res.status(200).send({
             message: 'Logged in!'

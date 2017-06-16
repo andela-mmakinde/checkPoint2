@@ -8,6 +8,7 @@ import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import documents from './routes/document';
 import users from './routes/user';
+import roles from './routes/role';
 
 // compiler for webpack
 const compiler = webpack(webpackConfig);
@@ -32,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 documents(app);
 users(app);
+roles(app);
 
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '../index.html'))

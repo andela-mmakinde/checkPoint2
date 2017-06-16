@@ -1,4 +1,3 @@
-'use strict';
 module.exports = function(sequelize, DataTypes) {
   const Role = sequelize.define('Role', {
     title: {
@@ -10,9 +9,10 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Role.belongsTo(models.User, {
-          foreignKey: 'userId'
-        })
+        Role.hasMany(models.User, {
+          foreignKey: 'roleId',
+          // as: 'users',
+        });
       }
     }
   });
