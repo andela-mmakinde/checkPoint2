@@ -1,13 +1,15 @@
-const debug = process.env.NODE_ENV !== 'production';
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 module.exports = {
-  context: path.join(__dirname, 'public'),
+  context: path.join(__dirname, 'client'),
   devtool: 'source-map',
-  entry: './scripts.js',
+  entry: [
+    'webpack-hot-middleware/client',    
+    './scripts.js'
+    ],
   module: {
     loaders: [
       {
@@ -34,20 +36,18 @@ module.exports = {
     tls: 'empty',
   },
   output: {
-    path: `${__dirname}/public/`,
+    path: `${__dirname}/client/`,
     filename: 'bundle.js',
     publicPath: '/'
   },
-  plugins: debug ? [
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('style.css'),
     new Dotenv({
       path: './.env',
     }),
-  ] : [
-    new ExtractTextPlugin('style.css'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
   ],
 };
 
