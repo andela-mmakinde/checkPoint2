@@ -1,5 +1,4 @@
-import { User } from '../models';
-import { Document } from '../models';
+import { User, Document } from '../models';
 
 module.exports = {
   create(req, res) {

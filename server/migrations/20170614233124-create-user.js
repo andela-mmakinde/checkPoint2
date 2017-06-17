@@ -23,11 +23,11 @@ module.exports = {
       roleId: {
         type: Sequelize.INTEGER,
         defaultValue: 2,
-        // references: {
-        //   model: 'Roles',
-        //   key: 'id',
-        //   as: 'roleId',
-        // },
+        references: {
+          model: 'Roles',
+          key: 'id',
+          as: 'roleId',
+        },
       },
       updatedAt: {
         allowNull: false,

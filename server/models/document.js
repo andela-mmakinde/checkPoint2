@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         Document.belongsTo(models.User, {
-          // as: 'owner',
+          as: 'owner',
           foreignKey: 'ownerId',
           onDelete: 'cascade',
         });

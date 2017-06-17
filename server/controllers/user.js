@@ -1,23 +1,22 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { User } from '../models'
+import { User } from '../models';
 
-const createToken = (user) => {
-  return jwt.sign(user, 'secret', { expiresIn: '24h' });
-};
+const createToken = user => jwt.sign(user, 'secret', { expiresIn: '24h' });
+
 
 module.exports = {
   create(req, res) {
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    if (!req.body.email || !req.body.password || !req.body.confirmPassword) {
+      return res.status(401).json({ message: 'Enter all required field' });
+    }
     if (!emailRegex.test(req.body.email)) {
       return res.status(401).json({
         message: 'Email is not rightly formatted'
       });
     }
-    if (!req.body.email || !req.body.password || !req.body.confirmPassword) {
-      return res.status(401).json({ message: 'Enter all required field' });
-    }
-    if(req.body.password !== req.body.confirmPassword) {
+    if (req.body.password !== req.body.confirmPassword) {
       return res.status(401).json({ message: 'Password doesn\'t match' });
     }
     User.findOne({
@@ -61,9 +60,9 @@ module.exports = {
           });
         }
         const salt = bcrypt.genSaltSync(10);
-        let password
-        if (req.body.password ) {
-          password = bcrypt.hashSync(req.body.password, salt)
+        let password;
+        if (!user.verifyPassword(user.password, req.body.password)) {
+          password = bcrypt.hashSync(req.body.password, salt);
         }
         return user
           .update({
@@ -91,7 +90,7 @@ module.exports = {
             message: 'User record not found!'
           });
         }
-        if (existingUser && existingUser.verifyPassword(req.body.password)) {
+        if (existingUser.verifyPassword(existingUser.password, req.body.password)) {
           const jsonToken = createToken({ existingUser });
           return res.status(200).send({
             message: 'Logged in!'
@@ -100,8 +99,8 @@ module.exports = {
         return res.status(401).send({
           message: 'Invalid Password!'
         });
-      })
-      .catch(error => res.status(400).send(error));
+      });
+      // .catch(error => res.status(400).send({message: 'Error', error}));
   },
 
   deleteRecord(req, res) {
