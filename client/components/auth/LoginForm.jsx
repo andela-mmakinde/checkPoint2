@@ -27,7 +27,7 @@ export default class LoginForm extends React.Component {
     event.preventDefault();
     this.props
       .userLoginRequest(this.state)
-      .then(success => this.setState({ logged: true }))
+      .then(() => this.setState({ logged: true }))
       .catch((errorData) => {
         this.setState({
           error: errorData.response.data
@@ -40,14 +40,14 @@ export default class LoginForm extends React.Component {
     const { logged } = this.state;
 
     if (logged) {
-      return <Redirect to="/index" />;
+      return <Redirect to="/document" />;
     }
     return (
       <div>
         <div className="section" />
         <main>
           <center>
-            <h5 className="indigo-text">Please, login into your account</h5>
+            <h5 className="indigo-text">Login into your account</h5>
             <div className="section" />
 
             <div className="container">
@@ -99,7 +99,7 @@ export default class LoginForm extends React.Component {
                 </form>
               </div>
             </div>
-            <ul> <li><Link to="/signup">Create account </Link></li> </ul>
+            <ul><li><Link to="/signup">Create a new account </Link></li> </ul>
           </center>
         </main>
       </div>

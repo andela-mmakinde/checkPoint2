@@ -10,7 +10,7 @@ export default class SignUpForm extends React.Component {
       password: '',
       confirmPassword: '',
       error: {},
-      logged: false
+      logged: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -27,7 +27,7 @@ export default class SignUpForm extends React.Component {
     event.preventDefault();
     this.props
       .userSignUpRequest(this.state)
-      .then((success) => {
+      .then(() => {
         this.setState({ logged: true });
       })
       .catch((errorData) => {
@@ -44,8 +44,10 @@ export default class SignUpForm extends React.Component {
     }
     return (
       <main>
+        <div className="section" />
         <center>
           <h5 className="indigo-text">Create a new account</h5>
+          <div className="section" />
           <div className="container">
             <div
               className="z-depth-1 grey lighten-4 row"
@@ -66,7 +68,6 @@ export default class SignUpForm extends React.Component {
                       type="email"
                       className="validate"
                       name="email"
-                      onChange={this.onChange}
                     />
                     <label htmlFor="email">Email</label>
                   </div>
