@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch server --exec babel-node -- ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
+    "test": "npm run setup:test && NODE_ENV=test nyc mocha --require babel-register --timeout 10000 ./server/test/**/*.spec.js",
+    "db:migrate:test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
+    "setup:test": "npm run db:migrate:test && NODE_ENV=test sequelize db:seed:all",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "repository": {
     "type": "git",
@@ -28,23 +32,31 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "dotenv-webpack": "^1.5.0",
+    "draft-convert": "^1.4.7",
+    "draft-js": "^0.10.1",
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^2.1.2",
+    "faker": "^4.1.0",
     "history": "^4.6.2",
     "jsonwebtoken": "^7.4.1",
+    "jwt-decode": "^2.2.0",
     "materialize-css": "^0.98.2",
     "morgan": "^1.8.2",
+    "node-sass": "^4.5.3",
     "path": "^0.12.7",
     "pg": "^6.2.3",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-draft-wysiwyg": "^1.10.0",
+    "react-materialize": "^1.0.1",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "sass-loader": "^6.0.6",
     "sequelize": "^4.1.0",
     "webpack": "^2.6.1",
     "webpack-dev-middleware": "^1.10.2",
@@ -52,12 +64,19 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "css-loader": "^0.28.4",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
-    "sequelize-cli": "^2.7.0"
+    "nyc": "^11.0.2",
+    "sequelize-cli": "^2.7.0",
+    "style-loader": "^0.18.2"
   }
 }
