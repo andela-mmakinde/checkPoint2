@@ -1,0 +1,21 @@
+{
+"require": [
+  "babel-register"
+],
+"include": [
+  "client/**/*.{js|jsx}",
+  "server/**/*.{js|jsx}"
+],
+"exclude": [
+  "**/constants/**",
+  "**/dispatcher.js",
+  "**/_instance.js"
+],
+"reporter": [
+  "text",
+  "lcov"
+],
+"sourceMap": false,
+"instrument": false,
+"all": true
+}
