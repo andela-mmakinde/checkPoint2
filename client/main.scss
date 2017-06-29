@@ -1,0 +1,65 @@
+body {
+  min-height: 100%;
+}
+
+.header {
+  font-weight: 500;
+  font-size: 43px !important;
+  margin-top: 100px !important;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.homepage {
+  position: relative;
+  height: 100% !important;
+}
+
+.homepage :after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('./components/images/garage1.jpg');
+  width: 100% !important;
+  opacity: 0.6;
+  z-index: -1;
+  min-height: 100%;
+  background-size: cover !important;
+}
+
+.welcome {
+  min-height: 100%;
+  background-image: url('./components/images/welcome.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.page-footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  padding: 0;
+}
+
+#search {
+  width: 50% !important;
+  border: 1px #ddd double !important;
+  font-size: 16px !important;
+}
+
+#search,
+select,
+textarea {
+  color: orange;
+}
+
+.brand-logo {
+  padding-left: 10px !important;
+}
+
+.header {
+  margin-top: 35px;
+}

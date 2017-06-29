@@ -2,13 +2,14 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm.jsx';
-import { userLoginRequest } from '../actions/loginActions';
+import { userLoginRequest } from '../../actions/authActions';
 
 class LoginPage extends React.Component {
+
   render() {
     const { userLoginRequest } = this.props;
     return (
-      <div>
+      <div className="welcome">
         <LoginForm userLoginRequest={userLoginRequest} />
       </div>
     );
@@ -20,4 +21,5 @@ LoginPage.propTypes = {
 };
 
 
-export default connect((state) => { return {}; }, { userLoginRequest })(LoginPage);
+export default connect(null, { userLoginRequest })(LoginPage);
+
