@@ -41,10 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
   });
-  User.prototype.verifyPassword = (realpassword,password) => {
-    return bcrypt.compareSync(password, realpassword);
-  };
+  User.prototype.verifyPassword = (realpassword, password) => (
+    bcrypt.compareSync(password, realpassword)
+  );
+
 
   return User;
-
 };

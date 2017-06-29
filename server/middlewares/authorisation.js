@@ -1,10 +1,17 @@
 import jwt from 'jsonwebtoken';
 
-exports.checkToken = (req, res, next) => {
-  const token = req.cookies.token;
-  // decoding the token
+/**
+ * Checks if user is authenticated
+ *
+ * @param {any} req
+ * @param {any} res
+ * @param {any} next
+ * @returns {object} response object
+ */
+const checkToken = (req, res, next) => {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
-    jwt.verify(token, secret, (error, decoded) => {
+    jwt.verify(token, 'secret', (error, decoded) => {
       if (error) {
         return res.status(403).json({
           message: 'Failed to authenticate token.'
@@ -14,9 +21,10 @@ exports.checkToken = (req, res, next) => {
       next();
     });
   } else {
-    // if there is no token available return a message
-    return res.status(200).send({
-      message: 'No token returned.'
+    return res.status(200).json({
+      message: 'No token provided.'
     });
   }
 };
+
+export default checkToken;

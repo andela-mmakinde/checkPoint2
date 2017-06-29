@@ -8,6 +8,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    access: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    roleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     ownerId: {
       allowNull: false,
       type: DataTypes.INTEGER,
