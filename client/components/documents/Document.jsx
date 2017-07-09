@@ -1,59 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CreateDocument from './CreateDocument.jsx';
-import SearchDocuments from './SearchDocuments.jsx';
+import { Link } from 'react-router-dom';
 import GetAccessDocuments from './GetAccessDocuments.jsx';
-import {
-  saveDocumentRequest,
-  fetchAllUserDocument,
-  myDocuments,
-  deleteDocuments,
-  searchDocuments
-} from '../../actions/documentActions';
+import { fetchAllUserDocument } from '../../actions/documentActions';
+import Pagination from '../common/pagination.jsx';
 
 class Documents extends React.Component {
-  constructor(props) {
-    super(props);
-    this.deleteDocument = this.deleteDocument.bind(this);
-  }
-
-  deleteDocument(id) {
-    this.props.deleteDocuments(id).then(() => {
-      Materialize.toast('Document deleted', 2000);
-    });
-  }
-
   render() {
     return (
-      <div>
-        <SearchDocuments
-          searchDocuments={this.props.searchDocuments}
-          documentsFromReducer={this.props.documentsFromReducer}
-        />
-        <CreateDocument
-          saveDocumentRequest={this.props.saveDocumentRequest}
-          currentUser={this.props.currentUser}
-          fetchAllUserDocument={this.props.fetchAllUserDocument}
-        />
-        <GetAccessDocuments
-          fetchAllUserDocument={this.props.fetchAllUserDocument}
-          documentsFromReducer={this.props.documentsFromReducer}
-          deleteDocument={this.deleteDocument}
-        />
-
+      <div className="dashboardBackground">
+        {!this.props.currentUser.id
+          ? <h2>Log in to view documents</h2>
+          : <div>
+            <Link
+              to="/create"
+              style={{ margin: '30px' }}
+              className="btn-floating btn-large waves-effect waves-light right indigo"
+            >
+              <i className="material-icons">
+                add
+              </i>
+            </Link>
+            <Pagination />
+            <GetAccessDocuments
+              fetchAllUserDocument={this.props.fetchAllUserDocument}
+              documentsFromReducer={this.props.documentsFromReducer}
+              currentUser={this.props.currentUser}
+            />
+          </div>
+        }
       </div>
     );
   }
 }
 
 Documents.propTypes = {
-  saveDocumentRequest: PropTypes.func.isRequired,
   fetchAllUserDocument: PropTypes.func.isRequired,
   documentsFromReducer: PropTypes.array.isRequired,
-  deleteDocuments: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
-  searchDocuments: PropTypes.func.isRequired
+  currentUser: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -65,9 +50,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  saveDocumentRequest,
   fetchAllUserDocument,
-  myDocuments,
-  deleteDocuments,
-  searchDocuments
 })(Documents);
