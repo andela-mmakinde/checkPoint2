@@ -31,12 +31,6 @@ h3 {
   background-size: cover !important;
 }
 
-.welcome {
-  min-height: 100%;
-  background-image: url('./components/images/welcome.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 .page-footer {
   width: 100%;
   position: fixed;
@@ -44,16 +38,36 @@ h3 {
   padding: 0;
 }
 
-#search {
-  width: 50% !important;
-  border: 1px #ddd double !important;
-  font-size: 16px !important;
+.input-field.document input[type=search] {
+  margin-top: 13px !important;
+  margin-left: 13px !important;
+  border-radius: 10px;
+  background: #efefef !important;
+  width: 150% !important;
+  height: 40px !important;
 }
 
-#search,
-select,
-textarea {
-  color: orange;
+.input-field.document input[type=search]:focus  {
+  background: white !important;
+}
+
+.input-field.user input[type=search]{
+  width: 70% !important;
+  margin: auto !important;
+}
+  // transform: translateX(100%) !important;
+  //  margin: auto !important;
+.searchForm {
+  display: inline-block !important;
+}
+
+.searchButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0 4px;
+    line-height: 0;
 }
 
 .brand-logo {
@@ -62,4 +76,44 @@ textarea {
 
 .header {
   margin-top: 35px;
+}
+
+.userTable {
+  margin: auto;
+  width: 80%;
+}
+
+.documentForm {
+  margin: 0 10px;
+  padding: 50px;
+  height: 400px;
+}
+
+.card.small {
+  background-color: white !important;
+  border-bottom: 1px solid #c4c4c4 !important;
+  border-left: 1px solid #d3d3d3 !important;
+  border-right: 1px solid #d3d3d3 !important;
+  border-top: 1px solid #d3d3d3 !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.07) !important;
+  margin-bottom: 20px !important;
+  width: 208px !important;
+  font-size: 12px;
+  font-family: Roboto,Arial,sans-serif;
+}
+
+.rdw-editor-main {
+    border: 1px solid #F1F1F1;
+    padding: 0 20px;    
+}
+
+.welcomeUser {
+  margin: 15px;
+  font-size: 20px;
+}
+
+.dashboardBackground {
+  background-color: #e6e6e6 !important;
+  min-height: 100%;
+  background-repeat: no-repeat;
 }

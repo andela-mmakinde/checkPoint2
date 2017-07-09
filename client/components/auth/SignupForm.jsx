@@ -40,7 +40,7 @@ export default class SignUpForm extends React.Component {
     const { error } = this.state;
     const { logged } = this.state;
     if (logged) {
-      return <Redirect to="/" />;
+      return <Redirect to="/document" />;
     }
     return (
       <main>
