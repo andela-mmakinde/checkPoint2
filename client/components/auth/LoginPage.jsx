@@ -9,7 +9,7 @@ class LoginPage extends React.Component {
   render() {
     const { userLoginRequest } = this.props;
     return (
-      <div className="welcome">
+      <div className="dashboardBackground">
         <LoginForm userLoginRequest={userLoginRequest} />
       </div>
     );

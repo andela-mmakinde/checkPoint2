@@ -15,14 +15,13 @@ export default class Home extends React.Component {
           </h3>
         </div>
         <div className="row center">
-          <button
+          <Link
+            to="/login"
             id="download-button"
             className="btn-large waves-effect waves-light indigo"
           >
-            <Link to="/login" className="white-text">
-              GO TO DOC-GARAGE
-            </Link>
-          </button>
+            GO TO DOC-GARAGE
+          </Link>
         </div>
         <br />
       </div>
