@@ -1,13 +1,13 @@
 import React from 'react';
-// import { Switch, Route } from 'react-router';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-// import App from './components/Index.jsx';
 import Documents from './components/documents/Document.jsx';
 import LoginPage from './components/auth/LoginPage.jsx';
 import UserProfile from './components/users/UserProfile.jsx';
 import SignUpPage from './components/auth/SignUpPage.jsx';
 import CreateDocument from './components/documents/CreateDocument.jsx';
 import Layout from './components/Layout.jsx';
+import EditDocument from './components/documents/EditDocument.jsx';
+import Users from './components/users/Users.jsx';
 import Home from './components/Home.jsx';
 import UserDocuments from './components/documents/UserDocuments.jsx';
 
@@ -21,7 +21,9 @@ const Routes = () => (
         <Route path="/document" component={Documents} />
         <Route path="/docs" component={UserDocuments} />
         <Route path="/profile" component={UserProfile} />
-        <Route path="/document/create" component={CreateDocument} />
+        <Route path="/user" component={Users} />
+        <Route path="/create" component={CreateDocument} />
+        <Route path="/edit/:id" component={EditDocument} />
         {/*<Route path="*" render={() => <h1>Page not found</h1>} />*/}
       </Layout>
     </Switch>
