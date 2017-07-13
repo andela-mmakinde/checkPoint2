@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node -- ./bin/www",
+    "postinstall": "npm run db:migrate && sequelize db:seed:all",
     "dev": "nodemon --watch server --exec babel-node -- ./bin/www",
     "db:migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "test": "npm run setup:test && NODE_ENV=test nyc mocha --timeout 50000 ./server/test/**/*.spec.js",
