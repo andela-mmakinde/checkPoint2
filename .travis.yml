@@ -10,4 +10,7 @@ services:
 before_script:
   - psql -c 'create database DMS_TESTS;' -U postgres
   - psql -c 'create user andeladeveloper;' -U postgres
+  - npm install -g sequelize-cli  
+  - npm install -g mocha
+  - npm install -g nyc
 after_success: 'npm run coveralls'
