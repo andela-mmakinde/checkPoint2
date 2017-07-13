@@ -17,5 +17,4 @@
   ],
   "sourceMap": false,
   "instrument": true,
-  "check-coverage": true
 }
