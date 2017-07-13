@@ -1,5 +1,6 @@
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const DocumentForm = ({
@@ -56,6 +57,12 @@ const DocumentForm = ({
     >
       Save
     </button>
+    <Link
+      className="waves-effect cancel waves-light btn right indigo"
+      to="/document"
+    >
+      Cancel
+    </Link>
   </div>
 );
 

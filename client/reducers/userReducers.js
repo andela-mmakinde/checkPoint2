@@ -7,7 +7,7 @@ export default (state = [], action) => {
         user: action.updatedUser,
       };
     case actionTypes.GET_ALL_USERS:
-      return { ...state, user: action.users.data.rows };
+      return action.users.data;
     case actionTypes.SEARCH_USER_SUCCESS:
       return { ...state, user: action.user.data.users };
     default:

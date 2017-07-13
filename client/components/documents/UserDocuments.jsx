@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 import DocumentCard from './DocumentCard.jsx';
-import Pagination from '../common/pagination.jsx';
 import { myDocuments, deleteDocuments } from '../../actions/documentActions';
 
 class UserDocuments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Documents: ''
+      documents: '',
+      offset: 0,
+      pageCount: 0,
     };
     this.deleteDocument = this.deleteDocument.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
@@ -20,9 +23,23 @@ class UserDocuments extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newDocument = nextProps.documentsFromReducer;
+    const documents = nextProps.documentsFromReducer;
+    const pagination = nextProps.pagination;
     this.setState({
-      Documents: newDocument
+      documents,
+      pageCount: pagination.pageCount
+    });
+  }
+
+  handlePageClick(data) {
+    const selected = data.selected;
+    const limit = 1;
+    const offset = Math.ceil(selected * limit);
+    this.setState({ offset });
+    this.props.myDocuments(offset, limit).then(() => {
+      this.setState({
+        documents: this.props.documentsFromReducer
+      });
     });
   }
 
@@ -33,10 +50,22 @@ class UserDocuments extends React.Component {
   }
 
   render() {
-    // const { documentsFromReducer } = this.props;
-    const { Documents } = this.state;
+    const { documents } = this.state;
     return (
       <div className="dashboardBackground">
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={<a href="">...</a>}
+          breakClassName={'break-me'}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
         <Link
           to="/create"
           style={{ margin: '30px' }}
@@ -46,12 +75,11 @@ class UserDocuments extends React.Component {
             add
           </i>
         </Link>
-        <Pagination />
-        {!Documents.length
+        {!documents.length
           ? <h2>You have not authored any document</h2>
           : <div className="container">
             <div className="row">
-              {Documents.map(docs => (
+              {documents.map(docs => (
                 <DocumentCard
                   key={docs.id}
                   id={docs.id}
@@ -70,14 +98,16 @@ class UserDocuments extends React.Component {
 UserDocuments.propTypes = {
   currentUser: PropTypes.object.isRequired,
   documentsFromReducer: PropTypes.array.isRequired,
+  pagination: PropTypes.object.isRequired,
   myDocuments: PropTypes.func.isRequired,
   deleteDocuments: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    documentsFromReducer: state.documents,
-    currentUser: state.auth.user
+    documentsFromReducer: state.documents.documents,
+    currentUser: state.auth.user,
+    pagination: state.documents.pagination
   };
 }
 

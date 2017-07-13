@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import GetAccessDocuments from './GetAccessDocuments.jsx';
 import { fetchAllUserDocument } from '../../actions/documentActions';
-import Pagination from '../common/pagination.jsx';
 
 class Documents extends React.Component {
   render() {
@@ -22,11 +21,11 @@ class Documents extends React.Component {
                 add
               </i>
             </Link>
-            <Pagination />
             <GetAccessDocuments
               fetchAllUserDocument={this.props.fetchAllUserDocument}
               documentsFromReducer={this.props.documentsFromReducer}
               currentUser={this.props.currentUser}
+              pagination={this.props.pagination}
             />
           </div>
         }
@@ -43,7 +42,8 @@ Documents.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    documentsFromReducer: state.documents,
+    documentsFromReducer: state.documents.documents,
+    pagination: state.documents.pagination,
     apiCall: state.loading,
     currentUser: state.auth.user
   };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+import ReactPaginate from 'react-paginate';
 import {
   getAllUsers,
   searchUserDb,
@@ -14,9 +14,12 @@ class Users extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allUsers: []
+      allUsers: [],
+      offset: 0,
+      pageCount: 0,
     };
     this.deleteUser = this.deleteUser.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
@@ -25,7 +28,7 @@ class Users extends React.Component {
       .getAllUsers()
       .then(() => {
         this.setState({
-          allUsers: this.props.allUsers
+          allUsers: this.props.allUsers.user
         });
         Materialize.toast('success', 2000);
       })
@@ -36,7 +39,20 @@ class Users extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      allUsers: nextProps.allUsers
+      allUsers: nextProps.allUsers.user,
+      pageCount: nextProps.allUsers.pagination.pageCount
+    });
+  }
+
+  handlePageClick(data) {
+    const selected = data.selected;
+    const limit = 1;
+    const offset = Math.ceil(selected * limit);
+    this.setState({ offset });
+    this.props.getAllUsers(offset, limit).then(() => {
+      this.setState({
+        users: this.props.allUsers.user
+      });
     });
   }
 
@@ -44,7 +60,6 @@ class Users extends React.Component {
     this.props.deleteUserRecord(id).then(() => {
       Materialize.toast('User deleted', 2000);
     });
-    // this.props.getAllUsers();
   }
 
   render() {
@@ -53,6 +68,19 @@ class Users extends React.Component {
       <div className="dashboardBackground">
         <h2 className="center">All Users</h2>
         <SearchUsers className="searchUser" searchUserDb={this.props.searchUserDb} />
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={<a href="">...</a>}
+          breakClassName={'break-me'}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
         <UserCard allUsers={allUsers} deleteUser={this.deleteUser} />
       </div>
     );
@@ -69,7 +97,7 @@ Users.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    allUsers: state.user.user,
+    allUsers: state.user,
     currentUser: state.auth.user
   };
 }

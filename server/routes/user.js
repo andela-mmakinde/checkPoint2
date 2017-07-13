@@ -8,9 +8,10 @@ module.exports = (app) => {
 
   app.post('/users', usersController.create);
   app.get('/users', checkToken, usersController.list);
-  app.put('/users/:id', usersController.update);
+  app.put('/users/:id', checkToken, usersController.update);
   app.post('/users/login', usersController.login);
   app.post('/users/logout', usersController.logout);
-  app.delete('/users/:id', usersController.deleteRecord);
-  app.get('/search/users', usersController.search);
+  app.delete('/users/:id', checkToken, usersController.deleteRecord);
+  app.get('/search/users', checkToken, usersController.search);
+  app.get('/users/:id', usersController.retrieveUser);
 };

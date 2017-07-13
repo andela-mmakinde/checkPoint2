@@ -33,9 +33,9 @@ export function updateUserDetails(id, userDetails) {
     });
 }
 
-export function getAllUsers() {
+export function getAllUsers(offset = 0, limit = 1) {
   return dispatch =>
-    axios.get('/users').then((users) => {
+    axios.get(`/users?limit=${limit}&offset=${offset}`).then((users) => {
       dispatch(getUsers(users));
     });
 }

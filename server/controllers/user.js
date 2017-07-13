@@ -4,28 +4,6 @@ import { User } from '../models';
 
 const createToken = user => jwt.sign(user, 'secret', { expiresIn: '24h' });
 
-/**
- * Get the pagination metaData
- *
- * @export
- * @param {Number} count total result
- * @param {Number} limit limit per page
- * @param {Number} offset the offset
- * @returns {Object} pagination metaData
- */
-const paginate = (count, limit, offset) => {
-  const page = Math.floor(offset / limit) + 1;
-  const pageCount = Math.ceil(count / limit);
-  const pageSize = (count - offset) > limit ? limit : (count - offset);
-
-  return {
-    page,
-    pageCount,
-    pageSize,
-    totalCount: count
-  };
-};
-
 module.exports = {
   /**
    * Creates a new user
@@ -37,7 +15,7 @@ module.exports = {
    */
   create(req, res) {
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (!req.body.email || !req.body.password || !req.body.confirmPassword) {
+    if (!req.body.email || !req.body.password || !req.body.confirmPassword || !req.body.fullName) {
       return res.status(401).json({ message: 'Enter all required field' });
     }
     if (!emailRegex.test(req.body.email)) {
@@ -60,7 +38,9 @@ module.exports = {
       }
       return User.create({
         email: req.body.email,
-        password: req.body.password
+        fullName: req.body.fullName,
+        password: req.body.password,
+        roleId: req.body.roleId
       })
         .then((user) => {
           const userDetails = {
@@ -84,14 +64,31 @@ module.exports = {
    * @returns {Response} response object
    */
   list(req, res) {
-    const limit = parseInt(req.query.limit, 10);
-    const offset = parseInt(req.query.offset, 10);
+    if (req.user.roleId !== 1) {
+      return res.status(401).json({ message: 'Unauthorised access' });
+    }
     return User
       .findAndCountAll({
-        limit: Math.abs(limit) || 10,
-        offset: Math.abs(offset) || 0,
+        limit: req.query.limit || 1,
+        offset: req.query.offset || 0,
       }).then((user) => {
-        res.status(200).send(user);
+        const limit = req.query.limit || 1;
+        const offset = req.query.offset || 0;
+        const total = user.count;
+        const pageCount = Math.ceil(total / limit);
+        const currentPage = Math.floor(offset / limit) + 1;
+        const pageSize = total - offset > limit ? limit : total - offset;
+        res.status(200).send({
+          user: user.rows,
+          pagination: {
+            total,
+            limit,
+            offset,
+            pageCount,
+            currentPage,
+            pageSize
+          }
+        });
       })
         .catch(err => res.status(400).send(err));
   },
@@ -105,6 +102,12 @@ module.exports = {
    * @returns {Response} response object
    */
   update(req, res) {
+    if (!req.body.password || !req.body.confirmPassword || !req.body.currentPassword) {
+      return res.status(401).json({ message: 'Enter all required field' });
+    }
+    if (req.body.password !== req.body.confirmPassword) {
+      return res.status(401).json({ message: 'Passwords do not match' });
+    }
     return User.find({
       where: {
         id: req.params.id
@@ -116,24 +119,19 @@ module.exports = {
             message: 'user Not Found'
           });
         }
-        const salt = bcrypt.genSaltSync(10);
-        if (!user.verifyPassword(user.password, req.body.currentPassword)) {
-          return res.status(201).send({
-            message: 'invalid password'
-          });
+        if (req.user.id === user.id) {
+          const salt = bcrypt.genSaltSync(10);
+          if (!user.verifyPassword(user.password, req.body.currentPassword)) {
+            return res.status(401).json({
+              message: 'Current password incorrect'
+            });
+          }
+          const password = bcrypt.hashSync(req.body.password, salt);
+          return user
+            .update({ password })
+            .then(updatedUser => res.status(200).json(updatedUser))
+            .catch(error => res.status(400).send(error));
         }
-        if (req.body.password !== req.body.confirmPassword) {
-          return res.status(201).send({
-            message: 'Passwords do not match'
-          });
-        }
-        const password = bcrypt.hashSync(req.body.password, salt);
-        return user
-          .update({
-            password
-          })
-          .then(updatedUser => res.status(200).send(updatedUser))
-          .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
   },
@@ -165,7 +163,8 @@ module.exports = {
           const userDetails = {
             id: existingUser.id,
             email: existingUser.email,
-            roleId: existingUser.roleId
+            roleId: existingUser.roleId,
+            fullName: existingUser.fullName
           };
           const jsonToken = createToken({ userDetails });
           return res.status(200).send({
@@ -175,8 +174,34 @@ module.exports = {
         return res.status(401).send({
           message: 'Invalid Password!'
         });
-      });
-      // .catch(error => res.status(400).send({message: 'Error', error}));
+      })
+      .catch(error => res.status(400).send({ message: 'Error', error }));
+  },
+
+    /**
+   * Retrieves a user in the database by the id
+   * Route: GET: /users/:id
+   *
+   * @param {any} req
+   * @param {any} res
+   * @returns {Response} response object
+   */
+  retrieveUser(req, res) {
+    return User
+      .findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then((user) => {
+        if (!user || user === null) {
+          return res
+            .status(404)
+            .send({ message: 'User not found!' });
+        }
+        return res.status(200).send(user);
+      })
+      .catch(error => res.status(404).send(error));
   },
 
   /**
@@ -188,6 +213,9 @@ module.exports = {
    * @returns {object} response object
    */
   deleteRecord(req, res) {
+    if (req.user.roleId !== 1) {
+      return res.status(401).json({ message: 'Unauthorised access' });
+    }
     return User.find({
       where: {
         id: req.params.id
@@ -220,6 +248,9 @@ module.exports = {
    * @returns {object} response object
    */
   search(req, res) {
+    if (req.user.roleId !== 1) {
+      return res.status(401).json({ message: 'Unauthorised access' });
+    }
     const search = req.query.q;
     User.findAll({
       where: { email: { $iLike: `%${search}%` } },

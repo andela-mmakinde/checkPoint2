@@ -32,9 +32,9 @@ module.exports = {
         return Document
           .create({
             title: req.body.title,
-            roleId: req.body.roleId,
+            roleId: req.user.roleId,
             content: req.body.content,
-            ownerId: req.body.ownerId,
+            ownerId: req.user.id,
             access: req.body.access
           })
           .then(document => res.status(201).send({ message: 'Document created', document }))
@@ -51,13 +51,11 @@ module.exports = {
    * @returns {Response} response object
    */
   listAllDocuments(req, res) {
-    const limit = parseInt(req.query.limit, 10);
-    const offset = parseInt(req.query.offset, 10);
     if (req.user.roleId === 1) {
       Document
       .findAndCountAll({
-        limit: Math.abs(limit) || 6,
-        offset: Math.abs(offset) || 0,
+        limit: req.query.limit || 6,
+        offset: req.query.offset || 0,
         where: {
           $or: [
             {
@@ -75,12 +73,30 @@ module.exports = {
           ]
         }
       })
-      .then(document => (res.status(200).json({ document })))
+      .then((document) => {
+        const limit = req.query.limit || 6;
+        const offset = req.query.offset || 0;
+        const total = document.count;
+        const pageCount = Math.ceil(total / limit);
+        const currentPage = Math.floor(offset / limit) + 1;
+        const pageSize = total - offset > limit ? limit : total - offset;
+        res.status(200).send({
+          document: document.rows,
+          pagination: {
+            total,
+            limit,
+            offset,
+            pageCount,
+            currentPage,
+            pageSize
+          }
+        });
+      })
       .catch(err => res.status(400).send(err));
     } else {
       const query = {
-        limit: Math.abs(limit) || 6,
-        offset: Math.abs(offset) || 0,
+        limit: req.query.limit || 6,
+        offset: req.query.offset || 0,
         where: {
           $or: [
             {
@@ -101,7 +117,25 @@ module.exports = {
       };
       Document
       .findAndCountAll(query)
-      .then(document => (res.status(200).json({ document })))
+      .then((document) => {
+        const limit = req.query.limit || 6;
+        const offset = req.query.offset || 0;
+        const total = document.count;
+        const pageCount = Math.ceil(total / limit);
+        const currentPage = Math.floor(offset / limit) + 1;
+        const pageSize = total - offset > limit ? limit : total - offset;
+        res.status(200).send({
+          document: document.rows,
+          pagination: {
+            total,
+            limit,
+            offset,
+            pageCount,
+            currentPage,
+            pageSize
+          }
+        });
+      })
       .catch(err => res.status(400).send(err));
     }
   },
@@ -226,7 +260,7 @@ module.exports = {
         }
         return document
           .destroy()
-          .then(() => res.status(201).send({ message: 'document deleted successfully' }))
+          .then(() => res.status(200).send({ message: 'document deleted successfully' }))
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
@@ -311,12 +345,32 @@ module.exports = {
             .send({ message: 'User not found' });
         }
         Document
-          .findAll({
+          .findAndCountAll({
+            limit: req.query.limit || 6,
+            offset: req.query.offset || 0,
             where: {
               ownerId: user.id
             }
           })
-          .then(ownerDocuments => res.send({ documentOwner: user, ownerDocuments }));
+          .then((ownerDocuments) => {
+            const limit = req.query.limit || 6;
+            const offset = req.query.offset || 0;
+            const total = ownerDocuments.count;
+            const pageCount = Math.ceil(total / limit);
+            const currentPage = Math.floor(offset / limit) + 1;
+            const pageSize = total - offset > limit ? limit : total - offset;
+            res.status(200).send({
+              ownerDocuments: ownerDocuments.rows,
+              pagination: {
+                total,
+                limit,
+                offset,
+                pageCount,
+                currentPage,
+                pageSize
+              }
+            });
+          });
       });
   },
 
@@ -330,11 +384,32 @@ module.exports = {
    */
   loggedInUserDocument(req, res) {
     Document
-      .findAll({
+      .findAndCountAll({
+        limit: req.query.limit || 6,
+        offset: req.query.offset || 0,
         where: {
-          ownerId: req.user.id
-        }
+          ownerId: req.user.id,
+        },
+        order: [['updatedAt', 'DESC']]
       })
-      .then(myDocuments => res.send({ myDocuments }));
+      .then((myDocuments) => {
+        const limit = req.query.limit || 6;
+        const offset = req.query.offset || 0;
+        const total = myDocuments.count;
+        const pageCount = Math.ceil(total / limit);
+        const currentPage = Math.floor(offset / limit) + 1;
+        const pageSize = total - offset > limit ? limit : total - offset;
+        res.status(200).send({
+          myDocuments: myDocuments.rows,
+          pagination: {
+            total,
+            limit,
+            offset,
+            pageCount,
+            currentPage,
+            pageSize
+          }
+        });
+      });
   }
 };

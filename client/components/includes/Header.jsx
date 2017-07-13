@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import SearchDocuments from '../../components/documents/SearchDocuments.jsx';
-import CreateDocument from '../../components/documents/CreateDocument.jsx';
 import { logout } from '../../actions/authActions';
 
 class Header extends React.Component {
@@ -23,8 +22,9 @@ class Header extends React.Component {
     return (
       <nav>
         <div className="col s12 nav-wrapper indigo">
-          <SearchDocuments />
+          <Link to="/document" className="brand-logo">DOC-GARAGE</Link>
           <ul id="nav-mobile" className="right ">
+            <li><SearchDocuments /></li>
             <li>
               <Link
                 className="dropdown-button"
@@ -39,7 +39,7 @@ class Header extends React.Component {
               </Link>
             </li>
             <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/user">Users</Link></li>
+            {this.props.currentUser.roleId === 1 && <li><Link to="/user">Users</Link></li>}
             <li><Link to="" onClick={this.logout}>Logout</Link></li>
           </ul>
 
