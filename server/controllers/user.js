@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt-nodejs';
 import { User } from '../models';
 
 const createToken = user => jwt.sign(user, 'secret', { expiresIn: '24h' });
@@ -63,12 +63,12 @@ module.exports = {
         password: req.body.password
       })
         .then((user) => {
-          const newUser = {
+          const userDetails = {
             id: user.id,
             email: user.email,
             roleId: user.roleId
           };
-          const jsonToken = createToken({ newUser });
+          const jsonToken = createToken({ userDetails });
           res.status(201).send({ message: 'User created', user, jsonToken });
         })
         .catch(err => res.status(400).send(err));
@@ -84,9 +84,16 @@ module.exports = {
    * @returns {Response} response object
    */
   list(req, res) {
-    return User.all()
-      .then(user => res.status(200).send(user))
-      .catch(err => res.status(400).send(err));
+    const limit = parseInt(req.query.limit, 10);
+    const offset = parseInt(req.query.offset, 10);
+    return User
+      .findAndCountAll({
+        limit: Math.abs(limit) || 10,
+        offset: Math.abs(offset) || 0,
+      }).then((user) => {
+        res.status(200).send(user);
+      })
+        .catch(err => res.status(400).send(err));
   },
 
   /**
@@ -109,20 +116,21 @@ module.exports = {
             message: 'user Not Found'
           });
         }
-        // if (user !== null) {
-        //   return res.status(409).send({
-        //     message: 'A user with this email already exists!'
-        //   });
-        // }
         const salt = bcrypt.genSaltSync(10);
-        let password;
-        if (!user.verifyPassword(user.password, req.body.password)) {
-          password = bcrypt.hashSync(req.body.password, salt);
+        if (!user.verifyPassword(user.password, req.body.currentPassword)) {
+          return res.status(201).send({
+            message: 'invalid password'
+          });
         }
+        if (req.body.password !== req.body.confirmPassword) {
+          return res.status(201).send({
+            message: 'Passwords do not match'
+          });
+        }
+        const password = bcrypt.hashSync(req.body.password, salt);
         return user
           .update({
-            email: req.body.email || user.email,
-            password: password || user.password
+            password
           })
           .then(updatedUser => res.status(200).send(updatedUser))
           .catch(error => res.status(400).send(error));

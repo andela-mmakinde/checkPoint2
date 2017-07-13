@@ -16,9 +16,10 @@ module.exports = {
         type: Sequelize.TEXT
       },
       access: {
-        type: Sequelize.INTEGER
+        type: Sequelize.TEXT
       },
       roleId: {
+        onDelete: 'CASCADE',
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -31,6 +32,7 @@ module.exports = {
       },
       ownerId: {
         allowNull: false,
+        onDelete: 'CASCADE',
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
