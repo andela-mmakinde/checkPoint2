@@ -46,7 +46,8 @@ module.exports = {
           const userDetails = {
             id: user.id,
             email: user.email,
-            roleId: user.roleId
+            roleId: user.roleId,
+            fullName: user.fullName
           };
           const jsonToken = createToken({ userDetails });
           res.status(201).send({ message: 'User created', user, jsonToken });
@@ -64,11 +65,13 @@ module.exports = {
    * @returns {Response} response object
    */
   list(req, res) {
-    if (req.user.roleId !== 1) {
-      return res.status(401).json({ message: 'Unauthorised access' });
-    }
     return User
       .findAndCountAll({
+        where: {
+          roleId: {
+            $ne: 1
+          }
+        },
         limit: req.query.limit || 1,
         offset: req.query.offset || 0,
       }).then((user) => {
@@ -213,9 +216,6 @@ module.exports = {
    * @returns {object} response object
    */
   deleteRecord(req, res) {
-    if (req.user.roleId !== 1) {
-      return res.status(401).json({ message: 'Unauthorised access' });
-    }
     return User.find({
       where: {
         id: req.params.id
@@ -248,9 +248,6 @@ module.exports = {
    * @returns {object} response object
    */
   search(req, res) {
-    if (req.user.roleId !== 1) {
-      return res.status(401).json({ message: 'Unauthorised access' });
-    }
     const search = req.query.q;
     User.findAll({
       where: { email: { $iLike: `%${search}%` } },

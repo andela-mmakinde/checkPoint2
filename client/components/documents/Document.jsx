@@ -14,7 +14,11 @@ class Documents extends React.Component {
           : <div>
             <Link
               to="/create"
-              style={{ margin: '30px' }}
+              style={{
+                margin: '30px',
+                position: 'absolute',
+                left: '75rem'
+              }}
               className="btn-floating btn-large waves-effect waves-light right indigo"
             >
               <i className="material-icons">
