@@ -10,10 +10,17 @@ module.exports = {
       title: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true        
+        unique: true
       },
       content: {
         type: Sequelize.TEXT
+      },
+      access: {
+        type: Sequelize.TEXT
+      },
+      roleId: {
+        onDelete: 'CASCADE',
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -25,6 +32,7 @@ module.exports = {
       },
       ownerId: {
         allowNull: false,
+        onDelete: 'CASCADE',
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
@@ -33,5 +41,5 @@ module.exports = {
         },
       },
     }),
-  down: (queryInterface => queryInterface.dropTable('Documents'))
+  down: queryInterface => queryInterface.dropTable('Documents')
 };

@@ -8,6 +8,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    access: {
+      allowNull: false,
+      type: DataTypes.TEXT,
+    },
+    roleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     ownerId: {
       allowNull: false,
       type: DataTypes.INTEGER,
@@ -23,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         Document.belongsTo(models.User, {
           as: 'owner',
           foreignKey: 'ownerId',
-          onDelete: 'cascade',
+          onDelete: 'CASCADE',
         });
       }
     }
