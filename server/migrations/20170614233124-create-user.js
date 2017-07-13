@@ -12,6 +12,10 @@ module.exports = {
         unique: true,
         allowNull: false,
       },
+      fullName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -22,6 +26,7 @@ module.exports = {
       },
       roleId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         defaultValue: 2,
         references: {
           model: 'Roles',
