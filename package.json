@@ -32,6 +32,7 @@
     "babel-register": "^6.24.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
     "dotenv-webpack": "^1.5.0",
     "draft-convert": "^1.4.7",
     "draft-js": "^0.10.1",
