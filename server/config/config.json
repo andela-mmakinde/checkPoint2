@@ -18,7 +18,12 @@
   },
   
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres"
+    "dialect": "postgres",     
+    "logging": false,
+    "username": "vzmkyjpo",
+    "password": "XjOMsHoAdVKP9DoTmHIAhmo2Gtfk7WHI",
+    "host": "pellefant.db.elephantsql.com",
+    "database": "vzmkyjpo",
+    "port": 5432
   }
 }
