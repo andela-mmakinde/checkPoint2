@@ -50,12 +50,12 @@ class UserProfile extends React.Component {
     const { success } = this.state;
 
     if (success) {
-      return <Redirect to="/" />;
+      return <Redirect to="/document" />;
     }
 
     return (
       <main className="dashboardBackground">
-        <h6 className="welcomeUser">Welcome {this.props.currentUser.email}</h6>
+        <h6 className="welcomeUser">Welcome {this.props.currentUser.fullName}</h6>
         <center>
           <h5 className="indigo-text">Update Profile</h5>
           <div className="container">

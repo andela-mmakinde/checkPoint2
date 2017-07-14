@@ -18,10 +18,10 @@ export function update() {
   };
 }
 
-export function searchDocs(document) {
+export function searchDocs(documents) {
   return {
     type: actionTypes.SEARCH_DOCUMENT_SUCCESS,
-    document
+    documents
   };
 }
 
@@ -31,17 +31,17 @@ export function singleDoc(singleDocument) {
     singleDocument
   };
 }
-export function fetchUserAccessDocument(userAccessDocuments) {
+export function fetchUserAccessDocument(documents) {
   return {
     type: actionTypes.GET_DOCUMENT_SUCCESS,
-    userAccessDocuments
+    documents
   };
 }
 
-export function userDocument(userCreatedDocuments) {
+export function userDocument(documents) {
   return {
     type: actionTypes.GET_USER_DOCUMENT_SUCCESS,
-    userCreatedDocuments
+    documents
   };
 }
 
@@ -58,18 +58,20 @@ export function saveDocumentRequest(document) {
   });
 }
 
-export function fetchAllUserDocument() {
-  return dispatch => axios.get('/documents').then((res) => {
-    const userAccessDocuments = res.data;
-    dispatch(fetchUserAccessDocument(userAccessDocuments));
+export function fetchAllUserDocument(offset = 0, limit = 1) {
+  return dispatch => axios.get(`/documents?limit=${limit}&offset=${offset}`).then((res) => {
+    const documents = res.data.document;
+    const pagination = res.data.pagination;
+    dispatch(fetchUserAccessDocument({ documents, pagination }));
   });
 }
 
-export function myDocuments() {
+export function myDocuments(offset = 0, limit = 1) {
   return dispatch =>
-    axios.get('/mydoc').then((res) => {
-      const userCreatedDocuments = res.data;
-      dispatch(userDocument(userCreatedDocuments));
+    axios.get(`/mydoc?limit=${limit}&offset=${offset}`).then((res) => {
+      const documents = res.data.myDocuments;
+      const pagination = res.data.pagination;
+      dispatch(userDocument({ documents, pagination }));
     });
 }
 
@@ -82,8 +84,8 @@ export function deleteDocuments(id) {
 
 export function searchDocuments(searchQuery) {
   return dispatch =>
-    axios.get(`/search/documents?q=${searchQuery}`).then((document) => {
-      dispatch(searchDocs(document));
+    axios.get(`/search/documents?q=${searchQuery}`).then((documents) => {
+      dispatch(searchDocs(documents));
     });
 }
 
@@ -96,7 +98,7 @@ export function updateDocument(id, documentToUpdate) {
 
 export function searchDocumentById(id) {
   return dispatch =>
-    axios.get(`/documents/${id}`).then((singleDocument) => {
-      dispatch(singleDoc(singleDocument));
+    axios.get(`/documents/${id}`).then((documents) => {
+      dispatch(singleDoc(documents));
     });
 }

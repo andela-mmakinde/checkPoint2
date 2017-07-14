@@ -39,11 +39,9 @@ h3 {
 }
 
 .input-field.document input[type=search] {
-  margin-top: 13px !important;
-  margin-left: 13px !important;
+  margin: 13px 20px 0 0 !important;
   border-radius: 10px;
   background: #efefef !important;
-  width: 150% !important;
   height: 40px !important;
 }
 
@@ -116,4 +114,9 @@ h3 {
   background-color: #e6e6e6 !important;
   min-height: 100%;
   background-repeat: no-repeat;
+  margin-top: -0.8rem;
+}
+
+.cancel {
+  margin-right: 10px;
 }
