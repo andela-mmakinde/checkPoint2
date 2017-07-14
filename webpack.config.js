@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 module.exports = {
@@ -55,9 +54,6 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('style.css'),
-    new Dotenv({
-      path: './.env',
-    }),
   ],
 };
 
