@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import { connect } from 'react-redux';
@@ -18,8 +18,6 @@ class EditDocument extends React.Component {
       access: '',
       title: '',
       editorState: '',
-      ownerId: '',
-      roleId: '',
       success: false
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
@@ -118,7 +116,7 @@ class EditDocument extends React.Component {
               style={{ margin: '0px' }}
             >
               <br />
-              <select name="access" onChange={this.updateAccessState} value={this.state.access}>
+              <select name="access" onChange={this.updateAccessState} defaultvalue={this.state.access}>
                 <option value="" disabled>Select document access</option>
                 <option name="public">Public</option>
                 <option name="private">Private</option>
@@ -136,6 +134,12 @@ class EditDocument extends React.Component {
           >
             Save
           </button>
+          <Link
+            className="waves-effect cancel waves-light btn right indigo"
+            to="/docs"
+          >
+            Cancel
+          </Link>
         </div>
       </div>
     );
@@ -144,7 +148,6 @@ class EditDocument extends React.Component {
 
 EditDocument.propTypes = {
   documentsFromReducer: PropTypes.array.isRequired,
-  currentUser: PropTypes.object.isRequired,
   updateDocument: PropTypes.func.isRequired,
   searchDocumentById: PropTypes.func.isRequired
 };

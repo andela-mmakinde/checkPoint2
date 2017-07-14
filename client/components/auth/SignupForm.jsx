@@ -8,6 +8,7 @@ export default class SignUpForm extends React.Component {
     this.state = {
       email: '',
       password: '',
+      fullName: '',
       confirmPassword: '',
       error: {},
       logged: false,
@@ -25,8 +26,14 @@ export default class SignUpForm extends React.Component {
   onSubmit(event) {
     this.setState({ error: {} });
     event.preventDefault();
+    const userDetailsToSave = {
+      email: this.state.email,
+      fullName: this.state.fullName,
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword,
+    };
     this.props
-      .userSignUpRequest(this.state)
+      .userSignUpRequest(userDetailsToSave)
       .then(() => {
         this.setState({ logged: true });
       })
@@ -60,6 +67,17 @@ export default class SignUpForm extends React.Component {
               <div className="row">
                 <form className="col s12" onSubmit={this.onSubmit}>
                   {error.message && Materialize.toast(error.message, 2000)}
+                  <div className="input-field col s12">
+                    <input
+                      id="fullName"
+                      value={this.state.fullName}
+                      onChange={this.onChange}
+                      type="text"
+                      className="validate"
+                      name="fullName"
+                    />
+                    <label htmlFor="fullName">Full Name</label>
+                  </div>
                   <div className="input-field col s12">
                     <input
                       id="email"

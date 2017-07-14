@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
-import $ from 'jquery';
-import { Link } from 'react-router-dom';
-import EditDocument from './EditDocument.jsx';
+import {Link} from 'react-router-dom';
 
 class DocumentCard extends React.Component {
   componentDidMount() {
@@ -16,23 +14,25 @@ class DocumentCard extends React.Component {
     const { currentUser } = this.props;
     const modalId = `modal${this.props.id}`;
 
-    const ellipsis = (text, length) => (text.length > length ? `${text.substr(0, length - 1)}...` : text);
-
     return (
       <div className="col m4 s12 documentCard">
         <div className="card small white darken-10">
           <div className="card-content black-text">
             <span className="card-title">{document.title}</span>
             <br />
-            <div>
-              <span>{ellipsis(renderHTML(document.content), 10)}
+            <div className="truncate">
+              <span>{renderHTML(document.content)}
               </span>
             </div>
             <div>Opened: {new Date(document.createdAt).toDateString()}</div>
             <div>Access: {document.access}</div>
           </div>
           <div className="card-action">
-            <a href={`#${modalId}`} onClick={() => $(`#${modalId}`).modal()} className="indigo-text">View</a>
+            <a
+              href={`#${modalId}`}
+              onClick={() => $(`#${modalId}`).modal()}
+              className="indigo-text"
+            >View</a>
           </div>
           {currentUser.id === document.ownerId && <div className="card-action">
             <a href="#deleteModal">
@@ -41,7 +41,11 @@ class DocumentCard extends React.Component {
             <Link to={`/edit/${document.id}`}>
               <i className="material-icons indigo-text">edit</i>
             </Link>
-            <a href={`#${modalId}`} onClick={() => $(`#${modalId}`).modal()} className="indigo-text">View</a>
+            <a
+              href={`#${modalId}`}
+              onClick={() => $(`#${modalId}`).modal()}
+              className="indigo-text"
+            >View</a>
             <div id="deleteModal" className="modal">
               <div className="modal-content">
                 <p>Are you sure you want to delete?</p>
@@ -73,7 +77,6 @@ class DocumentCard extends React.Component {
   }
 }
 
-
 DocumentCard.propTypes = {
   document: PropTypes.object.isRequired,
   deleteDocument: PropTypes.func,
@@ -83,6 +86,7 @@ DocumentCard.propTypes = {
 
 DocumentCard.defaultProps = {
   document: null,
+  deleteDocument: null
 };
 
 export default DocumentCard;

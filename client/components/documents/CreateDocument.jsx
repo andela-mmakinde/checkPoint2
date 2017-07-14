@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
 import { connect } from 'react-redux';
 import { convertToHTML } from 'draft-convert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -21,8 +20,7 @@ class CreateDocument extends React.Component {
       content: '',
       access: '',
       title: '',
-      ownerId: this.props.currentUser.id,
-      roleId: this.props.currentUser.roleId,
+
       success: false
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
@@ -60,8 +58,6 @@ class CreateDocument extends React.Component {
       content: this.state.content,
       access: this.state.access,
       title: this.state.title,
-      ownerId: this.state.ownerId,
-      roleId: this.state.roleId
     };
     this.props
       .saveDocumentRequest(documentToSave)
@@ -110,14 +106,12 @@ class CreateDocument extends React.Component {
 CreateDocument.propTypes = {
   saveDocumentRequest: PropTypes.func.isRequired,
   fetchAllUserDocument: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     documentsFromReducer: state.documents,
     apiCall: state.loading,
-    currentUser: state.auth.user
   };
 }
 
