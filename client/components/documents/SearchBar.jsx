@@ -11,9 +11,7 @@ const SearchBar = ({ onSubmit, onChange }) => (
         placeholder="Search Documents"
         onChange={onChange}
       />
-      <button type="submit" name="search" className="searchButton">
-        {/*<i className="material-icons">search</i>*/}
-      </button>
+      <button type="submit" name="search" className="searchButton" />
     </div>
   </form>
 );

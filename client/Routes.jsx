@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Documents from './components/documents/Document.jsx';
-import LoginPage from './components/auth/LoginPage.jsx';
-import UserProfile from './components/users/UserProfile.jsx';
-import SignUpPage from './components/auth/SignUpPage.jsx';
-import CreateDocument from './components/documents/CreateDocument.jsx';
-import Layout from './components/Layout.jsx';
-import EditDocument from './components/documents/EditDocument.jsx';
-import Users from './components/users/Users.jsx';
-import Home from './components/Home.jsx';
-import UserDocuments from './components/documents/UserDocuments.jsx';
+import Documents from './components/documents/Document';
+import LoginPage from './components/auth/LoginPage';
+import UserProfile from './components/users/UserProfile';
+import SignUpPage from './components/auth/SignUpPage';
+import CreateDocument from './components/documents/CreateDocument';
+import Layout from './components/Layout';
+import EditDocument from './components/documents/EditDocument';
+import Users from './components/users/Users';
+import Home from './components/Home';
+import UserDocuments from './components/documents/UserDocuments';
 
 const Routes = () => (
   <BrowserRouter>
@@ -24,7 +24,6 @@ const Routes = () => (
         <Route path="/user" component={Users} />
         <Route path="/create" component={CreateDocument} />
         <Route path="/edit/:id" component={EditDocument} />
-        {/*<Route path="*" render={() => <h1>Page not found</h1>} />*/}
       </Layout>
     </Switch>
   </BrowserRouter>
