@@ -1,6 +1,6 @@
 import { Role } from '../models/';
 
-export default {
+const Roles = {
   /**
    * Creates a new role for user
    * Route: POST: /role
@@ -31,7 +31,7 @@ export default {
    * @param {any} res
    * @returns {response} response object
    */
-  findRole(req, res) {
+  findOne(req, res) {
     return Role
       .findById(req.params.id)
       .then((role) => {
@@ -50,7 +50,7 @@ export default {
    * @param {any} res
    * @returns {response} response object
    */
-  getAllRoles(req, res) {
+  getAll(req, res) {
     return Role
       .findAll()
       .then(roles => res.status(200).json(roles))
@@ -65,10 +65,7 @@ export default {
    * @param {any} res
    * @returns {response} response object
    */
-  updateRole(req, res) {
-    // if (req.user.roleId !== 1) {
-    //   return res.status(401).json({ message: 'Unauthorised access' });
-    // }
+  update(req, res) {
     return Role
       .findById(req.params.id)
       .then((role) => {
@@ -90,7 +87,7 @@ export default {
    * @param {any} res
    * @returns {response} response object
    */
-  deleteRole(req, res) {
+  delete(req, res) {
     return Role
       .findById(req.params.id)
       .then((role) => {
@@ -104,3 +101,5 @@ export default {
       }).catch(error => res.json(error));
   },
 };
+export default Roles;
+

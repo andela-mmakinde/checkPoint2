@@ -1,7 +1,7 @@
 import { User, Document } from '../models';
 
 
-module.exports = {
+const Documents = {
 
   /**
    * Creates a new document
@@ -14,7 +14,7 @@ module.exports = {
   create(req, res) {
     if (!req.body.title || !req.body.content || !req.body.access) {
       return res
-        .status(401)
+        .status(400)
         .json({ message: 'Enter all required field' });
     }
     Document
@@ -50,7 +50,7 @@ module.exports = {
    * @param {any} res
    * @returns {Response} response object
    */
-  listAllDocuments(req, res) {
+  listAll(req, res) {
     if (req.user.roleId === 1) {
       Document
       .findAndCountAll({
@@ -148,7 +148,7 @@ module.exports = {
    * @param {any} res
    * @returns {Response} response object
    */
-  retrieveDocument(req, res) {
+  retrieveOne(req, res) {
     return Document
       .findOne({
         where: {
@@ -202,7 +202,7 @@ module.exports = {
    * @param {any} res
    * @returns {Response} response object
    */
-  updateDocument(req, res) {
+  update(req, res) {
     return Document
       .find({
         where: {
@@ -240,7 +240,7 @@ module.exports = {
    * @param {any} res
    * @returns {object} response object
    */
-  deleteDocument(req, res) {
+  delete(req, res) {
     return Document
       .find({
         where: {
@@ -279,6 +279,8 @@ module.exports = {
     let dbQuery;
     if (req.user.roleId === 1) {
       dbQuery = {
+        limit: req.query.limit || 6,
+        offset: req.query.offset || 0,
         where: {
           title: {
             $iLike: `%${search}%`
@@ -287,6 +289,8 @@ module.exports = {
       };
     } else {
       dbQuery = {
+        limit: req.query.limit || 6,
+        offset: req.query.offset || 0,
         where: {
           $and: {
             title: {
@@ -309,16 +313,30 @@ module.exports = {
         }
       };
     }
-    Document.findAll(dbQuery)
-      .then((documents) => {
-        if (documents.length === 0) {
+    Document.findAndCountAll(dbQuery)
+      .then((document) => {
+        if (document.count === 0) {
           return res
             .status(404)
             .json({ message: 'Sorry, No document found' });
         }
-        res
-          .status(200)
-          .send({ message: 'Found', documents });
+        const limit = req.query.limit || 6;
+        const offset = req.query.offset || 0;
+        const total = document.count;
+        const pageCount = Math.ceil(total / limit);
+        const currentPage = Math.floor(offset / limit) + 1;
+        const pageSize = total - offset > limit ? limit : total - offset;
+        res.status(200).send({
+          document: document.rows,
+          pagination: {
+            total,
+            limit,
+            offset,
+            pageCount,
+            currentPage,
+            pageSize
+          }
+        });
       })
     .catch(error => res.status(400).send(error));
   },
@@ -331,7 +349,7 @@ module.exports = {
    * @param {any} res
    * @returns {object} response object
    */
-  specificUserDocument(req, res) {
+  getMine(req, res) {
     User
       .findOne({
         where: {
@@ -350,7 +368,8 @@ module.exports = {
             offset: req.query.offset || 0,
             where: {
               ownerId: user.id
-            }
+            },
+            order: [['updatedAt', 'DESC']]
           })
           .then((ownerDocuments) => {
             const limit = req.query.limit || 6;
@@ -360,7 +379,7 @@ module.exports = {
             const currentPage = Math.floor(offset / limit) + 1;
             const pageSize = total - offset > limit ? limit : total - offset;
             res.status(200).send({
-              ownerDocuments: ownerDocuments.rows,
+              myDocuments: ownerDocuments.rows,
               pagination: {
                 total,
                 limit,
@@ -372,44 +391,7 @@ module.exports = {
             });
           });
       });
-  },
-
-   /**
-   * Gets all documents created by the currently logged in user
-   * Route: GET: /mydoc
-   *
-   * @param {any} req
-   * @param {any} res
-   * @returns {object} response object
-   */
-  loggedInUserDocument(req, res) {
-    Document
-      .findAndCountAll({
-        limit: req.query.limit || 6,
-        offset: req.query.offset || 0,
-        where: {
-          ownerId: req.user.id,
-        },
-        order: [['updatedAt', 'DESC']]
-      })
-      .then((myDocuments) => {
-        const limit = req.query.limit || 6;
-        const offset = req.query.offset || 0;
-        const total = myDocuments.count;
-        const pageCount = Math.ceil(total / limit);
-        const currentPage = Math.floor(offset / limit) + 1;
-        const pageSize = total - offset > limit ? limit : total - offset;
-        res.status(200).send({
-          myDocuments: myDocuments.rows,
-          pagination: {
-            total,
-            limit,
-            offset,
-            pageCount,
-            currentPage,
-            pageSize
-          }
-        });
-      });
   }
 };
+export default Documents;
+
