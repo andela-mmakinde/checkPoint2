@@ -1,12 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionType';
 
-export function update(updatedUser) {
-  return { type: actionTypes.UPDATE_USER_DETAILS,
-    updatedUser
-  };
-}
-
 export function getUsers(users) {
   return { type: actionTypes.GET_ALL_USERS,
     users
@@ -26,30 +20,23 @@ export function deleteUser() {
   };
 }
 
-export function updateUserDetails(id, userDetails) {
+export function getAllUsers(offset = 0, limit = 5) {
   return dispatch =>
-    axios.put(`/users/${id}`, userDetails).then((updatedUser) => {
-      dispatch(update(updatedUser));
-    });
-}
-
-export function getAllUsers(offset = 0, limit = 1) {
-  return dispatch =>
-    axios.get(`/users?limit=${limit}&offset=${offset}`).then((users) => {
+    axios.get(`/api/users?limit=${limit}&offset=${offset}`).then((users) => {
       dispatch(getUsers(users));
     });
 }
 
 export function searchUserDb(searchQuery) {
   return dispatch =>
-    axios.get(`/search/users?q=${searchQuery}`).then((user) => {
+    axios.get(`/api/search/users?q=${searchQuery}`).then((user) => {
       dispatch(search(user));
     });
 }
 
 export function deleteUserRecord(id) {
   return dispatch =>
-    axios.delete(`/users/${id}`).then(() => {
+    axios.delete(`/api/users/${id}`).then(() => {
       dispatch(deleteUser());
     });
 }

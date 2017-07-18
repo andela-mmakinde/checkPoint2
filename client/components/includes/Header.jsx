@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import SearchDocuments from '../../components/documents/SearchDocuments.jsx';
+import SearchDocuments from '../../components/documents/SearchDocuments';
 import { logout } from '../../actions/authActions';
 
 class Header extends React.Component {
@@ -38,7 +38,7 @@ class Header extends React.Component {
                   </i>
               </Link>
             </li>
-            <li><Link to="/profile">Profile</Link></li>
+            <li><Link to="/profile">Update Profile</Link></li>
             {this.props.currentUser.roleId === 1 && <li><Link to="/user">Users</Link></li>}
             <li><Link to="" onClick={this.logout}>Logout</Link></li>
           </ul>

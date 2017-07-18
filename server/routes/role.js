@@ -1,9 +1,10 @@
-import rolesController from '../controllers/role';
+import Roles from '../controllers/role';
+import Authorisation from '../middlewares/authorisation';
 
 module.exports = (app) => {
-  app.post('/role', rolesController.create);
-  app.get('/roles', rolesController.getAllRoles);
-  app.put('/roles/:id', rolesController.updateRole);
-  app.get('/roles/:id', rolesController.findRole);
-  app.delete('/roles/:id', rolesController.deleteRole);
+  app.post('/api/role', Authorisation.checkToken, Authorisation.isAdmin, Roles.create);
+  app.get('/api/roles', Authorisation.checkToken, Authorisation.isAdmin, Roles.getAll);
+  app.put('/api/roles/:id', Authorisation.checkToken, Authorisation.isAdmin, Roles.update);
+  app.get('/api/roles/:id', Authorisation.checkToken, Authorisation.isAdmin, Roles.findOne);
+  app.delete('/api/roles/:id', Authorisation.checkToken, Authorisation.isAdmin, Roles.delete);
 };

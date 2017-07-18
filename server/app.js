@@ -5,6 +5,8 @@ import documents from './routes/document';
 import users from './routes/user';
 import roles from './routes/role';
 
+require('dotenv').config();
+
 // express app setUp
 const app = express();
 

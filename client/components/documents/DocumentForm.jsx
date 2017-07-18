@@ -1,3 +1,4 @@
+/* global Materialize */
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { Link } from 'react-router-dom';

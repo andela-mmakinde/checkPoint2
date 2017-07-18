@@ -2,10 +2,10 @@ import http from 'http';
 import webpack from 'webpack';
 import express from 'express';
 import path from 'path';
-import webpackConfig from '../webpack.config';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import app from '../server/app'
+import webpackConfig from '../webpack.config';
+import app from '../server/app';
 
 const port = process.env.PORT || 3000;
 
@@ -21,7 +21,7 @@ app.use(webpackHotMiddleware(compiler, {
 }));
 
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '../index.html'))
+  res.sendFile(path.join(__dirname, '../client/index.html'))
 );
 
 const server = http.createServer(app);

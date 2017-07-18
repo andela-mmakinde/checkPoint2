@@ -7,12 +7,12 @@ module.exports = {
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',    
-    './scripts.js'
+    './scripts.jsx'
     ],
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
@@ -48,6 +48,9 @@ module.exports = {
     path: `${__dirname}/client/`,
     filename: 'bundle.js',
     publicPath: '/'
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),

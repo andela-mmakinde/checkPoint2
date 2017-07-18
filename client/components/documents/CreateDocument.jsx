@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { convertToHTML } from 'draft-convert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import DocumentForm from './DocumentForm.jsx';
+import DocumentForm from './DocumentForm';
 import {
   saveDocumentRequest,
   fetchAllUserDocument,

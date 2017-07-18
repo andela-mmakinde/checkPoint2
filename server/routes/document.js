@@ -1,13 +1,12 @@
-import documentsController from '../controllers/document';
-import middleware from '../middlewares/authorisation';
+import Documents from '../controllers/document';
+import Authorisation from '../middlewares/authorisation';
 
 module.exports = (app) => {
-  app.post('/documents', middleware.checkToken, documentsController.create);
-  app.get('/documents', middleware.checkToken, documentsController.listAllDocuments);
-  app.get('/documents/:id', middleware.checkToken, documentsController.retrieveDocument);
-  app.put('/documents/:id', middleware.checkToken, documentsController.updateDocument);
-  app.delete('/documents/:id', middleware.checkToken, documentsController.deleteDocument);
-  app.get('/users/:id/documents', middleware.checkToken, documentsController.specificUserDocument);
-  app.get('/search/documents', middleware.checkToken, documentsController.search);
-  app.get('/mydoc', middleware.checkToken, documentsController.loggedInUserDocument);
+  app.post('/api/documents', Authorisation.checkToken, Documents.create);
+  app.get('/api/documents', Authorisation.checkToken, Documents.listAll);
+  app.get('/api/documents/:id', Authorisation.checkToken, Documents.retrieveOne);
+  app.put('/api/documents/:id', Authorisation.checkToken, Documents.update);
+  app.delete('/api/documents/:id', Authorisation.checkToken, Documents.delete);
+  app.get('/api/users/:id/documents', Authorisation.checkToken, Documents.getMine);
+  app.get('/api/search/documents', Authorisation.checkToken, Documents.search);
 };

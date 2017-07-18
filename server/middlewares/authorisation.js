@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 
 /**
  *
- * @class middleware
+ * @class Authorisation
  */
-class middleware {
+class Authorisation {
 
   /**
    * Checks if user is authenticated
@@ -47,7 +47,7 @@ class middleware {
  *
  * @memberOf middleware
  */
-  static allowAdminAccess(req, res, next) {
+  static isAdmin(req, res, next) {
     if (req.user.roleId === 1) {
       next();
     } else {
@@ -58,4 +58,4 @@ class middleware {
   }
 }
 
-export default middleware;
+export default Authorisation;

@@ -6,18 +6,8 @@ const initialState = {
   }
 };
 
-export default (state = initialState, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.LOGIN_SUCCESS:
-      return {
-        user: action.user,
-      };
-    case actionTypes.SIGNUP_SUCCESS:
-      return {
-        loggedIn: true,
-        user: action.user,
-        loading: false
-      };
     case actionTypes.SET_CURRENT_USER:
       return {
         user: action.loggedInUser,

@@ -3,8 +3,7 @@ import bcrypt from 'bcrypt-nodejs';
 import { User } from '../models';
 
 const createToken = user => jwt.sign(user, 'secret', { expiresIn: '24h' });
-
-module.exports = {
+const Users = {
   /**
    * Creates a new user
    * Route: POST: /users
@@ -50,7 +49,7 @@ module.exports = {
             fullName: user.fullName
           };
           const jsonToken = createToken({ userDetails });
-          res.status(201).send({ message: 'User created', user, jsonToken });
+          res.status(201).send({ message: 'User created', jsonToken });
         })
         .catch(err => res.status(400).send(err));
     });
@@ -72,10 +71,10 @@ module.exports = {
             $ne: 1
           }
         },
-        limit: req.query.limit || 1,
+        limit: req.query.limit || 5,
         offset: req.query.offset || 0,
       }).then((user) => {
-        const limit = req.query.limit || 1;
+        const limit = req.query.limit || 5;
         const offset = req.query.offset || 0;
         const total = user.count;
         const pageCount = Math.ceil(total / limit);
@@ -105,18 +104,13 @@ module.exports = {
    * @returns {Response} response object
    */
   update(req, res) {
-    if (!req.body.password || !req.body.confirmPassword || !req.body.currentPassword) {
-      return res.status(401).json({ message: 'Enter all required field' });
-    }
-    if (req.body.password !== req.body.confirmPassword) {
-      return res.status(401).json({ message: 'Passwords do not match' });
-    }
     return User.find({
       where: {
         id: req.params.id
       }
     })
       .then((user) => {
+        let password;
         if (!user) {
           return res.status(404).send({
             message: 'user Not Found'
@@ -124,19 +118,39 @@ module.exports = {
         }
         if (req.user.id === user.id) {
           const salt = bcrypt.genSaltSync(10);
-          if (!user.verifyPassword(user.password, req.body.currentPassword)) {
-            return res.status(401).json({
-              message: 'Current password incorrect'
+          if (req.body.password) {
+            password = bcrypt.hashSync(req.body.password, salt);
+          }
+          if (req.body.email !== req.user.email) {
+            User.findOne({
+              where: { email: { $iLike: `%${req.body.email}%` } },
+            }).then((existingUser) => {
+              if (existingUser !== null) {
+                res.status(409).send({ message: 'Another user with this email already exist' });
+              }
             });
           }
-          const password = bcrypt.hashSync(req.body.password, salt);
+          const fieldsToUpdate = {
+            password: password || user.password,
+            email: req.body.email || user.email,
+            fullName: req.body.fullName || user.fullName
+          };
           return user
-            .update({ password })
-            .then(updatedUser => res.status(200).json(updatedUser))
+            .update(fieldsToUpdate)
+            .then((updatedUser) => {
+              const userDetails = {
+                email: updatedUser.email,
+                id: updatedUser.id,
+                roleId: updatedUser.roleId,
+                fullName: updatedUser.fullName
+              };
+              const jsonToken = createToken({ userDetails });
+              res.status(201).send({ message: 'User updated ', jsonToken });
+            })
             .catch(error => res.status(400).send(error));
         }
       })
-      .catch(error => res.status(400).send(error));
+        .catch(error => res.status(400).send(error));
   },
 
   /**
@@ -171,7 +185,7 @@ module.exports = {
           };
           const jsonToken = createToken({ userDetails });
           return res.status(200).send({
-            message: 'Logged in!', jsonToken, existingUser
+            message: 'Logged in!', jsonToken
           });
         }
         return res.status(401).send({
@@ -189,7 +203,7 @@ module.exports = {
    * @param {any} res
    * @returns {Response} response object
    */
-  retrieveUser(req, res) {
+  retrieveOne(req, res) {
     return User
       .findOne({
         where: {
@@ -215,10 +229,13 @@ module.exports = {
    * @param {any} res
    * @returns {object} response object
    */
-  deleteRecord(req, res) {
+  delete(req, res) {
     return User.find({
       where: {
-        id: req.params.id
+        id: req.params.id,
+        roleId: {
+          $ne: 1
+        }
       }
     })
       .then((user) => {
@@ -249,16 +266,35 @@ module.exports = {
    */
   search(req, res) {
     const search = req.query.q;
-    User.findAll({
+    User.findAndCountAll({
       where: { email: { $iLike: `%${search}%` } },
+      limit: req.query.limit || 5,
+      offset: req.query.offset || 0,
     })
-      .then((users) => {
-        if (users.length === 0) {
+      .then((user) => {
+        if (user.length === 0) {
           return res.status(404).json({
             message: 'Sorry, No User found'
           });
         }
-        res.status(200).send({ message: 'Found', users });
+        const limit = req.query.limit || 5;
+        const offset = req.query.offset || 0;
+        const total = user.count;
+        const pageCount = Math.ceil(total / limit);
+        const currentPage = Math.floor(offset / limit) + 1;
+        const pageSize = total - offset > limit ? limit : total - offset;
+        res.status(200).send({
+          user: user.rows,
+          pagination: {
+            total,
+            limit,
+            offset,
+            pageCount,
+            currentPage,
+            pageSize
+          }
+        });
+        // res.status(200).send({ message: 'Found', users });
       })
       .catch(error => res.status(400).send(error));
   },
@@ -275,3 +311,6 @@ module.exports = {
     res.status(200).send({ message: 'Logout successful' });
   }
 };
+
+export default Users;
+

@@ -7,8 +7,8 @@ import {
   searchUserDb,
   deleteUserRecord,
 } from '../../actions/userActions';
-import SearchUsers from './SearchUsers.jsx';
-import UserCard from '../../components/users/UserCard.jsx';
+import SearchUsers from './SearchUsers';
+import UserCard from '../../components/users/UserCard';
 
 class Users extends React.Component {
   constructor(props) {
@@ -28,7 +28,8 @@ class Users extends React.Component {
       .getAllUsers()
       .then(() => {
         this.setState({
-          allUsers: this.props.allUsers.user
+          allUsers: this.props.allUsers.user,
+          pageCount: this.props.allUsers.pagination.pageCount
         });
         Materialize.toast('success', 2000);
       })
@@ -46,7 +47,7 @@ class Users extends React.Component {
 
   handlePageClick(data) {
     const selected = data.selected;
-    const limit = 1;
+    const limit = 5;
     const offset = Math.ceil(selected * limit);
     this.setState({ offset });
     this.props.getAllUsers(offset, limit).then(() => {
@@ -87,12 +88,16 @@ class Users extends React.Component {
   }
 }
 
+Users.defaultProps = {
+  allUsers: {},
+};
+
 Users.propTypes = {
   currentUser: PropTypes.object.isRequired,
   searchUserDb: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
   deleteUserRecord: PropTypes.func.isRequired,
-  allUsers: PropTypes.array.isRequired,
+  allUsers: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 function mapStateToProps(state) {

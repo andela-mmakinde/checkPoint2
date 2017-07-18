@@ -2,15 +2,12 @@ import * as actionTypes from '../actions/actionType';
 
 export default (state = [], action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_USER_DETAILS:
-      return {
-        user: action.updatedUser,
-      };
     case actionTypes.GET_ALL_USERS:
-      return action.users.data;
+      return { ...state, ...action.users.data };
     case actionTypes.SEARCH_USER_SUCCESS:
-      return { ...state, user: action.user.data.users };
+      return { ...state, ...action.user.data };
     default:
       return state;
   }
 };
+
