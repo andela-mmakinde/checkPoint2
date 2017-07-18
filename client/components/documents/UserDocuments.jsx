@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-import DocumentCard from './DocumentCard.jsx';
+import DocumentCard from './DocumentCard';
 import { myDocuments, deleteDocuments } from '../../actions/documentActions';
 
 class UserDocuments extends React.Component {
@@ -19,7 +19,7 @@ class UserDocuments extends React.Component {
   }
 
   componentDidMount() {
-    this.props.myDocuments();
+    this.props.myDocuments(this.props.currentUser.id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,10 +33,10 @@ class UserDocuments extends React.Component {
 
   handlePageClick(data) {
     const selected = data.selected;
-    const limit = 1;
+    const limit = 6;
     const offset = Math.ceil(selected * limit);
     this.setState({ offset });
-    this.props.myDocuments(offset, limit).then(() => {
+    this.props.myDocuments(this.props.currentUser.id, offset, limit).then(() => {
       this.setState({
         documents: this.props.documentsFromReducer
       });
@@ -53,19 +53,6 @@ class UserDocuments extends React.Component {
     const { documents } = this.state;
     return (
       <div className="dashboardBackground">
-        <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
         <Link
           to="/create"
           style={{
@@ -94,14 +81,33 @@ class UserDocuments extends React.Component {
                 ))}
             </div>
           </div>}
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={<a href="">...</a>}
+          breakClassName={'break-me'}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
       </div>
     );
   }
 }
 
+
+UserDocuments.defaultProps = {
+  documentsFromReducer: {},
+  pagination: {}
+};
+
 UserDocuments.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  documentsFromReducer: PropTypes.array.isRequired,
+  documentsFromReducer: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   pagination: PropTypes.object.isRequired,
   myDocuments: PropTypes.func.isRequired,
   deleteDocuments: PropTypes.func.isRequired

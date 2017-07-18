@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SearchBar from '../common/searchBar.jsx';
+import SearchBar from '../documents/SearchBar';
 import { searchDocuments } from '../../actions/documentActions';
 
 class SearchDocuments extends React.Component {
@@ -40,7 +40,8 @@ SearchDocuments.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    documentsFromReducer: state.documents
+    documentsFromReducer: state.documents.documents,
+    pagination: state.pagination,
   };
 }
 
