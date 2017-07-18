@@ -8,13 +8,12 @@
   },
   
    "test": {
-    "dialect": "postgres",     
+    "username": "andeladeveloper",
     "logging": false,
-    "username": "kjfiggvk",
-    "password": "eMsN9f9TyDQ_iZ8cTvEFXEoW4hpfwFp4",
-    "host": "pellefant.db.elephantsql.com",
-    "database": "kjfiggvk",
-    "port": 5432
+    "password": null,
+    "database": "DMS_TESTS",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   },
   
   "production": {
