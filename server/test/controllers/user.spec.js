@@ -3,6 +3,7 @@ import chaiHttp from 'chai-http';
 
 import app from '../../app';
 
+const should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -70,20 +71,20 @@ describe('USER controller', () => {
   let user2Token;
   before((done) => {
     chai.request(app)
-      .post('/users')
+      .post('/api/users')
       .send(user1)
       .end((err, res) => {
         adminData = res.body.user;
         adminToken = res.body.jsonToken;
-        res.should.have.status(201);
+        res.status.should.eql(201);
       });
     chai.request(app)
-      .post('/users')
+      .post('/api/users')
       .send(user2)
       .end((err, res) => {
         userData = res.body.user;
         userToken = res.body.jsonToken;
-        res.should.have.status(201);
+        res.status.should.eql(201);
         done();
       });
   });
@@ -91,7 +92,7 @@ describe('USER controller', () => {
   describe('/POST users', () => {
     it('should fail without email field', (done) => {
       chai.request(app)
-        .post('/users')
+        .post('/api/users')
         .send(incompleteUserData)
         .end((err, res) => {
           res.should.have.status(401);
@@ -103,25 +104,21 @@ describe('USER controller', () => {
     });
     it('should save user info', (done) => {
       chai.request(app)
-        .post('/users')
+        .post('/api/users')
         .send(user3)
         .end((err, res) => {
           user2Data = res.body.user;
           res.should.have.status(201);
           res.body.should.be.a('object');
-          res.body.should.have.property('user');
           res.body.should.have.property('message');
-          res.body.user.should.be.a('object');
+          res.body.jsonToken.should.be.a('string');
           res.body.message.should.be.a('string').eql('User created');
-          res.body.user.should.have.property('fullName');
-          res.body.user.should.have.property('email');
-          res.body.user.should.have.property('password');
           done();
         });
     });
     it('should return a token', (done) => {
       chai.request(app)
-        .post('/users')
+        .post('/api/users')
         .send(user4)
         .end((err, res) => {
           res.should.have.status(201);
@@ -132,7 +129,7 @@ describe('USER controller', () => {
     });
     it('should fail if email already exists', (done) => {
       chai.request(app)
-        .post('/users')
+        .post('/api/users')
         .send(user4)
         .end((err, res) => {
           res.should.have.status(409);
@@ -142,7 +139,7 @@ describe('USER controller', () => {
     });
     it('should fail if the email entered is invalid ', (done) => {
       chai.request(app)
-        .post('/users')
+        .post('/api/users')
         .send(invalidEmail)
         .end((err, res) => {
           res.should.have.status(401);
@@ -152,7 +149,7 @@ describe('USER controller', () => {
     });
     it('should fail if the passwords do not match ', (done) => {
       chai.request(app)
-        .post('/users')
+        .post('/api/users')
         .send(passwordMismatch)
         .end((err, res) => {
           res.should.have.status(401);
@@ -165,19 +162,19 @@ describe('USER controller', () => {
   describe('/GET users', () => {
     it('should get list of users', (done) => {
       chai.request(app)
-        .get('/users')
+        .get('/api/users')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('user');
           res.body.should.have.property('pagination');
-          res.body.user.length.should.be.eql(1);
+          res.body.user.length.should.be.eql(4);
           done();
         });
     });
     it('should limit list of users', (done) => {
       chai.request(app)
-        .get('/users/?limit=2')
+        .get('/api/users/?limit=2')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
@@ -189,14 +186,14 @@ describe('USER controller', () => {
     });
     it('should limit users based on offset', (done) => {
       chai.request(app)
-        .get('/users/?offset=2')
+        .get('/api/users/?offset=2')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('user');
           res.body.should.have.property('pagination');
           res.body.pagination.should.be.a('object');
-          res.body.user.length.should.be.eql(1);
+          res.body.user.length.should.be.eql(2);
           done();
         });
     });
@@ -205,7 +202,7 @@ describe('USER controller', () => {
   describe('/POST users/login', () => {
     it('should log in user', (done) => {
       chai.request(app)
-        .post('/users/login')
+        .post('/api/users/login')
         .send({
           email: 'fibbo@gmail.com',
           password: 'andela'
@@ -213,18 +210,15 @@ describe('USER controller', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('existingUser');
           res.body.should.have.property('message');
-          res.body.existingUser.should.be.a('object');
+          res.body.jsonToken.should.be.a('string');
           res.body.message.should.be.a('string').eql('Logged in!');
-          res.body.existingUser.should.have.property('email');
-          res.body.existingUser.should.have.property('password');
           done();
         });
     });
     it('should return a token', (done) => {
       chai.request(app)
-        .post('/users/login')
+        .post('/api/users/login')
         .send(user2)
         .end((err, res) => {
           res.should.have.status(200);
@@ -235,7 +229,7 @@ describe('USER controller', () => {
     });
     it('should fail without email in the request', (done) => {
       chai.request(app)
-        .post('/users/login')
+        .post('/api/users/login')
         .send({ password: 'andela' })
         .end((err, res) => {
           res.should.have.status(401);
@@ -247,7 +241,7 @@ describe('USER controller', () => {
     });
     it('should fail without correct password', (done) => {
       chai.request(app)
-        .post('/users/login')
+        .post('/api/users/login')
         .send({
           email: 'fibbo@gmail.com',
           password: 'wrongPassword'
@@ -265,7 +259,7 @@ describe('USER controller', () => {
   describe('/PUT user:id', () => {
     it('should allow user to update his/her information', (done) => {
       chai.request(app)
-        .put(`/users/${userData.id}`)
+        .put(`/api/users/${userData.id}`)
         .send({
           currentPassword: 'andela',
           password: 'stillAndela',
@@ -281,7 +275,7 @@ describe('USER controller', () => {
     });
     it('should return an error if the user is not found', (done) => {
       chai.request(app)
-        .put('/users/200')
+        .put('/api/users/200')
         .send({
           currentPassword: 'andela',
           password: 'stillAndela',
@@ -300,7 +294,7 @@ describe('USER controller', () => {
   describe('/GET user:id', () => {
     it('should allow admin to view user', (done) => {
       chai.request(app)
-        .get(`/users/${userData.id}`)
+        .get(`/api/users/${userData.id}`)
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
@@ -311,7 +305,7 @@ describe('USER controller', () => {
     });
     it('should return an error message if user does not exist', (done) => {
       chai.request(app)
-        .get('/users/100')
+        .get('/api/users/100')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(404);
@@ -324,20 +318,19 @@ describe('USER controller', () => {
   describe('/GET search/users', () => {
     it('only admin should search all users based on email', (done) => {
       chai.request(app)
-        .get('/search/users?q=ma')
+        .get('/api/search/users?q=ma')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('message');
-          res.body.message.should.be.a('string').eql('Found');
-          res.body.users.length.should.eql(7);
+          res.body.should.have.property('pagination');
+          res.body.pagination.should.be.a('object');
           done();
         });
     });
 
     it('user should not be able to search for other users', (done) => {
       chai.request(app)
-        .get('/search/users?q=ma')
+        .get('/api/search/users?q=ma')
         .set('x-access-token', userToken)
         .end((err, res) => {
           res.should.have.status(401);
@@ -350,7 +343,7 @@ describe('USER controller', () => {
 
   describe('/POST /users/logout', () => {
     it('successfully logs a user out', (done) => {
-      chai.request(app).post('/users/logout')
+      chai.request(app).post('/api/users/logout')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.message.should.be.a('string').eql('Logout successful');
@@ -362,7 +355,7 @@ describe('USER controller', () => {
   describe('/DELETE user:id', () => {
     it('admin should be able to delete user account', (done) => {
       chai.request(app)
-        .delete(`/users/${user2Data.id}`)
+        .delete('/api/users/2')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(201);
@@ -374,7 +367,7 @@ describe('USER controller', () => {
 
     it('request should fail if user not found', (done) => {
       chai.request(app)
-        .delete(`/users/${user2Data.id}`)
+        .delete('/api/users/2')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(404);

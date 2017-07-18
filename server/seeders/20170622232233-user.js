@@ -14,7 +14,7 @@ module.exports = {
     {
       email: 'amaa@la.com',
       fullName: 'Amala Lase',
-      password: 'amala',
+      password: bcrypt.hashSync('amala', bcrypt.genSaltSync(10)),
       roleId: 2,
       createdAt: new Date(),
       updatedAt: new Date()

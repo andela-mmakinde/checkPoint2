@@ -6,12 +6,22 @@ import app from '../../app';
 
 const should = chai.should();
 
-const admin = {
-  fullName: 'Mayowa Makinde',
-  email: 'mayowamakinde@gmail.com',
-  password: 'andela',
-  confirmPassword: 'andela',
-  roleId: 1
+// const admin = {
+//   fullName: 'Mayowa Makinde',
+//   email: 'mayowamakinde@gmail.com',
+//   password: 'andela',
+//   confirmPassword: 'andela',
+//   roleId: 1
+// };
+
+const adminDetails = {
+  email: 'mayowa@andela.com',
+  password: 'andela'
+};
+
+const userDetails = {
+  email: 'amaa@la.com',
+  password: 'amala',
 };
 
 const incompleteRole = {
@@ -25,12 +35,17 @@ const roleOne = {
 chai.use(chaiHttp);
 
 describe('Role', () => {
-  let token;
+  let adminToken;
+  let userToken;
 
   before((done) => {
-    chai.request(app).post('/users').send(admin).end((err, res) => {
-      res.should.have.status(201);
-      token = res.body.jsonToken;
+    chai.request(app).post('/api/users/login').send(adminDetails).end((err, res) => {
+      res.should.have.status(200);
+      adminToken = res.body.jsonToken;
+    });
+    chai.request(app).post('/api/users/login').send(userDetails).end((err, res) => {
+      res.should.have.status(200);
+      userToken = res.body.jsonToken;
       done();
     });
   });
@@ -38,8 +53,9 @@ describe('Role', () => {
   describe('/POST roles', () => {
     it('should fail without title field', (done) => {
       chai.request(app)
-        .post('/role')
+        .post('/api/role')
         .send(incompleteRole)
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.be.a('object');
@@ -51,8 +67,9 @@ describe('Role', () => {
 
     it('should save role info', (done) => {
       chai.request(app)
-        .post('/role')
+        .post('/api/role')
         .send(roleOne)
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.be.a('object');
@@ -67,8 +84,9 @@ describe('Role', () => {
 
     it('should fail if title already exists', (done) => {
       chai.request(app)
-        .post('/role')
+        .post('/api/role')
         .send(roleOne)
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('message').eql('Error creating new role');
@@ -80,7 +98,8 @@ describe('Role', () => {
   describe('/VIEW role', () => {
     it('should get list of roles', (done) => {
       chai.request(app)
-        .get('/roles')
+        .get('/api/roles')
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
@@ -93,8 +112,9 @@ describe('Role', () => {
   describe('/UPDATE roles', () => {
     it('should update role', (done) => {
       chai.request(app)
-        .put('/roles/3')
+        .put('/api/roles/3')
         .send({ title: 'superUser' })
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property(
@@ -106,8 +126,9 @@ describe('Role', () => {
 
     it('should fail if role does not exist', (done) => {
       chai.request(app)
-        .put('/roles/45')
+        .put('/api/roles/45')
         .send({ title: 'ababio' })
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property(
@@ -120,7 +141,8 @@ describe('Role', () => {
   describe('/GET role', () => {
     it('should get role', (done) => {
       chai.request(app)
-      .get('/roles/3')
+      .get('/api/roles/3')
+      .set('x-access-token', adminToken)
       .end((err, res) => {
         res.should.have.status(200);
         done();
@@ -129,8 +151,9 @@ describe('Role', () => {
 
     it('should fail if role does not exist', (done) => {
       chai.request(app)
-        .get('/roles/12')
+        .get('/api/roles/12')
         .send({ title: 'gbagaun' })
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property(
@@ -143,7 +166,8 @@ describe('Role', () => {
   describe('/DELETE role', () => {
     it('should delete role', (done) => {
       chai.request(app)
-      .delete('/roles/3')
+      .delete('/api/roles/3')
+      .set('x-access-token', adminToken)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property('message').eql('Role has been deleted successfully');
@@ -153,8 +177,9 @@ describe('Role', () => {
 
     it('should fail if role does not exist', (done) => {
       chai.request(app)
-        .delete('/roles/12')
+        .delete('/api/roles/12')
         .send({ title: 'gbagaun' })
+        .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property(

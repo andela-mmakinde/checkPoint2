@@ -53,22 +53,19 @@ describe('DOCUMENT controller', () => {
   let testUserToken;
   let testUserData;
   let testAdminToken;
-  let testAdminData;
 
   before((done) => {
     chai.request(app)
-      .post('/users')
+      .post('/api/users')
       .send(user5)
       .end((err, res) => {
-        testAdminData = res.body.user;
         testAdminToken = res.body.jsonToken;
         res.should.have.status(201);
       });
     chai.request(app)
-      .post('/users')
+      .post('/api/users')
       .send(user6)
       .end((err, res) => {
-        testUserData = res.body.user;
         testUserToken = res.body.jsonToken;
         res.should.have.status(201);
         done();
@@ -77,7 +74,7 @@ describe('DOCUMENT controller', () => {
 
   before((done) => {
     chai.request(app)
-      .post('/documents')
+      .post('/api/documents')
       .send(document1)
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
@@ -85,7 +82,7 @@ describe('DOCUMENT controller', () => {
         res.should.have.status(201);
       });
     chai.request(app)
-      .post('/documents')
+      .post('/api/documents')
       .send(document3)
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
@@ -93,7 +90,7 @@ describe('DOCUMENT controller', () => {
         res.should.have.status(201);
       });
     chai.request(app)
-      .post('/documents')
+      .post('/api/documents')
       .send(document2)
       .set('x-access-token', testUserToken)
       .end((err, res) => {
@@ -106,34 +103,32 @@ describe('DOCUMENT controller', () => {
   describe('/POST documents', () => {
     it('should allow users to create a new document', (done) => {
       chai.request(app)
-        .post('/documents')
+        .post('/api/documents')
         .set('x-access-token', testUserToken)
         .send(document4)
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.have.property('document');
           res.body.should.have.property('message').eql('Document created');
-          res.body.document.should.have.property(
-            'ownerId').eql(testUserData.id);
-          res.body.document.should.have.property(
-            'roleId');
+          res.body.document.should.have.property('ownerId');
+          res.body.document.should.have.property('roleId');
           done();
         });
     });
     it('should fail if any field is left empty', (done) => {
       chai.request(app)
-        .post('/documents')
+        .post('/api/documents')
         .set('x-access-token', testUserToken)
         .send(incompleteDocument)
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(400);
           res.body.should.have.property('message').eql('Enter all required field');
           done();
         });
     });
     it('should fail if the document title already exists', (done) => {
       chai.request(app)
-        .post('/documents')
+        .post('/api/documents')
         .set('x-access-token', testUserToken)
         .send(document3)
         .end((err, res) => {
@@ -147,7 +142,7 @@ describe('DOCUMENT controller', () => {
   describe('/GET documents', () => {
     it('for a user, should list all documents he has access to', (done) => {
       chai.request(app)
-      .get('/documents')
+      .get('/api/documents')
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(200);
@@ -159,7 +154,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should limit list of documents', (done) => {
       chai.request(app)
-        .get('/documents/?limit=2')
+        .get('/api/documents/?limit=2')
         .set('x-access-token', testUserToken)
         .end((err, res) => {
           res.should.have.status(200);
@@ -171,7 +166,7 @@ describe('DOCUMENT controller', () => {
     });
     it('for an admin, should list all documents in the database except private documents', (done) => {
       chai.request(app)
-      .get('/documents')
+      .get('/api/documents')
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(200);
@@ -186,7 +181,7 @@ describe('DOCUMENT controller', () => {
   describe('/GET documents/:id', () => {
     it('should search for documents based on the id provided', (done) => {
       chai.request(app)
-      .get(`/documents/${publicDocumentData.id}`)
+      .get(`/api/documents/${publicDocumentData.id}`)
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(200);
@@ -197,7 +192,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should return an error if document wasn\'t found', (done) => {
       chai.request(app)
-      .get('/documents/39')
+      .get('/api/documents/39')
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(404);
@@ -207,7 +202,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should not return role level documents for users with lower role level', (done) => {
       chai.request(app)
-      .get(`/documents/${adminRoleDocumentData.id}`)
+      .get(`/api/documents/${adminRoleDocumentData.id}`)
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(401);
@@ -217,7 +212,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should return ROLE level documents for users with the same role level', (done) => {
       chai.request(app)
-      .get(`/documents/${adminRoleDocumentData.id}`)
+      .get(`/api/documents/${adminRoleDocumentData.id}`)
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(200);
@@ -228,7 +223,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should return PRIVATE level documents to only the creator', (done) => {
       chai.request(app)
-      .get(`/documents/${privateRoleDocumentData.id}`)
+      .get(`/api/documents/${privateRoleDocumentData.id}`)
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(200);
@@ -242,7 +237,7 @@ describe('DOCUMENT controller', () => {
   describe('/PUT documents/:id', () => {
     it('should return an error if document wasn\'t found', (done) => {
       chai.request(app)
-      .put('/documents/39')
+      .put('/api/documents/39')
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(404);
@@ -252,7 +247,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should allow user only user who created the document to update document', (done) => {
       chai.request(app)
-      .put(`/documents/${privateRoleDocumentData.id}`)
+      .put(`/api/documents/${privateRoleDocumentData.id}`)
       .send({
         content: 'It is a new document'
       })
@@ -266,7 +261,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should not allow other users to update document', (done) => {
       chai.request(app)
-      .put(`/documents/${privateRoleDocumentData.id}`)
+      .put(`/api/documents/${privateRoleDocumentData.id}`)
       .send({
         content: 'It is a new document'
       })
@@ -282,7 +277,7 @@ describe('DOCUMENT controller', () => {
   describe('/DELETE documents/:id', () => {
     it('should return an error if document wasn\'t found', (done) => {
       chai.request(app)
-      .delete('/documents/39')
+      .delete('/api/documents/39')
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(404);
@@ -292,7 +287,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should not allow other users to delete document', (done) => {
       chai.request(app)
-      .delete(`/documents/${privateRoleDocumentData.id}`)
+      .delete(`/api/documents/${privateRoleDocumentData.id}`)
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(401);
@@ -302,7 +297,7 @@ describe('DOCUMENT controller', () => {
     });
     it('should allow user only user who created the document to delete document', (done) => {
       chai.request(app)
-      .delete(`/documents/${privateRoleDocumentData.id}`)
+      .delete(`/api/documents/${privateRoleDocumentData.id}`)
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(200);
@@ -315,7 +310,7 @@ describe('DOCUMENT controller', () => {
   describe('/GET search/documents', () => {
     it('should return an error if document wasn\'t found', (done) => {
       chai.request(app)
-      .get('/search/documents/?q=oluwamayowa')
+      .get('/api/search/documents/?q=impossible')
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(404);
@@ -325,23 +320,21 @@ describe('DOCUMENT controller', () => {
     });
     it('should allow admin to search for all documents', (done) => {
       chai.request(app)
-      .get('/search/documents/?q=numb')
+      .get('/api/search/documents/?q=numb')
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property('message').eql('Found');
-        res.body.documents.length.should.eql(3);
+        res.body.pagination.should.have.property('total').eql(3);
         done();
       });
     });
     it('should allow users to search for documents they have access to', (done) => {
       chai.request(app)
-      .get('/search/documents/?q=numb')
+      .get('/api/search/documents/?q=numb')
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property('message').eql('Found');
-        res.body.documents.length.should.eql(2);
+        res.body.pagination.should.have.property('total').eql(2);
         done();
       });
     });
@@ -350,36 +343,21 @@ describe('DOCUMENT controller', () => {
   describe('/GET /users/:id/documents', () => {
     it('should return all documents belonging to a particular user', (done) => {
       chai.request(app)
-      .get(`/users/${testUserData.id}/documents`)
+      .get('/api/users/1/documents')
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property('ownerDocuments');
-        res.body.should.have.property('pagination');
+        res.body.pagination.should.have.property('total').eql(1);
         done();
       });
     });
     it('should return an error if the user is not found', (done) => {
       chai.request(app)
-      .get('/users/200/documents')
+      .get('/api/users/200/documents')
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.have.property('message').eql('User not found');
-        done();
-      });
-    });
-  });
-
-  describe('/GET /mydoc', () => {
-    it('should return all documents belonging to the currently logged in user', (done) => {
-      chai.request(app)
-      .get('/mydoc')
-      .set('x-access-token', testUserToken)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('myDocuments');
-        res.body.should.have.property('pagination');
         done();
       });
     });
