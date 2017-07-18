@@ -1,3 +1,4 @@
+/* global Materialize */
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -27,7 +28,6 @@ class EditDocument extends React.Component {
   }
 
   componentDidMount() {
-    $('.modal').modal({ dismissible: false });
     $('select').material_select();
     $('select').on('change', event =>
       this.updateAccessState(event.target.value)
@@ -67,7 +67,6 @@ class EditDocument extends React.Component {
     this.props
       .updateDocument(this.state.id, documentToUpdate)
       .then(() => {
-        $('.modal').modal('close');
         this.setState({ success: true });
       })
       .catch((errorData) => {
@@ -85,7 +84,6 @@ class EditDocument extends React.Component {
   }
 
   render() {
-    // const { editorState } = this.state;
     const { error } = this.state;
     const { success } = this.state;
     const { title } = this.state;
@@ -106,8 +104,8 @@ class EditDocument extends React.Component {
                 type="text"
                 className="validate"
                 style={{ margin: '0px' }}
+                placeholder="Enter document title"
               />
-              <label htmlFor="title">Enter document title</label>
             </div>
             {error.message && Materialize.toast(error.message, 2000)}
 
@@ -146,15 +144,20 @@ class EditDocument extends React.Component {
   }
 }
 
+
+EditDocument.defaultProps = {
+  documentsFromReducer: {},
+};
+
 EditDocument.propTypes = {
-  documentsFromReducer: PropTypes.array.isRequired,
+  documentsFromReducer: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   updateDocument: PropTypes.func.isRequired,
-  searchDocumentById: PropTypes.func.isRequired
+  searchDocumentById: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    documentsFromReducer: state.documents,
+    documentsFromReducer: state.documents.data,
     currentUser: state.auth.user
   };
 }

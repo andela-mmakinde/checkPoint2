@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class DocumentCard extends React.Component {
   componentDidMount() {
@@ -18,12 +18,8 @@ class DocumentCard extends React.Component {
       <div className="col m4 s12 documentCard">
         <div className="card small white darken-10">
           <div className="card-content black-text">
-            <span className="card-title">{document.title}</span>
+            <span className="card-title truncate">{document.title}</span>
             <br />
-            <div className="truncate">
-              <span>{renderHTML(document.content)}
-              </span>
-            </div>
             <div>Opened: {new Date(document.createdAt).toDateString()}</div>
             <div>Access: {document.access}</div>
           </div>
