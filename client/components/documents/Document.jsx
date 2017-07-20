@@ -64,7 +64,6 @@ export class Documents extends React.Component {
             </i>
           </Link>
           <GetAccessDocuments
-            
             currentUser={this.props.currentUser}
             documents={this.state.documents}
           />

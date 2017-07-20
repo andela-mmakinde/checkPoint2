@@ -46,7 +46,7 @@ class Header extends React.Component {
           <div>
             <ul id="dropdown1" className="dropdown-content">
               <li><Link to="/docs">Owned by Me</Link></li>
-              <li><Link to="/document">Owned by Anyone</Link></li>
+              <li><Link to="/document">All documents</Link></li>
               <li>
                 <Link to="/create">Create Document</Link>
               </li>
