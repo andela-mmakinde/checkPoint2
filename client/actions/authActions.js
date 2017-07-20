@@ -11,7 +11,7 @@ export function setUser(loggedInUser) {
 }
 
 export function userLoginRequest(userData) {
-  return dispatch => axios.post('/api/users/login', userData).then((res) => {
+  return dispatch => axios.post('/api/v1/users/login', userData).then((res) => {
     const token = res.data.jsonToken;
     localStorage.setItem('token', token);
     setAuthorizationHeader(token);
@@ -22,7 +22,7 @@ export function userLoginRequest(userData) {
 
 export function userSignUpRequest(userData) {
   return dispatch =>
-    axios.post('/api/users', userData).then((res) => {
+    axios.post('/api/v1/users', userData).then((res) => {
       const token = res.data.jsonToken;
       localStorage.setItem('token', token);
       setAuthorizationHeader(token);
@@ -33,7 +33,7 @@ export function userSignUpRequest(userData) {
 
 export function updateUserDetails(id, userDetails) {
   return dispatch =>
-    axios.put(`/api/users/${id}`, userDetails).then((res) => {
+    axios.put(`/api/v1/users/${id}`, userDetails).then((res) => {
       const token = res.data.jsonToken;
       localStorage.setItem('token', token);
       setAuthorizationHeader(token);
