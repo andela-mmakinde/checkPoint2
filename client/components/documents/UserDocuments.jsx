@@ -70,7 +70,7 @@ export class UserDocuments extends React.Component {
           </i>
         </Link>
         {!documents.length
-          ? <h2>You have not authored any document</h2>
+          ? <span />
           : <div className="container">
             <div className="row">
               {documents.map(docs => (
