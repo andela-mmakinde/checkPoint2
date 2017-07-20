@@ -33,9 +33,6 @@ export default class SearchUsers extends React.Component {
             placeholder="Search Users"
             onChange={this.onChange}
           />
-          <label className="label-icon" htmlFor="search">
-            <i className="material-icons">search</i>
-          </label>
         </div>
       </form>
     );

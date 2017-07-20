@@ -53,13 +53,13 @@ export function deleteRecord(successMessage) {
 }
 
 export function saveDocumentRequest(document) {
-  return dispatch => axios.post('/api/documents', document).then((response) => {
+  return dispatch => axios.post('/api/v1/documents', document).then((response) => {
     dispatch(createNewDocument(response));
   });
 }
 
 export function fetchAllUserDocument(offset = 0, limit = 6) {
-  return dispatch => axios.get(`/api/documents?limit=${limit}&offset=${offset}`).then((res) => {
+  return dispatch => axios.get(`/api/v1/documents?limit=${limit}&offset=${offset}`).then((res) => {
     const documents = res.data.document;
     const pagination = res.data.pagination;
     dispatch(fetchUserAccessDocument({ documents, pagination }));
@@ -68,7 +68,7 @@ export function fetchAllUserDocument(offset = 0, limit = 6) {
 
 export function myDocuments(id, offset = 0, limit = 6) {
   return dispatch =>
-    axios.get(`/api/users/${id}/documents/?limit=${limit}&offset=${offset}`).then((res) => {
+    axios.get(`/api/v1/users/${id}/documents/?limit=${limit}&offset=${offset}`).then((res) => {
       const documents = res.data.myDocuments;
       const pagination = res.data.pagination;
       dispatch(userDocument({ documents, pagination }));
@@ -77,14 +77,14 @@ export function myDocuments(id, offset = 0, limit = 6) {
 
 export function deleteDocuments(id) {
   return dispatch =>
-    axios.delete(`/api/documents/${id}`).then((successMessage) => {
+    axios.delete(`/api/v1/documents/${id}`).then((successMessage) => {
       dispatch(deleteRecord(successMessage));
     });
 }
 
 export function searchDocuments(searchQuery) {
   return dispatch =>
-    axios.get(`/api/search/documents?q=${searchQuery}`).then((res) => {
+    axios.get(`/api/v1/search/documents?q=${searchQuery}`).then((res) => {
       const documents = res.data.document;
       const pagination = res.data.pagination;
       dispatch(searchDocs({ documents, pagination }));
@@ -93,14 +93,14 @@ export function searchDocuments(searchQuery) {
 
 export function updateDocument(id, documentToUpdate) {
   return dispatch =>
-    axios.put(`/api/documents/${id}`, documentToUpdate).then(() => {
+    axios.put(`/api/v1/documents/${id}`, documentToUpdate).then(() => {
       dispatch(update());
     });
 }
 
 export function searchDocumentById(id) {
   return dispatch =>
-    axios.get(`/api/documents/${id}`).then((document) => {
+    axios.get(`/api/v1/documents/${id}`).then((document) => {
       dispatch(singleDoc(document));
     });
 }
