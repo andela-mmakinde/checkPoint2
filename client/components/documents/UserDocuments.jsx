@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
 import DocumentCard from './DocumentCard';
 import { myDocuments, deleteDocuments } from '../../actions/documentActions';
 
-class UserDocuments extends React.Component {
+export class UserDocuments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +46,10 @@ class UserDocuments extends React.Component {
   deleteDocument(id) {
     this.props
       .deleteDocuments(id)
-      .then(() => (Materialize.toast('Document deleted', 2000)));
+      .then(() => {
+        this.props.myDocuments(this.props.currentUser.id);
+        Materialize.toast('Document deleted', 2000);
+      });
   }
 
   render() {

@@ -4,7 +4,7 @@ import Proptypes from 'prop-types';
 import SignUpForm from './SignupForm';
 import { userSignUpRequest } from '../../actions/authActions';
 
-class SignUpPage extends React.Component {
+export class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

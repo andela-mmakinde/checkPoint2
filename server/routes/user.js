@@ -7,16 +7,16 @@ module.exports = (app) => {
   }));
 
 // Not protected routes
-  app.post('/api/users', Users.create);
-  app.post('/api/users/login', Users.login);
-  app.post('/api/users/logout', Users.logout);
+  app.post('/api/v1/users', Users.create);
+  app.post('/api/v1/users/login', Users.login);
+  app.post('/api/v1/users/logout', Users.logout);
 
 // Users & Admin
-  app.put('/api/users/:id', Authorisation.checkToken, Users.update);
-  app.get('/api/users/:id', Authorisation.checkToken, Authorisation.isAdmin, Users.retrieveOne);
+  app.put('/api/v1/users/:id', Authorisation.checkToken, Users.update);
+  app.get('/api/v1/users/:id', Authorisation.checkToken, Authorisation.isAdmin, Users.retrieveOne);
 
 // Admins only
-  app.get('/api/search/users', Authorisation.checkToken, Authorisation.isAdmin, Users.search);
-  app.get('/api/users', Authorisation.checkToken, Authorisation.isAdmin, Users.list);
-  app.delete('/api/users/:id', Authorisation.checkToken, Authorisation.isAdmin, Users.delete);
+  app.get('/api/v1/search/users', Authorisation.checkToken, Authorisation.isAdmin, Users.search);
+  app.get('/api/v1/users', Authorisation.checkToken, Authorisation.isAdmin, Users.list);
+  app.delete('/api/v1/users/:id', Authorisation.checkToken, Authorisation.isAdmin, Users.delete);
 };

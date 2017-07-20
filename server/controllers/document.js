@@ -84,8 +84,6 @@ const Documents = {
           document: document.rows,
           pagination: {
             total,
-            limit,
-            offset,
             pageCount,
             currentPage,
             pageSize
@@ -128,8 +126,6 @@ const Documents = {
           document: document.rows,
           pagination: {
             total,
-            limit,
-            offset,
             pageCount,
             currentPage,
             pageSize
@@ -315,11 +311,11 @@ const Documents = {
     }
     Document.findAndCountAll(dbQuery)
       .then((document) => {
-        if (document.count === 0) {
-          return res
-            .status(404)
-            .json({ message: 'Sorry, No document found' });
-        }
+        // if (document.count === 0) {
+        //   return res
+        //     .status(404)
+        //     .json({ message: 'Sorry, No document found' });
+        // }
         const limit = req.query.limit || 6;
         const offset = req.query.offset || 0;
         const total = document.count;
@@ -330,8 +326,6 @@ const Documents = {
           document: document.rows,
           pagination: {
             total,
-            limit,
-            offset,
             pageCount,
             currentPage,
             pageSize
@@ -382,8 +376,6 @@ const Documents = {
               myDocuments: ownerDocuments.rows,
               pagination: {
                 total,
-                limit,
-                offset,
                 pageCount,
                 currentPage,
                 pageSize

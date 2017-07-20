@@ -2,10 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 import GetAccessDocuments from './GetAccessDocuments';
 import { fetchAllUserDocument } from '../../actions/documentActions';
 
-class Documents extends React.Component {
+export class Documents extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      documents: [],
+      offset: 0,
+      pageCount: 0,
+      singleDocument: {},
+    };
+    this.handlePageClick = this.handlePageClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchAllUserDocument().then(() => {
+      this.setState({
+        documents: this.props.documentsFromReducer
+      });
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const documents = nextProps.documentsFromReducer;
+    const pageCount = nextProps.pagination.pageCount;
+    this.setState({
+      documents,
+      pageCount,
+    });
+  }
+
+  handlePageClick(data) {
+    const selected = data.selected;
+    const limit = 6;
+    const offset = Math.ceil(selected * limit);
+    this.setState({ offset });
+    this.props.fetchAllUserDocument(offset, limit).then(() => {
+      this.setState({
+        documents: this.props.documentsFromReducer
+      });
+    });
+  }
   render() {
     return (
       <div className="dashboardBackground">
@@ -24,10 +64,24 @@ class Documents extends React.Component {
             </i>
           </Link>
           <GetAccessDocuments
-            fetchAllUserDocument={this.props.fetchAllUserDocument}
-            documentsFromReducer={this.props.documentsFromReducer}
+            
             currentUser={this.props.currentUser}
-            pagination={this.props.pagination}
+            documents={this.state.documents}
+          />
+        </div>
+        <div className="paginationContainer">
+          <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={<a href="">...</a>}
+            breakClassName={'break-me'}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
           />
         </div>
       </div>
@@ -37,12 +91,15 @@ class Documents extends React.Component {
 
 Documents.defaultProps = {
   documentsFromReducer: [],
+  currentUser: {},
+  pagination: {}
 };
 
 Documents.propTypes = {
   fetchAllUserDocument: PropTypes.func.isRequired,
-  documentsFromReducer: PropTypes.array.isRequired,
-  currentUser: PropTypes.object.isRequired
+  documentsFromReducer: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  pagination: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 function mapStateToProps(state) {

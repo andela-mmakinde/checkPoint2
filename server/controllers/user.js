@@ -84,8 +84,6 @@ const Users = {
           user: user.rows,
           pagination: {
             total,
-            limit,
-            offset,
             pageCount,
             currentPage,
             pageSize
@@ -104,19 +102,19 @@ const Users = {
    * @returns {Response} response object
    */
   update(req, res) {
-    return User.find({
+    User.findOne({
       where: {
         id: req.params.id
       }
     })
       .then((user) => {
         let password;
-        if (!user) {
+        if (!user || user === null) {
           return res.status(404).send({
             message: 'user Not Found'
           });
         }
-        if (req.user.id === user.id) {
+        if (req.user.id === user.id || user.id === 1) {
           const salt = bcrypt.genSaltSync(10);
           if (req.body.password) {
             password = bcrypt.hashSync(req.body.password, salt);
@@ -272,11 +270,11 @@ const Users = {
       offset: req.query.offset || 0,
     })
       .then((user) => {
-        if (user.length === 0) {
-          return res.status(404).json({
-            message: 'Sorry, No User found'
-          });
-        }
+        // if (user.count === 0) {
+        //   return res.status(404).json({
+        //     message: 'Sorry, No User found'
+        //   });
+        // }
         const limit = req.query.limit || 5;
         const offset = req.query.offset || 0;
         const total = user.count;
@@ -287,14 +285,11 @@ const Users = {
           user: user.rows,
           pagination: {
             total,
-            limit,
-            offset,
             pageCount,
             currentPage,
             pageSize
           }
         });
-        // res.status(200).send({ message: 'Found', users });
       })
       .catch(error => res.status(400).send(error));
   },
