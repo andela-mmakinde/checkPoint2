@@ -10,6 +10,7 @@ import EditDocument from './components/documents/EditDocument';
 import Users from './components/users/Users';
 import Home from './components/Home';
 import UserDocuments from './components/documents/UserDocuments';
+import Protect from './components/Protect';
 
 const Routes = () => (
   <BrowserRouter>
@@ -18,12 +19,12 @@ const Routes = () => (
       <Route path="/login" component={LoginPage} />
       <Route path="/signup" component={SignUpPage} />
       <Layout>
-        <Route path="/document" component={Documents} />
-        <Route path="/docs" component={UserDocuments} />
-        <Route path="/profile" component={UserProfile} />
-        <Route path="/user" component={Users} />
-        <Route path="/create" component={CreateDocument} />
-        <Route path="/edit/:id" component={EditDocument} />
+        <Protect path="/document" component={Documents} />
+        <Protect path="/docs" component={UserDocuments} />
+        <Protect path="/profile" component={UserProfile} />
+        <Protect path="/user" component={Users} />
+        <Protect path="/create" component={CreateDocument} />
+        <Protect path="/edit/:id" component={EditDocument} />
       </Layout>
     </Switch>
   </BrowserRouter>
