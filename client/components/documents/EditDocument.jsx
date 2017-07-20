@@ -9,7 +9,7 @@ import { EditorState } from 'draft-js';
 import { updateDocument, searchDocumentById, fetchAllUserDocument } from '../../actions/documentActions';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-class EditDocument extends React.Component {
+export class EditDocument extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

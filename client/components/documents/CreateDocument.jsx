@@ -12,7 +12,7 @@ import {
   deleteDocuments
 } from '../../actions/documentActions';
 
-class CreateDocument extends React.Component {
+export class CreateDocument extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,9 +81,7 @@ class CreateDocument extends React.Component {
   }
 
   render() {
-    const { error } = this.state;
-    const { success } = this.state;
-    const { title } = this.state;
+    const { error, success, title } = this.state;
 
     if (success) {
       return <Redirect to="/docs" />;

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { updateUserDetails } from '../../actions/authActions';
 
-class UserProfile extends React.Component {
+export class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,8 +48,8 @@ class UserProfile extends React.Component {
       .props
       .updateUserDetails(this.props.currentUser.id, userDetails)
       .then(() => {
-        Materialize.toast('Success', 2000);
         this.setState({ success: true });
+        Materialize.toast('Success', 2000);
       })
       .catch((errorData) => {
         this.setState({ error: errorData.response.data });

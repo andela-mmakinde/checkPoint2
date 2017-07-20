@@ -10,7 +10,7 @@ import {
 import SearchUsers from './SearchUsers';
 import UserCard from '../../components/users/UserCard';
 
-class Users extends React.Component {
+export class Users extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,6 +60,7 @@ class Users extends React.Component {
   deleteUser(id) {
     this.props.deleteUserRecord(id).then(() => {
       Materialize.toast('User deleted', 2000);
+      this.props.getAllUsers();
     });
   }
 
