@@ -17,12 +17,14 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "client/components/**/*.jsx"
+      "client/**/*.js", "client/**/*.jsx"
     ],
     "setupFiles": [
       "./client/test/mocks/mocks.js"
     ],
-    "moduleNameMapper": {"\\.(css|less)$": "./client/test/mocks/styleMock.js"}    
+    "moduleNameMapper": {
+      "\\.(css|less)$": "./client/test/mocks/styleMock.js"
+    }
   },
   "repository": {
     "type": "git",
@@ -48,16 +50,19 @@
     "dotenv": "^4.0.0",
     "draft-convert": "^1.4.7",
     "draft-js": "^0.10.1",
+    "expect": "^1.20.2",
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^2.1.2",
     "faker": "^4.1.0",
     "file-loader": "^0.11.2",
     "history": "^4.6.2",
     "jquery": "^3.2.1",
+    "jsdom": "^11.1.0",
     "jsonwebtoken": "^7.4.1",
     "jwt-decode": "^2.2.0",
     "materialize-css": "^0.98.2",
     "morgan": "^1.8.2",
+    "moxios": "^0.4.0",
     "node-sass": "^4.5.3",
     "path": "^0.12.7",
     "pg": "^6.2.3",
@@ -74,6 +79,7 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
+    "redux-mock-store": "^1.2.3",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "sequelize": "^4.0.0",

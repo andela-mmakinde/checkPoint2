@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
 import DocumentCard from './DocumentCard';
+import Pagination from '../Pagination';
 import { myDocuments, deleteDocuments } from '../../actions/documentActions';
 
 export class UserDocuments extends React.Component {
@@ -84,19 +84,7 @@ export class UserDocuments extends React.Component {
                 ))}
             </div>
           </div>}
-        <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
+        <Pagination handlePageClick={this.handlePageClick} pageCount={this.state.pageCount} />
       </div>
     );
   }
@@ -118,7 +106,7 @@ UserDocuments.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    documentsFromReducer: state.documents.documents,
+    documentsFromReducer: state.documents.documentList,
     currentUser: state.auth.user,
     pagination: state.documents.pagination
   };

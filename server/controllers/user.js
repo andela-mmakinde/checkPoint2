@@ -143,7 +143,7 @@ const Users = {
                 fullName: updatedUser.fullName
               };
               const jsonToken = createToken({ userDetails });
-              res.status(201).send({ message: 'User updated ', jsonToken });
+              res.status(201).send({ message: 'User updated', jsonToken });
             })
             .catch(error => res.status(400).send(error));
         }

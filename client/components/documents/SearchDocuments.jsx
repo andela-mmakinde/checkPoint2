@@ -38,13 +38,6 @@ SearchDocuments.propTypes = {
   searchDocuments: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    documentsFromReducer: state.documents.documents,
-    pagination: state.pagination,
-  };
-}
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   searchDocuments
 })(SearchDocuments);

@@ -7,9 +7,7 @@ class UserCard extends React.Component {
     this.state = {
       allUsers: this.props.allUsers
     };
-    this.selectUser = this
-      .selectUser
-      .bind(this);
+    this.selectUser = this.selectUser.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {

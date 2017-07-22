@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import SearchDocuments from '../../components/documents/SearchDocuments';
 import { logout } from '../../actions/authActions';
 
-class Header extends React.Component {
+export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);

@@ -157,7 +157,7 @@ EditDocument.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    documentsFromReducer: state.documents.data,
+    documentsFromReducer: state.documents.documentList,
     currentUser: state.auth.user
   };
 }
