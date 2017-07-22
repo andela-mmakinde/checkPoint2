@@ -22,15 +22,19 @@ export function deleteUser() {
 
 export function getAllUsers(offset = 0, limit = 5) {
   return dispatch =>
-    axios.get(`/api/v1/users?limit=${limit}&offset=${offset}`).then((users) => {
-      dispatch(getUsers(users));
+    axios.get(`/api/v1/users?limit=${limit}&offset=${offset}`).then((res) => {
+      const users = res.data.user;
+      const pagination = res.data.pagination;
+      dispatch(getUsers({ users, pagination }));
     });
 }
 
 export function searchUserDb(searchQuery) {
   return dispatch =>
-    axios.get(`/api/v1/search/users?q=${searchQuery}`).then((user) => {
-      dispatch(search(user));
+    axios.get(`/api/v1/search/users?q=${searchQuery}`).then((res) => {
+      const user = res.data.user;
+      const pagination = res.data.pagination;
+      dispatch(search({ user, pagination }));
     });
 }
 
