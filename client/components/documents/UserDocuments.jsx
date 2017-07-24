@@ -56,19 +56,21 @@ export class UserDocuments extends React.Component {
     const { documents } = this.state;
     return (
       <div className="dashboardBackground">
-        <Link
-          to="/create"
-          style={{
-            margin: '30px',
-            position: 'absolute',
-            left: '75rem'
-          }}
-          className="btn-floating btn-large waves-effect waves-light right indigo"
-        >
-          <i className="material-icons">
-            add
-          </i>
-        </Link>
+        <div className="btn-container">
+          <Link
+            to="/create"
+            style={{
+              margin: '30px',
+              position: 'absolute',
+              left: '75rem'
+            }}
+            className="btn-floating btn-large waves-effect waves-light right indigo"
+          >
+            <i className="material-icons">
+              add
+            </i>
+          </Link>
+        </div>
         {!documents.length
           ? <span />
           : <div className="container">
@@ -84,7 +86,9 @@ export class UserDocuments extends React.Component {
                 ))}
             </div>
           </div>}
-        <Pagination handlePageClick={this.handlePageClick} pageCount={this.state.pageCount} />
+        <div className="paginationContainer">
+          <Pagination handlePageClick={this.handlePageClick} pageCount={this.state.pageCount} />
+        </div>
       </div>
     );
   }

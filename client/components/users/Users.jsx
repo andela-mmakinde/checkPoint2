@@ -70,8 +70,10 @@ export class Users extends React.Component {
       <div className="dashboardBackground">
         <h2 className="center">All Users</h2>
         <SearchUsers className="searchUser" searchUserDb={this.props.searchUserDb} />
-        <Pagination pageCount={this.state.pageCount} handlePageClick={this.handlePageClick} />
         <UserCard allUsers={allUsers} deleteUser={this.deleteUser} />
+        <div className="paginationContainer">
+          <Pagination pageCount={this.state.pageCount} handlePageClick={this.handlePageClick} />
+        </div>
       </div>
     );
   }

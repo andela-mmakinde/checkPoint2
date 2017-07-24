@@ -18,7 +18,7 @@ class DocumentCard extends React.Component {
       <div className="col m4 s12 documentCard">
         <div className="card small white darken-10">
           <div className="card-content black-text">
-            <span className="card-title truncate">{document.title}</span>
+            <span className="card-title truncate title">{document.title}</span>
             <br />
             <div>Opened: {new Date(document.createdAt).toDateString()}</div>
             <div>Access: {document.access}</div>
@@ -27,7 +27,7 @@ class DocumentCard extends React.Component {
             <a
               href={`#${modalId}`}
               onClick={() => $(`#${modalId}`).modal()}
-              className="indigo-text"
+              className="indigo-text viewDocument"
             >View</a>
           </div>
           {currentUser.id === document.ownerId && <div className="card-action">
@@ -35,7 +35,7 @@ class DocumentCard extends React.Component {
               <i className="material-icons indigo-text">delete</i>
             </a>
             <Link to={`/edit/${document.id}`}>
-              <i className="material-icons indigo-text">edit</i>
+              <i className="material-icons edit indigo-text">edit</i>
             </Link>
             <a
               href={`#${modalId}`}

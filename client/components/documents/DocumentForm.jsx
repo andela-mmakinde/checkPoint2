@@ -38,10 +38,10 @@ const DocumentForm = ({
       >
         <br />
         <select name="access" onChange={updateAccessState} defaultValue="">
-          <option value="" disabled>Select document access</option>
-          <option name="public">Public</option>
-          <option name="private">Private</option>
-          <option name="role">Role</option>
+          <option value="">Select document access</option>
+          <option value="Public">Public</option>
+          <option value="Private">Private</option>
+          <option value="Role">Role</option>
         </select>
       </div>
     </div>
@@ -52,7 +52,7 @@ const DocumentForm = ({
       editorClassName="home-editor"
     />
     <button
-      className="waves-effect waves-light btn right indigo"
+      className="waves-effect submit waves-light btn right indigo"
       onClick={onSubmit}
     >
       Save

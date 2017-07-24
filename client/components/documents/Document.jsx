@@ -48,8 +48,8 @@ export class Documents extends React.Component {
   }
   render() {
     return (
-      <div className="dashboardBackground">
-        <div>
+      <div>
+        <div className="btn-container">
           <Link
             to="/create"
             style={{
@@ -63,6 +63,9 @@ export class Documents extends React.Component {
               add
             </i>
           </Link>
+        </div>
+      <div className="dashboardBackground">
+        <div>
           <GetAccessDocuments
             currentUser={this.props.currentUser}
             documents={this.state.documents}
@@ -72,6 +75,7 @@ export class Documents extends React.Component {
           <Pagination handlePageClick={this.handlePageClick} pageCount={this.state.pageCount} />
         </div>
       </div>
+     </div>
     );
   }
 }

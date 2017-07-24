@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="6">
+
+  <testsuite name="user"
+    errors="0" failures="0" hostname="" id="" package="user" skipped="0"
+    tests="6" time="21.31" timestamp="Mon, 24 Jul 2017 09:48:08 GMT">
+  
+    <testcase name="User sign up without credentials" classname="user" time="4.657" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User sign up success" classname="user" time="4.288" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User sign in success" classname="user" time="3.291" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to update his fullname and email and password" classname="user" time="3.765" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be ableto update his password" classname="user" time="3.539" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be returned to the home screen on Logout" classname="user" time="1.770" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

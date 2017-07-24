@@ -37,6 +37,7 @@ h3 {
   position: fixed;
   bottom: 0;
   padding: 0;
+  // z-index: 10;
 }
 
 .input-field.document input[type=search] {
@@ -53,6 +54,10 @@ h3 {
 .input-field.user input[type=search]{
   width: 70% !important;
   margin: auto !important;
+}
+
+.input-field.user input[type=search]:focus{
+ background: #e6e6e6  !important;
 }
   // transform: translateX(100%) !important;
   //  margin: auto !important;
@@ -84,8 +89,8 @@ h3 {
 
 .documentForm {
   margin: 0 10px;
-  padding: 50px;
-  height: 400px;
+  padding: 0px 50px;
+  // height: 400px;
 }
 
 .card.small {
@@ -114,14 +119,15 @@ h3 {
 
 .welcomeUser {
   margin: 15px;
+  text-align: center;
   font-size: 20px;
 }
 
-.dashboardBackground {
-  background-color: #e6e6e6 !important;
-  min-height: 100%;
-  background-repeat: no-repeat;
-}
+// .dashboardBackground {
+//   background-color: #e6e6e6 !important;
+//   min-height: 100%;
+//   background-repeat: no-repeat;
+// }
 
 .cancel {
   margin-right: 10px;
@@ -138,4 +144,12 @@ h3 {
 
 .pagination :active {
   background-color: indigo;
+}
+
+.userprofile {
+  background: #efefef !important;
+}
+
+.btn-container {
+  margin: 16px;
 }
