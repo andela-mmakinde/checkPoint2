@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ReactPaginate from 'react-paginate';
 import {
   getAllUsers,
   searchUserDb,
   deleteUserRecord,
 } from '../../actions/userActions';
+import Pagination from '../Pagination';
 import SearchUsers from './SearchUsers';
 import UserCard from '../../components/users/UserCard';
 
@@ -28,8 +28,8 @@ export class Users extends React.Component {
       .getAllUsers()
       .then(() => {
         this.setState({
-          allUsers: this.props.allUsers.user,
-          pageCount: this.props.allUsers.pagination.pageCount
+          allUsers: this.props.allUsers,
+          pageCount: this.props.pagination.pageCount
         });
         Materialize.toast('success', 2000);
       })
@@ -40,8 +40,8 @@ export class Users extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      allUsers: nextProps.allUsers.user,
-      pageCount: nextProps.allUsers.pagination.pageCount
+      allUsers: nextProps.allUsers,
+      pageCount: nextProps.pagination.pageCount
     });
   }
 
@@ -70,20 +70,10 @@ export class Users extends React.Component {
       <div className="dashboardBackground">
         <h2 className="center">All Users</h2>
         <SearchUsers className="searchUser" searchUserDb={this.props.searchUserDb} />
-        <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
         <UserCard allUsers={allUsers} deleteUser={this.deleteUser} />
+        <div className="paginationContainer">
+          <Pagination pageCount={this.state.pageCount} handlePageClick={this.handlePageClick} />
+        </div>
       </div>
     );
   }
@@ -94,7 +84,7 @@ Users.defaultProps = {
 };
 
 Users.propTypes = {
-  currentUser: PropTypes.object.isRequired,
+  pagination: PropTypes.object.isRequired,
   searchUserDb: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
   deleteUserRecord: PropTypes.func.isRequired,
@@ -103,7 +93,8 @@ Users.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    allUsers: state.user,
+    allUsers: state.user.userData,
+    pagination: state.user.pagination,
     currentUser: state.auth.user
   };
 }

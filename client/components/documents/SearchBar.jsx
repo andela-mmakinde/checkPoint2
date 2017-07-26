@@ -8,6 +8,7 @@ const SearchBar = ({ onSubmit, onChange }) => (
         id="search"
         className="searchBar"
         type="search"
+        name="search"
         placeholder="Search Documents"
         onChange={onChange}
       />

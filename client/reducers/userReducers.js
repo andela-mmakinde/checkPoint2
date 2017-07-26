@@ -1,11 +1,15 @@
 import * as actionTypes from '../actions/actionType';
 
-export default (state = [], action) => {
+const initialState = {
+  userData: [],
+  pagination: {}
+};
+export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_ALL_USERS:
-      return { ...state, ...action.users.data };
+      return { ...state, userData: action.users.users, pagination: action.users.pagination };
     case actionTypes.SEARCH_USER_SUCCESS:
-      return { ...state, ...action.user.data };
+      return { ...state, userData: action.user.user, pagination: action.user.pagination };
     default:
       return state;
   }

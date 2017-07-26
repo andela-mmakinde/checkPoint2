@@ -67,8 +67,8 @@ export class UserProfile extends React.Component {
       <main className="dashboardBackground">
         <h6 className="welcomeUser">Welcome {this.props.currentUser.fullName}</h6>
         <center>
-          <div className="container">
-            <ul className="collapsible" data-collapsible="accordion">
+          <div className="container ">
+            <ul className="collapsible userprofile" data-collapsible="accordion">
               <li>
                 <div className="collapsible-header active">Update Details</div>
                 <div className="collapsible-body">
@@ -108,7 +108,7 @@ export class UserProfile extends React.Component {
                 </div>
               </li>
               <li>
-                <div className="collapsible-header">Change Password</div>
+                <div id="changePassword" className="collapsible-header">Change Password</div>
                 <div className="collapsible-body">
                   <form className="col s12" onSubmit={this.onSubmit}>
                     <div className="modal-content">
@@ -136,7 +136,7 @@ export class UserProfile extends React.Component {
                       </div>
                     </div>
                     <div className="modal-footer">
-                      <button className="waves-effect waves-light btn right indigo">
+                      <button id="submitPassword" className="waves-effect waves-light btn right indigo">
                         Save
                       </button>
                     </div>

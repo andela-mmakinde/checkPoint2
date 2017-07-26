@@ -3,14 +3,8 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { convertToHTML } from 'draft-convert';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import DocumentForm from './DocumentForm';
-import {
-  saveDocumentRequest,
-  fetchAllUserDocument,
-  myDocuments,
-  deleteDocuments
-} from '../../actions/documentActions';
+import { saveDocumentRequest } from '../../actions/documentActions';
 
 export class CreateDocument extends React.Component {
   constructor(props) {
@@ -20,7 +14,6 @@ export class CreateDocument extends React.Component {
       content: '',
       access: '',
       title: '',
-
       success: false
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
@@ -63,7 +56,7 @@ export class CreateDocument extends React.Component {
       .saveDocumentRequest(documentToSave)
       .then(() => {
         $('.modal').modal('close');
-        this.props.fetchAllUserDocument();
+        // this.props.fetchAllUserDocument();
         this.setState({ success: true });
       })
       .catch((errorData) => {
@@ -103,19 +96,6 @@ export class CreateDocument extends React.Component {
 
 CreateDocument.propTypes = {
   saveDocumentRequest: PropTypes.func.isRequired,
-  fetchAllUserDocument: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    documentsFromReducer: state.documents,
-    apiCall: state.loading,
-  };
-}
-
-export default connect(mapStateToProps, {
-  saveDocumentRequest,
-  fetchAllUserDocument,
-  myDocuments,
-  deleteDocuments
-})(CreateDocument);
+export default connect(null, { saveDocumentRequest })(CreateDocument);

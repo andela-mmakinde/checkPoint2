@@ -9,6 +9,7 @@ describe('Users component', () => {
     getAllUsers: jest.fn(() => Promise.resolve()),
     deleteUserRecord: jest.fn(() => Promise.resolve()),
     currentUser: {},
+    pagination: {},
     searchUserDb: jest.fn()
   };
   it('renders as a div', () => {

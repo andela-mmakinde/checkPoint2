@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { EditDocument } from '../../components/documents/EditDocument';
 
-describe('Create Document component', () => {
+describe('Edit Document component', () => {
   const props = {
     documentsFromReducer: {},
     updateDocument: jest.fn(() => Promise.resolve()),
@@ -38,11 +38,5 @@ describe('Create Document component', () => {
     const updateAccessSpy = jest.spyOn(wrapper.instance(), 'updateAccessState');
     wrapper.instance().updateAccessState();
     expect(updateAccessSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should call the method componentDidMount', () => {
-    const componentDidMountSpy = jest.spyOn(wrapper.instance(), 'componentDidMount');
-    wrapper.instance().componentDidMount();
-    expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,10 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionType';
 
-export function beginApiCall() {
-  return { type: actionTypes.BEGIN_API_CALL };
-}
-
 export function createNewDocument(document) {
   return {
     type: actionTypes.CREATE_DOCUMENT_SUCCESS,

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="6">
+
+  <testsuite name="documents"
+    errors="0" failures="1" hostname="" id="" package="documents" skipped="1"
+    tests="6" time="58.24" timestamp="Wed, 26 Jul 2017 13:41:36 GMT">
+  
+    <testcase name="User should receive an error message if any field is left unfilled" classname="documents" time="22.49" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to create document successfully" classname="documents" time="2.212" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to retrieve all documents he/she created" classname="documents" time="4.074" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to search documents" classname="documents" time="5.785" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to edit a document successfully" classname="documents" time="23.68" assertions="2">
+
+      <failure message="Testing if the URL equals &quot;http://localhost:5000/docs&quot;.">    at Object.User should be able to edit a document successfully (/Users/andeladeveloper/checkPoint2/client/test/e2e/documents.js:73:15)
+    at _combinedTickCallback (internal/process/next_tick.js:95:7)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+  
+    
+    <testcase
+      name="User should be able to view document details" classname="documents">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

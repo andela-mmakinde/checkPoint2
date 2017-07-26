@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import SearchDocuments from '../../components/documents/SearchDocuments';
 import { logout } from '../../actions/authActions';
 
-class Header extends React.Component {
+export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
@@ -38,17 +38,17 @@ class Header extends React.Component {
                   </i>
               </Link>
             </li>
-            <li><Link to="/profile">Update Profile</Link></li>
-            {this.props.currentUser.roleId === 1 && <li><Link to="/user">Users</Link></li>}
-            <li><Link to="" onClick={this.logout}>Logout</Link></li>
+            <li><Link id="updateProfile" to="/profile">Update Profile</Link></li>
+            {this.props.currentUser.roleId === 1 && <li><Link className="users" to="/user">Users</Link></li>}
+            <li><Link id="logout" to="" onClick={this.logout}>Logout</Link></li>
           </ul>
 
           <div>
             <ul id="dropdown1" className="dropdown-content">
-              <li><Link to="/docs">Owned by Me</Link></li>
+              <li><Link id="myDocs" to="/docs">Owned by Me</Link></li>
               <li><Link to="/document">All documents</Link></li>
               <li>
-                <Link to="/create">Create Document</Link>
+                <Link id="createNewDoc" to="/create">Create Document</Link>
               </li>
             </ul>
           </div>

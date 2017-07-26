@@ -7,9 +7,7 @@ class UserCard extends React.Component {
     this.state = {
       allUsers: this.props.allUsers
     };
-    this.selectUser = this
-      .selectUser
-      .bind(this);
+    this.selectUser = this.selectUser.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,11 +34,11 @@ class UserCard extends React.Component {
           <tbody>
             {allUsers.map(users => (
               <tr key={users.id}>
-                <td>{users.email}</td>
+                <td className="userEmail">{users.email}</td>
                 <td>{users.id}</td>
                 <td>{users.roleId}</td>
                 <td>
-                  <a href="#deleteModal2">
+                  <a className="deleteModalTrigger" href="#deleteModal2">
                     <i
                       className="material-icons"
                       role="button"
@@ -62,7 +60,8 @@ class UserCard extends React.Component {
           <div className="modal-footer">
             <button
               onClick={() => this.props.deleteUser(selectId)}
-              className="modal-action modal-close waves-effect waves-green btn-flat">
+              className="modal-action modal-close waves-effect delete waves-green btn-flat"
+            >
               Yes
             </button>
             <button className="modal-action modal-close waves-effect waves-green btn-flat">

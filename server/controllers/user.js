@@ -71,6 +71,7 @@ const Users = {
             $ne: 1
           }
         },
+        attributes: { exclude: ['password'] },
         limit: req.query.limit || 5,
         offset: req.query.offset || 0,
       }).then((user) => {
@@ -143,7 +144,7 @@ const Users = {
                 fullName: updatedUser.fullName
               };
               const jsonToken = createToken({ userDetails });
-              res.status(201).send({ message: 'User updated ', jsonToken });
+              res.status(201).send({ message: 'User updated', jsonToken });
             })
             .catch(error => res.status(400).send(error));
         }
@@ -206,7 +207,8 @@ const Users = {
       .findOne({
         where: {
           id: req.params.id
-        }
+        },
+        attributes: { exclude: ['password'] }
       })
       .then((user) => {
         if (!user || user === null) {
@@ -265,7 +267,8 @@ const Users = {
   search(req, res) {
     const search = req.query.q;
     User.findAndCountAll({
-      where: { email: { $iLike: `%${search}%` } },
+      where: { email: { $iLike: `%${search}%` }, roleId: { $ne: 1 } },
+      attributes: { exclude: ['password'] },
       limit: req.query.limit || 5,
       offset: req.query.offset || 0,
     })

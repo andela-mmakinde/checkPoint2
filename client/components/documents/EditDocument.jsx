@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { convertToHTML, convertFromHTML } from 'draft-convert';
 import { EditorState } from 'draft-js';
 import { updateDocument, searchDocumentById, fetchAllUserDocument } from '../../actions/documentActions';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export class EditDocument extends React.Component {
   constructor(props) {
@@ -157,7 +156,7 @@ EditDocument.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    documentsFromReducer: state.documents.data,
+    documentsFromReducer: state.documents.documentList,
     currentUser: state.auth.user
   };
 }

@@ -30,6 +30,7 @@ export default class SearchUsers extends React.Component {
           <input
             id="search"
             type="search"
+            name="userSearch"
             placeholder="Search Users"
             onChange={this.onChange}
           />
