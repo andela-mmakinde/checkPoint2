@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import DocumentCard from './DocumentCard';
 import Pagination from '../Pagination';
+import SearchDocuments from './SearchDocuments';
 import { myDocuments, deleteDocuments } from '../../actions/documentActions';
 
 export class UserDocuments extends React.Component {
@@ -57,6 +58,7 @@ export class UserDocuments extends React.Component {
     const { documents } = this.state;
     return (
       <div className="dashboardBackground">
+        <div><SearchDocuments /></div>
         <div className="btn-container">
           <Link
             to="/create"

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
+import SearchDocuments from './SearchDocuments';
 import GetAccessDocuments from './GetAccessDocuments';
 import { fetchAllUserDocument } from '../../actions/documentActions';
 
@@ -49,6 +50,7 @@ export class Documents extends React.Component {
   render() {
     return (
       <div>
+        <div><SearchDocuments /></div>
         <div className="btn-container">
           <Link
             to="/create"

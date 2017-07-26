@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import SearchDocuments from '../../components/documents/SearchDocuments';
 import { logout } from '../../actions/authActions';
 
 export class Header extends React.Component {
@@ -24,7 +23,6 @@ export class Header extends React.Component {
         <div className="col s12 nav-wrapper indigo">
           <Link to="/document" className="brand-logo">DOC-GARAGE</Link>
           <ul id="nav-mobile" className="right ">
-            <li><SearchDocuments /></li>
             <li>
               <Link
                 className="dropdown-button"
