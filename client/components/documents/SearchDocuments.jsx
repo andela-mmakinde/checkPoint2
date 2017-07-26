@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import SearchBar from '../documents/SearchBar';
 import { searchDocuments } from '../../actions/documentActions';
 
-class SearchDocuments extends React.Component {
+export class SearchDocuments extends React.Component {
   constructor() {
     super();
     this.state = {

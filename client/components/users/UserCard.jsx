@@ -34,11 +34,11 @@ class UserCard extends React.Component {
           <tbody>
             {allUsers.map(users => (
               <tr key={users.id}>
-                <td className="userEmail">{users.email}</td>
+                <td id="userEmail">{users.email}</td>
                 <td>{users.id}</td>
                 <td>{users.roleId}</td>
                 <td>
-                  <a className="deleteModalTrigger" href="#deleteModal2">
+                  <a id="deleteModalTrigger" href="#deleteModal2">
                     <i
                       className="material-icons"
                       role="button"

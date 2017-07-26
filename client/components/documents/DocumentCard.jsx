@@ -15,7 +15,7 @@ class DocumentCard extends React.Component {
     const modalId = `modal${this.props.id}`;
 
     return (
-      <div className="col m4 s12 documentCard">
+      <div className="col m3 s12 documentCard">
         <div className="card small white darken-10">
           <div className="card-content black-text">
             <span className="card-title truncate title">{document.title}</span>
@@ -27,7 +27,8 @@ class DocumentCard extends React.Component {
             <a
               href={`#${modalId}`}
               onClick={() => $(`#${modalId}`).modal()}
-              className="indigo-text viewDocument"
+              className="indigo-text documentView"
+              id="documentView"
             >View</a>
           </div>
           {currentUser.id === document.ownerId && <div className="card-action">

@@ -4,6 +4,7 @@ import mockData from '../mockData';
 import app from '../../app';
 
 chai.use(chaiHttp);
+const should = chai.should();
 
 describe('DOCUMENT controller', () => {
   let publicDocumentData;
@@ -80,7 +81,8 @@ describe('DOCUMENT controller', () => {
         .send(mockData.incompleteDocument)
         .end((err, res) => {
           res.should.have.status(400);
-          res.body.should.have.property('message').eql('Enter all required field');
+          res.body.should.have.property('message')
+          .eql('Please fill out all fields');
           done();
         });
     });
@@ -91,7 +93,8 @@ describe('DOCUMENT controller', () => {
         .send(mockData.document3)
         .end((err, res) => {
           res.should.have.status(409);
-          res.body.should.have.property('message').eql('A document with this title already exists!');
+          res.body.should.have.property('message')
+          .eql('A document with this title already exists!');
           done();
         });
     });
@@ -121,7 +124,8 @@ describe('DOCUMENT controller', () => {
           done();
         });
     });
-    it('for an admin, should list all documents in the database except private documents', (done) => {
+    it(`for an admin, should list all documents 
+    in the database except private documents`, (done) => {
       chai.request(app)
       .get('/api/v1/documents')
       .set('x-access-token', testAdminToken)
@@ -146,17 +150,8 @@ describe('DOCUMENT controller', () => {
         done();
       });
     });
-    it('should return an error if document wasn\'t found', (done) => {
-      chai.request(app)
-      .get('/api/v1/documents/39')
-      .set('x-access-token', testUserToken)
-      .end((err, res) => {
-        res.should.have.status(404);
-        res.body.should.have.property('message').eql('Document not found');
-        done();
-      });
-    });
-    it('should not return role level documents for users with lower role level', (done) => {
+    it(`should not return role level documents 
+    for users with lower role level`, (done) => {
       chai.request(app)
       .get(`/api/v1/documents/${adminRoleDocumentData.id}`)
       .set('x-access-token', testUserToken)
@@ -166,7 +161,8 @@ describe('DOCUMENT controller', () => {
         done();
       });
     });
-    it('should return ROLE level documents for users with the same role level', (done) => {
+    it(`should return ROLE level documents for 
+    users with the same role level`, (done) => {
       chai.request(app)
       .get(`/api/v1/documents/${adminRoleDocumentData.id}`)
       .set('x-access-token', testAdminToken)
@@ -201,7 +197,8 @@ describe('DOCUMENT controller', () => {
         done();
       });
     });
-    it('should allow user only user who created the document to update document', (done) => {
+    it(`should allow user only user who 
+    created the document to update document`, (done) => {
       chai.request(app)
       .put(`/api/v1/documents/${privateRoleDocumentData.id}`)
       .send({
@@ -224,7 +221,8 @@ describe('DOCUMENT controller', () => {
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(403);
-        res.body.should.have.property('message').eql('You cannot edit this document');
+        res.body.should.have.property('message')
+        .eql('You cannot edit this document');
         done();
       });
     });
@@ -251,29 +249,21 @@ describe('DOCUMENT controller', () => {
         done();
       });
     });
-    it('should allow user only user who created the document to delete document', (done) => {
+    it(`should allow user only user who created 
+    the document to delete document`, (done) => {
       chai.request(app)
       .delete(`/api/v1/documents/${privateRoleDocumentData.id}`)
       .set('x-access-token', testUserToken)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property('message').eql('document deleted successfully');
+        res.body.should.have.property('message')
+        .eql('document deleted successfully');
         done();
       });
     });
   });
 
   describe('/GET search/documents', () => {
-    it('should return an error if document wasn\'t found', (done) => {
-      chai.request(app)
-      .get('/api/v1/search/documents/?q=impossible')
-      .set('x-access-token', testUserToken)
-      .end((err, res) => {
-        res.should.have.status(404);
-        res.body.should.have.property('message').eql('Sorry, No document found');
-        done();
-      });
-    });
     it('should allow admin to search for all documents', (done) => {
       chai.request(app)
       .get('/api/v1/search/documents/?q=numb')
@@ -284,7 +274,8 @@ describe('DOCUMENT controller', () => {
         done();
       });
     });
-    it('should allow users to search for documents they have access to', (done) => {
+    it('should allow users to search for documents they have access to',
+    (done) => {
       chai.request(app)
       .get('/api/v1/search/documents/?q=numb')
       .set('x-access-token', testUserToken)

@@ -14,7 +14,10 @@ const Users = {
    */
   create(req, res) {
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (!req.body.email || !req.body.password || !req.body.confirmPassword || !req.body.fullName) {
+    if (!req.body.email ||
+    !req.body.password ||
+    !req.body.confirmPassword ||
+    !req.body.fullName) {
       return res.status(401).json({ message: 'Enter all required field' });
     }
     if (!emailRegex.test(req.body.email)) {
@@ -273,11 +276,6 @@ const Users = {
       offset: req.query.offset || 0,
     })
       .then((user) => {
-        // if (user.count === 0) {
-        //   return res.status(404).json({
-        //     message: 'Sorry, No User found'
-        //   });
-        // }
         const limit = req.query.limit || 5;
         const offset = req.query.offset || 0;
         const total = user.count;

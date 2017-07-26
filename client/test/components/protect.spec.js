@@ -1,4 +1,4 @@
-/* global expect */
+/* global expect window*/
 
 import React from 'react';
 import { shallow } from 'enzyme';

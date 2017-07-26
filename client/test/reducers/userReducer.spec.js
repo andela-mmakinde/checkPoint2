@@ -14,13 +14,13 @@ describe('User reducer', () => {
 
   it('should handle GET_ALL_USERS', () => {
     const users = {
-      users: [{ name: 'mayowa' }, { name: 'oriyomi' }, { name: 'mankind' }],
+      users: [{ name: 'mayowa' }, { name: 'oriyomi' }],
       pagination: { count: 3, total: 10 }
     };
     const action = { type: actionType.GET_ALL_USERS, users };
     expect(userReducer({}, action)).toEqual(
       {
-        userData: [{ name: 'mayowa' }, { name: 'oriyomi' }, { name: 'mankind' }],
+        userData: [{ name: 'mayowa' }, { name: 'oriyomi' }],
         pagination: { count: 3, total: 10 }
       }
     );

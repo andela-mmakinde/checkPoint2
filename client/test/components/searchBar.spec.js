@@ -10,7 +10,7 @@ const props = {
 };
 describe('SearchBar component', () => {
   it('renders as a form', () => {
-    const wrapper = shallow(<form {...props} />);
+    const wrapper = shallow(<SearchBar {...props} />);
     expect(wrapper.node.type).toEqual('form');
   });
 });

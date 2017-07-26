@@ -1,12 +1,15 @@
-/* global Materialize */
+/* global */
 import React from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Editor } from 'react-draft-wysiwyg';
 import { connect } from 'react-redux';
 import { convertToHTML, convertFromHTML } from 'draft-convert';
 import { EditorState } from 'draft-js';
-import { updateDocument, searchDocumentById, fetchAllUserDocument } from '../../actions/documentActions';
+import DocumentForm from './DocumentForm';
+import {
+updateDocument,
+searchDocumentById,
+fetchAllUserDocument } from '../../actions/documentActions';
 
 export class EditDocument extends React.Component {
   constructor(props) {
@@ -22,15 +25,11 @@ export class EditDocument extends React.Component {
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onTitleChange = this.onTitleChange.bind(this);
-    this.updateAccessState = this.updateAccessState.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     $('select').material_select();
-    $('select').on('change', event =>
-      this.updateAccessState(event.target.value)
-    );
     this.props.searchDocumentById(this.props.match.params.id).then(() => {
       this.setState({
         id: this.props.documentsFromReducer.id,
@@ -41,7 +40,7 @@ export class EditDocument extends React.Component {
     });
   }
 
-  onTitleChange(event) {
+  onChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
       error: {}
@@ -75,69 +74,23 @@ export class EditDocument extends React.Component {
       });
   }
 
-  updateAccessState(selectedValue) {
-    this.setState({
-      access: selectedValue,
-      error: {}
-    });
-  }
-
   render() {
-    const { error } = this.state;
-    const { success } = this.state;
-    const { title } = this.state;
+    const { error, success, title, content, access, editorState } = this.state;
+    const docObj = { title, content, access, editorState };
 
     if (success) {
       return <Redirect to="/docs" />;
     }
     return (
       <div>
-        <div className="documentForm">
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                id="title"
-                name="title"
-                onChange={this.onTitleChange}
-                value={title}
-                type="text"
-                className="validate"
-                style={{ margin: '0px' }}
-                placeholder="Enter document title"
-              />
-            </div>
-            {error.message && Materialize.toast(error.message, 2000)}
-
-            <div
-              className="input-field col s12"
-              style={{ margin: '0px' }}
-            >
-              <br />
-              <select name="access" onChange={this.updateAccessState} defaultvalue={this.state.access}>
-                <option value="" disabled>Select document access</option>
-                <option name="public">Public</option>
-                <option name="private">Private</option>
-                <option name="role">Role</option>
-              </select>
-            </div>
-          </div>
-          <Editor
-            editorState={this.state.editorState}
-            onEditorStateChange={this.onEditorStateChange}
-          />
-          <button
-            className="waves-effect waves-light btn right indigo"
-            onClick={this.onSubmit}
-          >
-            Save
-          </button>
-          <Link
-            className="waves-effect cancel waves-light btn right indigo"
-            to="/docs"
-          >
-            Cancel
-          </Link>
-        </div>
+        <DocumentForm
+          error={error}
+          onSubmit={this.onSubmit}
+          onChange={this.onChange}
+          onEditorStateChange={this.onEditorStateChange}
+          editorState={this.state.editorState}
+          docObj={docObj}
+        />
       </div>
     );
   }

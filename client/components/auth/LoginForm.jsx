@@ -34,24 +34,26 @@ const LoginForm = ({ onSubmit, onChange, error, password, email, logged }) => {
 
                 <div className="input-field col s12">
                   <input
-                    className="validate"
+                    className="validate required"
                     type="email"
                     name="email"
                     onChange={onChange}
                     value={email}
                     id="email"
+                    required
                   />
                   <label htmlFor="email">Enter your email</label>
                 </div>
 
                 <div className="input-field col s12">
                   <input
-                    className="validate"
+                    className="validate required"
                     type="password"
                     onChange={onChange}
                     value={password}
                     name="password"
                     id="password"
+                    required
                   />
                   <label htmlFor="password">Enter your password</label>
                 </div>

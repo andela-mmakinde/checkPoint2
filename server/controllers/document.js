@@ -15,7 +15,7 @@ const Documents = {
     if (!req.body.title || !req.body.content || !req.body.access) {
       return res
         .status(400)
-        .json({ message: 'Enter all required field' });
+        .json({ message: 'Please fill out all fields' });
     }
     Document
       .findOne({
@@ -37,7 +37,8 @@ const Documents = {
             ownerId: req.user.id,
             access: req.body.access
           })
-          .then(document => res.status(201).send({ message: 'Document created', document }))
+          .then(document => res.status(201)
+          .send({ message: 'Document created', document }))
           .catch(err => res.status(400).send(err));
       });
   },
@@ -60,18 +61,13 @@ const Documents = {
           $or: [
             {
               access: 'Public',
-              ownerId: {
-                $ne: req.user.id
-              },
             },
             {
               access: 'Role',
-              ownerId: {
-                $not: req.user.id
-              },
             },
           ]
-        }
+        },
+        order: [['updatedAt', 'DESC']]
       })
       .then((document) => {
         const limit = req.query.limit || 6;
@@ -99,19 +95,14 @@ const Documents = {
           $or: [
             {
               access: 'Public',
-              ownerId: {
-                $ne: req.user.id
-              },
             },
             {
               access: 'Role',
               roleId: req.user.roleId,
-              ownerId: {
-                $not: req.user.id
-              },
             },
           ]
-        }
+        },
+        order: [['updatedAt', 'DESC']]
       };
       Document
       .findAndCountAll(query)
@@ -176,7 +167,8 @@ const Documents = {
           return User
             .findById(document.ownerId)
             .then((documentOwner) => {
-              if (req.user.id !== 1 && Number(documentOwner.roleId) !== Number(req.user.roleId)) {
+              if (req.user.id !== 1 &&
+              Number(documentOwner.roleId) !== Number(req.user.roleId)) {
                 return res
                   .status(401)
                   .json({ message: 'Unauthorized Access' });
@@ -222,7 +214,8 @@ const Documents = {
             content: req.body.content || document.content,
             access: req.body.access || document.access
           })
-          .then(updatedDocument => res.status(200).json({ message: 'Update Successful', updatedDocument }))
+          .then(updatedDocument => res.status(200)
+          .json({ message: 'Update Successful', updatedDocument }))
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
@@ -256,7 +249,8 @@ const Documents = {
         }
         return document
           .destroy()
-          .then(() => res.status(200).send({ message: 'document deleted successfully' }))
+          .then(() => res.status(200)
+          .send({ message: 'document deleted successfully' }))
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
@@ -311,11 +305,6 @@ const Documents = {
     }
     Document.findAndCountAll(dbQuery)
       .then((document) => {
-        // if (document.count === 0) {
-        //   return res
-        //     .status(404)
-        //     .json({ message: 'Sorry, No document found' });
-        // }
         const limit = req.query.limit || 6;
         const offset = req.query.offset || 0;
         const total = document.count;

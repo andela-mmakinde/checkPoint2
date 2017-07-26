@@ -1,13 +1,11 @@
 /* global jest expect */
 
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import LoginForm from '../../components/auth/LoginForm';
 
 jest.mock('react-router-dom');
-describe('Home page component', () => {
-  let wrapper;
-
+describe('login form component', () => {
   const error = {
     message: 'Take sorry na'
   };
@@ -18,20 +16,14 @@ describe('Home page component', () => {
     error,
     password: '123455',
     email: 'hello@hello.com',
-    logged: false
+    logged: true
   };
 
-  beforeAll(() => {
-    wrapper = mount(<LoginForm {...props} />);
-  });
+  const wrapper = shallow(<LoginForm {...props} />);
+
   describe('renders', () => {
-    it('shouls have a password field with the same valua as props \'password\'', () => {
-      const password = wrapper.find('#password').props();
-      expect(password.value).toEqual(props.password);
-    });
-    it('should redirect user to the document page if logged state is true', () => {
-      wrapper.setProps({ logged: true });
-      expect(2).toBe(2);
+    it('renders as a div', () => {
+      expect(typeof wrapper.node.type).toEqual('function');
     });
   });
 });

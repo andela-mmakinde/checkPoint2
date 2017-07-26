@@ -18,19 +18,15 @@ export class CreateDocument extends React.Component {
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onTitleChange = this.onTitleChange.bind(this);
-    this.updateAccessState = this.updateAccessState.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     $('.modal').modal({ dismissible: false });
     $('select').material_select();
-    $('select').on('change', event =>
-      this.updateAccessState(event.target.value)
-    );
   }
 
-  onTitleChange(event) {
+  onChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
       error: {}
@@ -39,8 +35,8 @@ export class CreateDocument extends React.Component {
 
   onEditorStateChange(editorState) {
     this.setState({
-      content: convertToHTML(editorState.getCurrentContent()),
-      error: {}
+      editorState,
+      content: convertToHTML(editorState.getCurrentContent())
     });
   }
 
@@ -56,7 +52,6 @@ export class CreateDocument extends React.Component {
       .saveDocumentRequest(documentToSave)
       .then(() => {
         $('.modal').modal('close');
-        // this.props.fetchAllUserDocument();
         this.setState({ success: true });
       })
       .catch((errorData) => {
@@ -66,15 +61,14 @@ export class CreateDocument extends React.Component {
       });
   }
 
-  updateAccessState(selectedValue) {
-    this.setState({
-      access: selectedValue,
-      error: {}
-    });
-  }
-
   render() {
-    const { error, success, title } = this.state;
+    const { error, success, title, content, access, editorState } = this.state;
+    const docObj = {
+      title,
+      content,
+      access,
+      editorState
+    };
 
     if (success) {
       return <Redirect to="/docs" />;
@@ -84,10 +78,10 @@ export class CreateDocument extends React.Component {
         <DocumentForm
           error={error}
           onSubmit={this.onSubmit}
-          onTitleChange={this.onTitleChange}
+          onChange={this.onChange}
           updateAccessState={this.updateAccessState}
           onEditorStateChange={this.onEditorStateChange}
-          title={title}
+          docObj={docObj}
         />
       </div>
     );

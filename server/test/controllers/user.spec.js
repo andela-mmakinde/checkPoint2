@@ -10,8 +10,6 @@ chai.use(chaiHttp);
 describe('USER controller', () => {
   let userToken;
   let adminToken;
-  // const userId = 6;
-  // const adminId = 5;
   before((done) => {
     chai.request(app)
       .post('/api/v1/users')
@@ -73,7 +71,8 @@ describe('USER controller', () => {
         .send(mockData.user4)
         .end((err, res) => {
           res.should.have.status(409);
-          res.body.should.have.property('message').eql('A user with this email already exists!');
+          res.body.should.have.property('message')
+          .eql('A user with this email already exists!');
           done();
         });
     });
@@ -93,7 +92,8 @@ describe('USER controller', () => {
         .send(mockData.passwordMismatch)
         .end((err, res) => {
           res.should.have.status(401);
-          res.body.should.have.property('message').eql('Password doesn\'t match');
+          res.body.should.have.property('message')
+          .eql('Password doesn\'t match');
           done();
         });
     });

@@ -6,7 +6,6 @@
   "scripts": {
     "test-e2e": "./node_modules/.bin/nightwatch",
     "jest": "jest --coverage client/",
-    "jest:update": "jest --updateSnapshot client/",
     "start": "babel-node -- ./bin/www",
     "db:seed": "NODE_ENV=production sequelize db:migrate:undo:all && NODE_ENV=production sequelize db:migrate && NODE_ENV=production sequelize db:seed:all",
     "dev": "nodemon --watch server --exec babel-node -- ./bin/www",
@@ -18,8 +17,9 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "client/**/*.js",
-      "client/**/*.jsx"
+      "client/actions/*.js",
+      "client/components/**/*.jsx",
+      "client/reducers/*.js"
     ],
     "setupFiles": [
       "./client/test/mocks/mocks.js"
