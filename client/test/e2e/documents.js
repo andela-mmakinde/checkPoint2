@@ -1,6 +1,7 @@
 const faker = require('faker');
 
 const title = faker.lorem.words(2);
+const newTitle = faker.lorem.words(1);
 const content = faker.lorem.paragraphs(2);
 const email = faker.internet.email();
 const password = faker.internet.password();
@@ -61,24 +62,35 @@ module.exports = {
       .click('.edit')
       .pause(2000)
       .clearValue('input[name=title]')
-      .setValue('input[name=title]', 'new title')
+      .setValue('input[name=title]', newTitle)
       .click('select option[value="Public"]')
       .click('.DraftEditor-editorContainer')
       .click('div.public-DraftStyleDefault-block')
       .clearValue('.public-DraftEditor-content')
       .setValue('.public-DraftEditor-content', content)
-      .click('.submit')
-      .pause(5000)
-      .assert.urlEquals('http://localhost:5000/docs'),
+      .click('.edit-Document')
+      .pause(2000)
+      .url('http://localhost:5000/docs')
+      .waitForElementVisible('.documentCard', 5000)
+      .assert.containsText('.title', newTitle),
   'User should be able to view document details': browser =>
     browser
-      .url('http://localhost:5000/document')
+      .url('http://localhost:5000/docs')
+      .pause(1000)
       .waitForElementVisible('body', 5000)
-      .click('a.documentView')
+      .click('#documentView')
+      .waitForElementVisible('.viewModal', 5000)
       .pause(2000)
-      .waitForElementVisible('.modal', 10000)
+      .assert.containsText('.center', newTitle),
+  'User should be able to delete a document successfully': browser =>
+    browser
+     .url('http://localhost:5000/docs')
+      .waitForElementVisible('body', 5000)
+      .click('.deleteModalTrigger')
       .pause(2000)
-      .assert.containsText('.center', 'new title')
+      .click('.delete')
+      .waitForElementVisible('.toast', 10000)
+      .assert.containsText('.toast', 'Document deleted')
       .end()
 };
 

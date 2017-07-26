@@ -33,6 +33,9 @@ h3 {
 }
 
 .page-footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
   padding: 0;
 }
 
@@ -110,7 +113,8 @@ h3 {
 
 .rdw-editor-main {
     border: 1px solid #F1F1F1;
-    padding: 0 20px;    
+    padding: 0 20px;
+    height: 40% !important;   
 }
 
 .welcomeUser {
@@ -130,8 +134,7 @@ h3 {
 }
 
 .paginationContainer {
-  margin: 0 auto;
-	width: 20%;
+  margin-top: 20px !important;
 }
 
 .pagination {
@@ -151,5 +154,5 @@ h3 {
 }
 
 .myContents {
-  min-height: 39em;
+  min-height: 35em;
 }

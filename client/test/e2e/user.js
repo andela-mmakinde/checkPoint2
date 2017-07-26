@@ -73,7 +73,7 @@ module.exports = {
       .pause(2000)
       .waitForElementVisible('.toast', 5000)
       .assert.containsText('.toast', 'Another user with this email already exist'),
-  'User should be ableto update his password': browser =>
+  'User should be able to update his password': browser =>
     browser
       .url('http://localhost:5000/document')
       .click('#updateProfile')

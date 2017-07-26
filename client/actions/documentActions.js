@@ -54,7 +54,7 @@ export function saveDocumentRequest(document) {
   });
 }
 
-export function fetchAllUserDocument(offset = 0, limit = 6) {
+export function fetchAllUserDocument(offset = 0, limit = 8) {
   return dispatch => axios.get(`/api/v1/documents?limit=${limit}&offset=${offset}`).then((res) => {
     const documents = res.data.document;
     const pagination = res.data.pagination;
@@ -62,7 +62,7 @@ export function fetchAllUserDocument(offset = 0, limit = 6) {
   });
 }
 
-export function myDocuments(id, offset = 0, limit = 6) {
+export function myDocuments(id, offset = 0, limit = 8) {
   return dispatch =>
     axios.get(`/api/v1/users/${id}/documents/?limit=${limit}&offset=${offset}`).then((res) => {
       const documents = res.data.myDocuments;
