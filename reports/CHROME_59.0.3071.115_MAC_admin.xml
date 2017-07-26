@@ -1,43 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="1"
-            tests="3">
+            failures="0"
+            tests="0">
 
   <testsuite name="admin"
-    errors="0" failures="1" hostname="" id="" package="admin" skipped="1"
-    tests="3" time="14.62" timestamp="Mon, 24 Jul 2017 09:47:08 GMT">
-  
-    <testcase name="Admin should be able to view a list of all users" classname="admin" time="10.18" assertions="4">
-
-    
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="Admin should be able to delete a user" classname="admin" time="4.441" assertions="3">
-
-    
-
-      <failure message="Testing if element &lt;.toast&gt; contains text: &quot;User deleted&quot;. Element could not be located.">    at Object.Admin should be able to delete a user (/Users/andeladeveloper/checkPoint2/client/test/e2e/admin.js:24:15)
-    at _combinedTickCallback (internal/process/next_tick.js:95:7)</failure>
-
-    
-    </testcase>
+    errors="0" failures="0" hostname="" id="" package="admin" skipped="0"
+    tests="0" time="0.000" timestamp="Wed, 26 Jul 2017 13:41:35 GMT">
   
 
   
 
-  
-    
-    <testcase
-      name="Admin should be able to search users" classname="admin">
-      <skipped />
-    </testcase>
-    
   
   </testsuite>
 </testsuites>
