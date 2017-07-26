@@ -28,11 +28,10 @@ class DocumentCard extends React.Component {
               href={`#${modalId}`}
               onClick={() => $(`#${modalId}`).modal()}
               className="indigo-text documentView"
-              id="documentView"
             >View</a>
           </div>
           {currentUser.id === document.ownerId && <div className="card-action">
-            <a href="#deleteModal">
+            <a className="deleteModalTrigger" href="#deleteModal">
               <i className="material-icons indigo-text">delete</i>
             </a>
             <Link to={`/edit/${document.id}`}>
@@ -42,6 +41,7 @@ class DocumentCard extends React.Component {
               href={`#${modalId}`}
               onClick={() => $(`#${modalId}`).modal()}
               className="indigo-text"
+              id="documentView"
             >View</a>
             <div id="deleteModal" className="modal">
               <div className="modal-content">
@@ -50,7 +50,7 @@ class DocumentCard extends React.Component {
               <div className="modal-footer">
                 <button
                   onClick={() => deleteDocument(document.id)}
-                  className="modal-action modal-close waves-effect waves-green btn-flat">
+                  className="modal-action modal-close waves-effect delete waves-green btn-flat">
                   Yes
                 </button>
                 <button className="modal-action modal-close waves-effect waves-green btn-flat">
@@ -61,7 +61,7 @@ class DocumentCard extends React.Component {
 
           </div>}
 
-          <div id={modalId} className="modal">
+          <div id={modalId} className="modal viewModal">
             <div className="modal-content">
               <h5 className="center">{document.title}</h5>
               <span>{renderHTML(document.content)}</span>

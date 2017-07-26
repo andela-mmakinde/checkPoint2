@@ -52,7 +52,7 @@ const DocumentForm = ({
       editorClassName="home-editor"
     />
     <button
-      className="waves-effect submit waves-light btn right indigo"
+      className="waves-effect submit edit-Document waves-light btn right indigo"
       onClick={onSubmit}
     >
       Save
