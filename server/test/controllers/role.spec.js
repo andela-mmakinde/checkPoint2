@@ -1,12 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import mockData from '../mockData';
-
-
 import app from '../../app';
 
 const should = chai.should();
-
 chai.use(chaiHttp);
 
 describe('Role', () => {
@@ -14,11 +11,13 @@ describe('Role', () => {
   let userToken;
 
   before((done) => {
-    chai.request(app).post('/api/v1/users/login').send(mockData.adminDetails).end((err, res) => {
+    chai.request(app).post('/api/v1/users/login')
+    .send(mockData.adminDetails).end((err, res) => {
       res.should.have.status(200);
       adminToken = res.body.jsonToken;
     });
-    chai.request(app).post('/api/v1/users/login').send(mockData.userDetails).end((err, res) => {
+    chai.request(app).post('/api/v1/users/login')
+    .send(mockData.userDetails).end((err, res) => {
       res.should.have.status(200);
       userToken = res.body.jsonToken;
       done();
@@ -51,7 +50,8 @@ describe('Role', () => {
           res.body.should.have.property('role');
           res.body.role.should.be.a('object');
           res.body.role.should.have.property('title');
-          res.body.message.should.be.a('string').eql('Role created succesfully');
+          res.body.message.should.be.a('string')
+          .eql('Role created succesfully');
           done();
         });
     });
@@ -62,7 +62,20 @@ describe('Role', () => {
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(400);
-          res.body.should.have.property('message').eql('Error creating new role');
+          res.body.should.have.property('message')
+          .eql('Error creating new role');
+          done();
+        });
+    });
+    it('should fail if the user is not an admin', (done) => {
+      chai.request(app)
+        .post('/api/v1/role')
+        .send(mockData.roleOne)
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.have.property('message')
+          .eql('Unauthorised access');
           done();
         });
     });
@@ -141,7 +154,8 @@ describe('Role', () => {
       .set('x-access-token', adminToken)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property('message').eql('Role has been deleted successfully');
+        res.body.should.have.property('message')
+        .eql('Role has been deleted successfully');
         done();
       });
     });

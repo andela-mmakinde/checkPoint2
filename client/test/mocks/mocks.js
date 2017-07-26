@@ -3,6 +3,10 @@ global.Materialize = {
 };
 global.$ = () => ({
   tabs: () => null,
-  val: () => null
+  val: () => null,
+  material_select: () => null,
+  on: () => null,
+  modal: () => null,
+  collapsible: () => null
 });
 

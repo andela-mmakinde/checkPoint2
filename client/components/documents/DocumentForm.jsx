@@ -5,12 +5,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const DocumentForm = ({
+  docObj,
   onSubmit,
-  onTitleChange,
-  updateAccessState,
+  onChange,
   onEditorStateChange,
   error,
-  title
 }) => (
   <div className="documentForm">
     <div className="row">
@@ -18,15 +17,15 @@ const DocumentForm = ({
         <input
           id="title"
           name="title"
-          onChange={onTitleChange}
-          value={title}
+          onChange={onChange}
+          value={docObj.title}
           type="text"
           className="validate"
           style={{
             margin: '0px'
           }}
+          placeholder="Enter document title"
         />
-        <label htmlFor="title">Enter document title</label>
       </div>
       {error.message && Materialize.toast(error.message, 2000)}
 
@@ -37,8 +36,8 @@ const DocumentForm = ({
         }}
       >
         <br />
-        <select name="access" onChange={updateAccessState} defaultValue="">
-          <option value="">Select document access</option>
+        <select name="access" onChange={onChange} className="browser-default" value={docObj.access}>
+          <option value="" disabled>Select document access</option>
           <option value="Public">Public</option>
           <option value="Private">Private</option>
           <option value="Role">Role</option>
@@ -47,6 +46,7 @@ const DocumentForm = ({
     </div>
     <Editor
       onEditorStateChange={onEditorStateChange}
+      editorState={docObj.editorState}
       toolbarClassName="home-toolbar"
       wrapperClassName="home-wrapper"
       editorClassName="home-editor"
@@ -68,10 +68,9 @@ const DocumentForm = ({
 
 DocumentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  updateAccessState: PropTypes.func.isRequired,
-  onTitleChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onEditorStateChange: PropTypes.func.isRequired,
   error: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired
+  docObj: PropTypes.object
 };
 export default DocumentForm;

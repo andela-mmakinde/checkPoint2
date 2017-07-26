@@ -55,7 +55,8 @@ describe('Document reducer', () => {
   });
 
   it('should handle SEARCH_DOCUMENTBYID_SUCCESS', () => {
-    const document = { data: { title: 'mayowa' }, status: 200, statusText: 'OK' };
+    const document =
+    { data: { title: 'mayowa' }, status: 200, statusText: 'OK' };
     const action = { type: actionType.SEARCH_DOCUMENTBYID_SUCCESS, document };
     expect(documentReducer(
       {

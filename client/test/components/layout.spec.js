@@ -4,12 +4,8 @@ import { shallow } from 'enzyme';
 import Layout from '../../components/Layout';
 
 describe('Home page component', () => {
-  let wrapper;
-
-  beforeAll(() => {
-    wrapper = shallow(<Layout />);
-  });
+  const wrapper = shallow(<Layout />);
   it('renders', () => {
-    expect(true).toEqual(true);
+    expect(wrapper.node.type).toEqual('div');
   });
 });

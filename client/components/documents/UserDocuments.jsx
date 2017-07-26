@@ -1,3 +1,4 @@
+/* global Materialize */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -33,7 +34,7 @@ export class UserDocuments extends React.Component {
 
   handlePageClick(data) {
     const selected = data.selected;
-    const limit = 6;
+    const limit = 8;
     const offset = Math.ceil(selected * limit);
     this.setState({ offset });
     this.props.myDocuments(this.props.currentUser.id, offset, limit).then(() => {
@@ -59,11 +60,6 @@ export class UserDocuments extends React.Component {
         <div className="btn-container">
           <Link
             to="/create"
-            style={{
-              margin: '30px',
-              position: 'absolute',
-              left: '75rem'
-            }}
             className="btn-floating btn-large waves-effect waves-light right indigo"
           >
             <i className="material-icons">

@@ -43,6 +43,7 @@ const SignUpForm = ({
                     type="text"
                     className="validate"
                     name="fullName"
+                    required
                   />
                   <label htmlFor="fullName">Full Name</label>
                 </div>
@@ -54,6 +55,7 @@ const SignUpForm = ({
                     type="email"
                     className="validate"
                     name="email"
+                    required
                   />
                   <label htmlFor="email">Email</label>
                 </div>
@@ -65,6 +67,7 @@ const SignUpForm = ({
                     type="password"
                     name="password"
                     className="validate"
+                    required
                   />
                   <label htmlFor="password">Password</label>
                 </div>
@@ -77,6 +80,7 @@ const SignUpForm = ({
                     type="password"
                     name="confirmPassword"
                     className="validate"
+                    required
                   />
                   <label htmlFor="confirm password">Confirm Password</label>
                 </div>

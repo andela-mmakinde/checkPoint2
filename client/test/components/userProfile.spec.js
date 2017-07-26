@@ -34,7 +34,13 @@ describe('Users component', () => {
   wrapper.instance().onSubmit(event);
   expect(submitSpy).toHaveBeenCalledTimes(1);
 
-  it('should redirect user to the document page if update was state is true', () => {
+  const componentDidMountSpy =
+  jest.spyOn(wrapper.instance(), 'componentDidMount');
+  wrapper.instance().componentDidMount();
+  expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
+
+  it(`should redirect user to the document 
+  page if update was state is true`, () => {
     wrapper.setState({ success: true });
     expect(wrapper.state('success')).toEqual(true);
   });

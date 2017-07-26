@@ -18,38 +18,8 @@ describe('User actions', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('should create an action to get all users', () => {
-    const users = {
-      user: 1,
-      pagination
-    };
-    const expectedAction = {
-      type: actionTypes.GET_ALL_USERS,
-      users
-    };
-    expect(actions.getUsers(users)).toEqual(expectedAction);
-  });
-
-  it('should create an action to search all users', () => {
-    const user = {
-      user: 1,
-      pagination
-    };
-    const expectedAction = {
-      type: actionTypes.SEARCH_USER_SUCCESS,
-      user
-    };
-    expect(actions.search(user)).toEqual(expectedAction);
-  });
-
-  it('should create an action to delete users', () => {
-    const expectedAction = {
-      type: actionTypes.DELETE_USER_SUCCESS,
-    };
-    expect(actions.deleteUser()).toEqual(expectedAction);
-  });
-
-  it('creates an action type GET_ALL_USERS get all users request is successful', (done) => {
+  it(`creates an action type GET_ALL_USERS 
+  get all users request is successful`, (done) => {
     moxios.stubRequest('/api/v1/users?limit=5&offset=0', {
       status: 201,
       response: {
@@ -67,7 +37,8 @@ describe('User actions', () => {
     done();
   });
 
-  it('creates an action type SEARCH_USER_SUCCESS when search user database request is successful', (done) => {
+  it(`creates an action type SEARCH_USER_SUCCESS 
+  when search user database request is successful`, (done) => {
     moxios.stubRequest('/api/v1/search/users?q=ma', {
       status: 200,
       response: {
@@ -85,7 +56,8 @@ describe('User actions', () => {
     done();
   });
 
-  it('creates an action type DELETE_USER_SUCCESS deleteUserRecord request is successful', (done) => {
+  it(`creates an action type DELETE_USER_SUCCESS 
+  deleteUserRecord request is successful`, (done) => {
     moxios.stubRequest('/api/v1/users/14', {
       status: 200,
       response: {

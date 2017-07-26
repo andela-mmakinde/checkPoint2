@@ -1,3 +1,4 @@
+/* global expect */
 import authReducer from '../../reducers/authReducers';
 import * as actionType from '../../actions/actionType';
 

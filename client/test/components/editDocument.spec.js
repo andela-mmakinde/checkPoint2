@@ -9,7 +9,8 @@ describe('Edit Document component', () => {
     documentsFromReducer: {},
     updateDocument: jest.fn(() => Promise.resolve()),
     searchDocumentById: jest.fn(() => Promise.resolve()),
-    material_select: jest.fn()
+    material_select: jest.fn(),
+    match: { params: {} }
   };
   const event = {
     preventDefault: jest.fn()
@@ -17,9 +18,9 @@ describe('Edit Document component', () => {
 
   const wrapper = shallow(<EditDocument {...props} />);
 
-  it('contains an onTitleChange function', () => {
-    const spy = jest.spyOn(wrapper.instance(), 'onTitleChange');
-    wrapper.instance().onTitleChange({
+  it('changes the title when the on change function is called', () => {
+    const spy = jest.spyOn(wrapper.instance(), 'onChange');
+    wrapper.instance().onChange({
       target: {
         value: 'Document1', name: 'title'
       }
@@ -34,9 +35,21 @@ describe('Edit Document component', () => {
     expect(submitSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('contains an updateAccessState function', () => {
-    const updateAccessSpy = jest.spyOn(wrapper.instance(), 'updateAccessState');
-    wrapper.instance().updateAccessState();
-    expect(updateAccessSpy).toHaveBeenCalledTimes(1);
+  it('changes the acces type when the on change function is called', () => {
+    const spy = jest.spyOn(wrapper.instance(), 'onChange');
+    wrapper.instance().onChange({
+      target: {
+        value: 'Public', name: 'access'
+      }
+    });
+    expect(wrapper.state('access')).toEqual('Public');
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  it('contains a componentDidMount function', () => {
+    const componentDidMountSpy =
+    jest.spyOn(wrapper.instance(), 'componentDidMount');
+    wrapper.instance().componentDidMount();
+    expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
   });
 });

@@ -11,21 +11,25 @@ describe('Home page component', () => {
   };
   // create props
   const props = {
-    editorState: jest.fn(),
+    editorState: {},
     onChange: jest.fn(),
     onSubmit: jest.fn(),
     updateAccessState: jest.fn(),
     onTitleChange: jest.fn(),
     onEditorStateChange: jest.fn(),
+    docObj: {
+      title: '123455',
+      access: 'Public'
+    },
     error,
-    title: '123455',
   };
 
   describe('renders', () => {
     const wrapper = shallow(<DocumentForm {...props} />);
-    it('shouls have a password field with the same valua as props \'password\'', () => {
+    it('should have a password field with the same value as props \'password\'',
+    () => {
       const title = wrapper.find('#title').props();
-      expect(title.value).toEqual(props.title);
+      expect(title.value).toEqual(props.docObj.title);
     });
   });
 });
