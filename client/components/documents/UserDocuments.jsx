@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import DocumentCard from './DocumentCard';
 import Pagination from '../Pagination';
-import SearchDocuments from './SearchDocuments';
+import ConnectedSearchDocuments from './SearchDocuments';
 import { myDocuments, deleteDocuments } from '../../actions/documentActions';
 
 /**
@@ -96,7 +96,7 @@ export class UserDocuments extends React.Component {
     const { documents } = this.state;
     return (
       <div className="dashboardBackground">
-        <div><SearchDocuments /></div>
+        <div><ConnectedSearchDocuments /></div>
         <div className="btn-container">
           <Link
             to="/create"
@@ -141,10 +141,10 @@ UserDocuments.defaultProps = {
 };
 
 UserDocuments.propTypes = {
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.shape({ id: '' }).isRequired,
   documentsFromReducer:
   PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  pagination: PropTypes.object.isRequired,
+  pagination: PropTypes.shape({ pageCount: '' }).isRequired,
   myDocuments: PropTypes.func.isRequired,
   deleteDocuments: PropTypes.func.isRequired
 };

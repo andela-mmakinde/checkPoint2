@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import Header from '../components/includes/Header';
+import ConnectedHeader from '../components/includes/Header';
 import Footer from '../components/includes/Footer';
 
 const Protect = ({ component: Component, ...rest }) => (
@@ -11,7 +11,7 @@ const Protect = ({ component: Component, ...rest }) => (
     render={props => (
     localStorage.getItem('token') ? (
       <div>
-        <Header />
+        <ConnectedHeader />
         <Component {...props} />
         <Footer />
       </div>
@@ -32,7 +32,7 @@ Protect.defaultProps = {
 };
 Protect.propTypes = {
   component: PropTypes.func,
-  location: PropTypes.object
+  location: PropTypes.shape({ fullName: '' }),
 };
 
 export default Protect;

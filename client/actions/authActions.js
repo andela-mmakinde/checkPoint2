@@ -79,7 +79,8 @@ export function updateUserDetails(id, userDetails) {
  * @returns {object} - remove token
  */
 export function logout() {
-  return () => {
+  return (dispatch) => {
     localStorage.removeItem('token');
+    dispatch({ type: actionTypes.LOGOUT });
   };
 }

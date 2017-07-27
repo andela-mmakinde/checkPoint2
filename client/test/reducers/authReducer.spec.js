@@ -22,4 +22,16 @@ describe('Auth reducer', () => {
       }
     );
   });
+  it('should handle logging a user out', () => {
+    const action = { type: actionType.LOGOUT };
+    expect(authReducer({
+      isLogged: false,
+      user: {},
+    }, action)).toEqual(
+      {
+        isLogged: false,
+        user: {},
+      }
+    );
+  });
 });

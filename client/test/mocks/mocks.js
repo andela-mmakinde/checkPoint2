@@ -7,6 +7,7 @@ global.$ = () => ({
   material_select: () => null,
   on: () => null,
   modal: () => null,
-  collapsible: () => null
+  collapsible: () => null,
+  dropdown: () => null
 });
 

@@ -2,7 +2,9 @@
 
 ### Welcome to DOC-GARAGE
 
-DOC-GARAGE allows users to create, edit, retrieve and delete documents.
+DOC-GARAGE allows users to create, edit, retrieve and delete documents. It allows you to search for a particular document by title.
+Pagination is added to allow for easy accessing of documents.
+And what else? Is is free!
 [Click here](http://docgarage.herokuapp.com/) to view the app on Heroku.
 
 ### Core Tecnologies

@@ -1,4 +1,4 @@
-/* global $ localStorage*/
+/* global $ */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -22,7 +22,7 @@ export class Header extends React.Component {
   }
 
   /**
-   * Get all documents a user has access to on component mount
+   * Initialize document dropdown on component mount
    * @method ComponentDidMount
    * @return {void}
    * @memberOf Documents
@@ -36,8 +36,7 @@ export class Header extends React.Component {
    * @memberOf Header
    */
   logout() {
-    localStorage.removeItem('token');
-    this.setState({ logged: false });
+    this.props.logout();
   }
 
   /**
@@ -88,7 +87,8 @@ export class Header extends React.Component {
 }
 
 Header.propTypes = {
-  currentUser: PropTypes.object.isRequired
+  currentUser: PropTypes.shape({ roleId: '' }).isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

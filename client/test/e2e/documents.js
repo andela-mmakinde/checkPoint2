@@ -6,7 +6,8 @@ const content = faker.lorem.paragraphs(2);
 const email = faker.internet.email();
 const password = faker.internet.password();
 module.exports = {
-  'User should receive an error message if any field is left unfilled': browser =>
+  'User should receive an error message if any field is left unfilled':
+  browser =>
     browser
      .url('http://localhost:5000/signup')
       .waitForElementVisible('body', 5000)

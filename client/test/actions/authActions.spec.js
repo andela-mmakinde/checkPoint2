@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import expect from 'expect';
 import * as actions from '../../actions/authActions';
-import * as actionTypes from '../../actions/actionType';
 import mockLocalStorage from '../utils/mockLocalStorage';
 
 const middlewares = [thunk];

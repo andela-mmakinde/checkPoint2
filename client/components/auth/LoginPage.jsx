@@ -99,17 +99,15 @@ export class LoginPage extends React.Component {
     );
   }
 }
-
 LoginPage.propTypes = {
   userLoginRequest: Proptypes.func.isRequired,
   isLogged: Proptypes.bool.isRequired,
-  history: Proptypes.object.isRequired,
+  history: Proptypes.shape({ push: '' }).isRequired,
 };
 const mapStateToProps = state => ({
   isLogged: state.auth.isLogged
 });
 
-
-export default
-connect(mapStateToProps, { userLoginRequest })(withRouter(LoginPage));
+export default connect(mapStateToProps,
+  { userLoginRequest })(withRouter(LoginPage));
 
