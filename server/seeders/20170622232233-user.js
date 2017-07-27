@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt-nodejs');
 
+// const adminPassword = process.env.adminPassword;
+// const userPassword = process.env.userPassword;
 module.exports = {
   up: queryInterface => queryInterface.bulkInsert('Users', [
     {
       email: 'mayowa@andela.com',
       fullName: 'Mayowa Makinde',
-      password: bcrypt.hashSync('andela', bcrypt.genSaltSync(10)),
+      password: bcrypt.hashSync('amala', bcrypt.genSaltSync(10)),
       roleId: 1,
       createdAt: new Date(),
       updatedAt: new Date()

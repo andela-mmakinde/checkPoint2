@@ -1,4 +1,6 @@
+/* global localStorage */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
 
@@ -19,5 +21,13 @@ const Protect = ({ component: Component, ...rest }) => (
   />
 );
 
-export default Protect;
+Protect.defaultProps = {
+  component: null,
+  location: null
+};
+Protect.propTypes = {
+  component: PropTypes.func,
+  location: PropTypes.object
+};
 
+export default Protect;

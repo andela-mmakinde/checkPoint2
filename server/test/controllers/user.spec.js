@@ -82,7 +82,8 @@ describe('USER controller', () => {
         .send(mockData.invalidEmail)
         .end((err, res) => {
           res.should.have.status(401);
-          res.body.should.have.property('message').eql('Email is not rightly formatted');
+          res.body.should.have.property('message')
+          .eql('Email is not rightly formatted');
           done();
         });
     });
@@ -280,7 +281,8 @@ describe('USER controller', () => {
         .end((err, res) => {
           res.should.have.status(401);
           res.body.should.have.property('message');
-          res.body.message.should.be.a('string').eql('Unauthorised access');          
+          res.body.message.should.be.a('string')
+          .eql('Unauthorised access');
           done();
         });
     });
@@ -300,7 +302,7 @@ describe('USER controller', () => {
   describe('/DELETE user:id', () => {
     it('admin should be able to delete user account', (done) => {
       chai.request(app)
-        .delete('/api/v1/users/2')
+        .delete('/api/v1/users/4')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(201);
@@ -312,7 +314,7 @@ describe('USER controller', () => {
 
     it('request should fail if user not found', (done) => {
       chai.request(app)
-        .delete('/api/v1/users/2')
+        .delete('/api/v1/users/4')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           res.should.have.status(404);
