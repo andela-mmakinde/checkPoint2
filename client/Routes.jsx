@@ -18,15 +18,13 @@ const Routes = () => (
       <Route exact path="/" component={Home} />
       <Route path="/login" component={LoginPage} />
       <Route path="/signup" component={SignUpPage} />
-      <Layout>
-        <Protect path="/document" component={Documents} />
-        <Protect path="/mydocuments" component={UserDocuments} />
-        <Protect path="/profile" component={UserProfile} />
-        <Protect path="/user" component={Users} />
-        <Protect path="/create" component={CreateDocument} />
-        <Protect path="/edit/:id" component={EditDocument} />
-      </Layout>
-      <Route render={() => <h1>Page not found</h1>} />
+      <Protect path="/document" component={Documents} />
+      <Protect path="/mydocuments" component={UserDocuments} />
+      <Protect path="/profile" component={UserProfile} />
+      <Protect path="/user" component={Users} />
+      <Protect path="/create" component={CreateDocument} />
+      <Protect path="/edit/:id" component={EditDocument} />
+      <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
 );

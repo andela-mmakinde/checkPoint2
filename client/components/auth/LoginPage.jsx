@@ -1,7 +1,7 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import { userLoginRequest } from '../../actions/authActions';
 
@@ -23,10 +23,23 @@ export class LoginPage extends React.Component {
       email: '',
       password: '',
       error: {},
+      isLogged: false,
       logged: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  /**
+   * Checks if user is logged in
+   * @method ComponentDidMount
+   * @return {void}
+   * @memberOf LoginPage
+   */
+  componentDidMount() {
+    if (this.props.isLogged) {
+      this.props.history.push('/document');
+    }
   }
 
   /**
@@ -55,7 +68,7 @@ export class LoginPage extends React.Component {
     event.preventDefault();
     this.props
       .userLoginRequest(this.state)
-      .then(() => this.setState({ logged: true }))
+      .then(() => this.setState({ isLogged: this.props.isLogged }))
       .catch((errorData) => {
         this.setState({
           error: errorData.response.data
@@ -68,8 +81,8 @@ export class LoginPage extends React.Component {
    * @memberOf LoginPage
    */
   render() {
-    const { logged } = this.state;
-    if (logged) {
+    const { isLogged } = this.state;
+    if (isLogged) {
       return <Redirect to="/document" />;
     }
     return (
@@ -89,8 +102,14 @@ export class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   userLoginRequest: Proptypes.func.isRequired,
+  isLogged: Proptypes.bool.isRequired,
+  history: Proptypes.object.isRequired,
 };
+const mapStateToProps = state => ({
+  isLogged: state.auth.isLogged
+});
 
 
-export default connect(null, { userLoginRequest })(LoginPage);
+export default
+connect(mapStateToProps, { userLoginRequest })(withRouter(LoginPage));
 

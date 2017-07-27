@@ -2,14 +2,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-
+import Header from '../components/includes/Header';
+import Footer from '../components/includes/Footer';
 
 const Protect = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => (
     localStorage.getItem('token') ? (
-      <Component {...props} />
+      <div>
+        <Header />
+        <Component {...props} />
+        <Footer />
+      </div>
     ) : (
       <Redirect to={{
         pathname: '/',

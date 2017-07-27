@@ -7,6 +7,10 @@ describe('Login Page', () => {
   const userLoginRequest = jest.fn(() => Promise.resolve());
   const props = {
     userLoginRequest,
+    isLogged: true,
+    history: {
+      push: null
+    }
   };
   const event = {
     preventDefault: jest.fn()
