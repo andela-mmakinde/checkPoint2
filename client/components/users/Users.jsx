@@ -67,6 +67,7 @@ export class Users extends React.Component {
       pageCount: nextProps.pagination.pageCount
     });
   }
+
   /**
    * handles click on change of page
    * @param {object} page

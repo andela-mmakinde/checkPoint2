@@ -10,6 +10,7 @@ import { searchDocuments } from '../../actions/documentActions';
  * @extends {React.Component}
  */
 export class SearchDocuments extends React.Component {
+
   /**
    * Creates an instance of SearchDocuments.
    * @memberOf SearchDocuments
@@ -50,7 +51,6 @@ export class SearchDocuments extends React.Component {
       searchQuery: ''
     });
   }
-
 
   /**
    * @returns {String} The HTML markup for the SearchBar

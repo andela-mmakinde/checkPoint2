@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
  * @extends {React.Component}
  */
 class UserCard extends React.Component {
+
   /**
    * Creates an instance of UserCard.
    * @param {any} props
