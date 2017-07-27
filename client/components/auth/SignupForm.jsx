@@ -104,7 +104,7 @@ const SignUpForm = ({
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  error: PropTypes.object.isRequired,
+  error: PropTypes.shape({ message: '' }).isRequired,
   password: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   fullName: PropTypes.string.isRequired,

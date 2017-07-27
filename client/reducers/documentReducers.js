@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionType';
 
 const initialState = {
   documentList: {},
-  pagination: {}
+  pagination: {},
+  document: {}
 };
 
 /**
@@ -26,7 +27,7 @@ export default (state = initialState, action) => {
         documentList: action.documents.documents,
         pagination: action.documents.pagination };
     case actionTypes.SEARCH_DOCUMENTBYID_SUCCESS:
-      return { ...state, documentList: action.document.data };
+      return { ...state, document: action.document.data };
     default:
       return state;
   }

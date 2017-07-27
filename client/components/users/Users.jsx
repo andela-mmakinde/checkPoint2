@@ -50,9 +50,7 @@ export class Users extends React.Component {
         });
         Materialize.toast('success', 2000);
       })
-      .catch((errorData) => {
-        console.log(errorData);
-      });
+      .catch(() => {});
   }
 
   /**
@@ -128,7 +126,7 @@ Users.defaultProps = {
 };
 
 Users.propTypes = {
-  pagination: PropTypes.object.isRequired,
+  pagination: PropTypes.shape({ pageCount: '' }).isRequired,
   searchUserDb: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
   deleteUserRecord: PropTypes.func.isRequired,

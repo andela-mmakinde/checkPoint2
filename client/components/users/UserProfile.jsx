@@ -201,7 +201,7 @@ export class UserProfile extends React.Component {
 }
 
 UserProfile.propTypes = {
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.shape({ fullName: '', email: '', id: '' }).isRequired,
   updateUserDetails: PropTypes.func.isRequired
 };
 

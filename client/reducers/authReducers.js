@@ -18,6 +18,8 @@ export default (state = initialState, action) => {
         isLogged: true,
         user: action.loggedInUser,
       };
+    case actionTypes.LOGOUT:
+      return { ...state, isLogged: false };
     default:
       return state;
   }

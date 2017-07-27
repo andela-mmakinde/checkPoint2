@@ -47,12 +47,12 @@ export class EditDocument extends React.Component {
     $('select').material_select();
     this.props.searchDocumentById(this.props.match.params.id).then(() => {
       this.setState({
-        id: this.props.documentsFromReducer.id,
-        access: this.props.documentsFromReducer.access,
-        title: this.props.documentsFromReducer.title,
+        id: this.props.document.id,
+        access: this.props.document.access,
+        title: this.props.document.title,
         editorState:
         EditorState.createWithContent(convertFromHTML(this
-          .props.documentsFromReducer.content)),
+          .props.document.content)),
       });
     });
   }
@@ -134,19 +134,16 @@ export class EditDocument extends React.Component {
 }
 
 
-EditDocument.defaultProps = {
-  documentsFromReducer: {},
-};
-
 EditDocument.propTypes = {
-  documentsFromReducer:
-  PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  document:
+  PropTypes.shape({ id: '', access: '', title: '', content: '' }).isRequired,
   updateDocument: PropTypes.func.isRequired,
   searchDocumentById: PropTypes.func.isRequired,
+  match: PropTypes.shape({ params: { id: '' } }).isRequired,
 };
 
 const mapStateToProps = state => ({
-  documentsFromReducer: state.documents.documentList,
+  document: state.documents.document,
   currentUser: state.auth.user
 });
 

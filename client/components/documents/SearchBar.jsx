@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
  * SearchBar component.
  * @returns {String} The HTML markup for the search input component
  */
-const SearchBar = ({ onSubmit, onChange, clearField }) => (
+const SearchBar = ({ onSubmit, onChange }) => (
   <form className="searchForm" onSubmit={onSubmit}>
     <div className="input-field document">
       <input
@@ -16,7 +16,7 @@ const SearchBar = ({ onSubmit, onChange, clearField }) => (
         placeholder="Search Documents"
         onChange={onChange}
       />
-      <i role="button" className="material-icons" onClick={clearField}>close</i>
+      <i role="button" className="material-icons">close</i>
       <button type="submit" name="search" className="searchButton" />
     </div>
   </form>
@@ -25,7 +25,6 @@ const SearchBar = ({ onSubmit, onChange, clearField }) => (
 SearchBar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  clearField: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

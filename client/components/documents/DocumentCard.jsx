@@ -89,12 +89,14 @@ class DocumentCard extends React.Component {
     );
   }
 }
-
 DocumentCard.propTypes = {
-  document: PropTypes.object.isRequired,
+  document: PropTypes.shape({
+    title: '',
+    content: ''
+  }).isRequired,
   deleteDocument: PropTypes.func,
   id: PropTypes.number.isRequired,
-  currentUser: PropTypes.object.isRequired
+  currentUser: PropTypes.shape({ id: '' }).isRequired,
 };
 
 DocumentCard.defaultProps = {

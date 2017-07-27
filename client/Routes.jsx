@@ -1,32 +1,29 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Documents from './components/documents/Document';
-import LoginPage from './components/auth/LoginPage';
-import UserProfile from './components/users/UserProfile';
-import SignUpPage from './components/auth/SignUpPage';
-import CreateDocument from './components/documents/CreateDocument';
-import Layout from './components/Layout';
-import EditDocument from './components/documents/EditDocument';
-import Users from './components/users/Users';
+import ConnectedDocuments from './components/documents/Document';
+import ConnectedLoginPage from './components/auth/LoginPage';
+import ConnectedUserProfile from './components/users/UserProfile';
+import ConnectedSignUpPage from './components/auth/SignUpPage';
+import ConnectedCreateDocument from './components/documents/CreateDocument';
+import ConnectedEditDocument from './components/documents/EditDocument';
+import ConnectedUsers from './components/users/Users';
 import Home from './components/Home';
-import UserDocuments from './components/documents/UserDocuments';
+import ConnectedUserDocuments from './components/documents/UserDocuments';
 import Protect from './components/Protect';
 
 const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/login" component={LoginPage} />
-      <Route path="/signup" component={SignUpPage} />
-      <Layout>
-        <Protect path="/document" component={Documents} />
-        <Protect path="/mydocuments" component={UserDocuments} />
-        <Protect path="/profile" component={UserProfile} />
-        <Protect path="/user" component={Users} />
-        <Protect path="/create" component={CreateDocument} />
-        <Protect path="/edit/:id" component={EditDocument} />
-      </Layout>
-      <Route render={() => <h1>Page not found</h1>} />
+      <Route path="/login" component={ConnectedLoginPage} />
+      <Route path="/signup" component={ConnectedSignUpPage} />
+      <Protect path="/document" component={ConnectedDocuments} />
+      <Protect path="/mydocuments" component={ConnectedUserDocuments} />
+      <Protect path="/profile" component={ConnectedUserProfile} />
+      <Protect path="/user" component={ConnectedUsers} />
+      <Protect path="/create" component={ConnectedCreateDocument} />
+      <Protect path="/edit/:id" component={ConnectedEditDocument} />
+      <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
 );

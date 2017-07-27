@@ -66,6 +66,7 @@ class UserCard extends React.Component {
                 <td>
                   <a id="deleteModalTrigger" href="#deleteModal2">
                     <i
+                      tabIndex="0"
                       className="material-icons"
                       role="button"
                       onClick={() => this.selectUser(users.id)}
@@ -106,7 +107,7 @@ class UserCard extends React.Component {
 }
 
 UserCard.propTypes = {
-  allUsers: PropTypes.array.isRequired,
+  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteUser: PropTypes.func.isRequired
 };
 

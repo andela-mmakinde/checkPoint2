@@ -61,7 +61,8 @@ module.exports = {
       .pause(2000)
       .waitForElementVisible('.toast', 5000)
       .assert.containsText('.toast', 'Success'),
-  'User should receive an error it they try updating email to an exixting mail': browser =>
+  'User should receive an error it they try updating email to an exixting mail':
+  browser =>
     browser
       .url('http://localhost:5000/document')
       .click('#updateProfile')
@@ -72,7 +73,8 @@ module.exports = {
       .click('.waves-light')
       .pause(2000)
       .waitForElementVisible('.toast', 5000)
-      .assert.containsText('.toast', 'Another user with this email already exist'),
+      .assert.containsText('.toast',
+      'Another user with this email already exist'),
   'User should be able to update his password': browser =>
     browser
       .url('http://localhost:5000/document')

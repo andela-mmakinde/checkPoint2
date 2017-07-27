@@ -7,7 +7,8 @@ describe('Document reducer', () => {
     expect(documentReducer(undefined, {})).toEqual(
       {
         documentList: {},
-        pagination: {}
+        pagination: {},
+        document: {}
       }
     );
   });
@@ -15,7 +16,7 @@ describe('Document reducer', () => {
   it('should handle GET_DOCUMENT_SUCCESS', () => {
     const documents = {
       documents: ['mayowa'],
-      pagination: { count: 3, total: 10 }
+      pagination: { count: 3, total: 10 },
     };
     const action = { type: actionType.GET_DOCUMENT_SUCCESS, documents };
     expect(documentReducer({}, action)).toEqual(
@@ -64,8 +65,9 @@ describe('Document reducer', () => {
         pagination: { count: 1, total: 2 },
       }, action)).toEqual(
       {
-        documentList: { title: 'mayowa' },
+        documentList: [{ title: 'mayowa' }, { title: 'Another mayowa' }],
         pagination: { count: 1, total: 2 },
+        document: { title: 'mayowa' }
       }
     );
   });

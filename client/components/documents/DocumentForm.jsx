@@ -72,7 +72,10 @@ DocumentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onEditorStateChange: PropTypes.func.isRequired,
-  error: PropTypes.object.isRequired,
-  docObj: PropTypes.object
+  error: PropTypes.shape({ message: '' }).isRequired,
+  docObj: PropTypes.shape({
+    title: '',
+    access: ''
+  }).isRequired,
 };
 export default DocumentForm;

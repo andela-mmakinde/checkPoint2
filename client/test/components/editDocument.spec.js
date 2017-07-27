@@ -6,7 +6,7 @@ import { EditDocument } from '../../components/documents/EditDocument';
 
 describe('Edit Document component', () => {
   const props = {
-    documentsFromReducer: {},
+    document: {},
     updateDocument: jest.fn(() => Promise.resolve()),
     searchDocumentById: jest.fn(() => Promise.resolve()),
     material_select: jest.fn(),
