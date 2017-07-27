@@ -20,8 +20,8 @@ describe('SignUpForm component', () => {
   const wrapper = shallow(<SignupForm {...props} />);
 
   describe('SignUpFor component', () => {
-    it('renders as a div', () => {
-      expect(typeof wrapper.node.type).toEqual('function');
+    it('renders as a main component', () => {
+      expect(wrapper.node.type).toEqual('main');
     });
   });
 });

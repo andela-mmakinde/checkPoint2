@@ -17,7 +17,7 @@ describe('Users component', () => {
     allUsers: [],
     pagination: { pageCount: 3 }
   };
-  const data = {
+  const page = {
     selected: 3,
   };
   const wrapper = shallow(<Users {...props} />);
@@ -36,14 +36,14 @@ describe('Users component', () => {
   it('should contain the method handlePageClick', () => {
     const handlePageClickSpy =
     jest.spyOn(wrapper.instance(), 'handlePageClick');
-    wrapper.instance().handlePageClick(data);
+    wrapper.instance().handlePageClick(page);
     expect(handlePageClickSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should contain the method deleteUser', () => {
     const deleteUserSpy =
     jest.spyOn(wrapper.instance(), 'deleteUser');
-    wrapper.instance().deleteUser(data);
+    wrapper.instance().deleteUser(3);
     expect(deleteUserSpy).toHaveBeenCalledTimes(1);
   });
 

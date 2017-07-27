@@ -64,7 +64,9 @@ class UserCard extends React.Component {
             >
               Yes
             </button>
-            <button className="modal-action modal-close waves-effect waves-green btn-flat">
+            <button
+              className="modal-action modal-close waves-effect waves-green btn-flat"
+            >
               No
             </button>
           </div>

@@ -20,12 +20,13 @@ const Routes = () => (
       <Route path="/signup" component={SignUpPage} />
       <Layout>
         <Protect path="/document" component={Documents} />
-        <Protect path="/docs" component={UserDocuments} />
+        <Protect path="/mydocuments" component={UserDocuments} />
         <Protect path="/profile" component={UserProfile} />
         <Protect path="/user" component={Users} />
         <Protect path="/create" component={CreateDocument} />
         <Protect path="/edit/:id" component={EditDocument} />
       </Layout>
+      <Route render={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
 );

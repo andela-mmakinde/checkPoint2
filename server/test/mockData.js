@@ -1,7 +1,7 @@
 const mockData = {
   adminDetails: {
     email: 'mayowa@andela.com',
-    password: 'andela'
+    password: 'amala'
   },
   userDetails: {
     email: 'amaa@la.com',

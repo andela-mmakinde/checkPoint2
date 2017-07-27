@@ -55,7 +55,7 @@ const Documents = {
     if (req.user.roleId === 1) {
       Document
       .findAndCountAll({
-        limit: req.query.limit || 6,
+        limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
           $or: [
@@ -70,7 +70,7 @@ const Documents = {
         order: [['updatedAt', 'DESC']]
       })
       .then((document) => {
-        const limit = req.query.limit || 6;
+        const limit = req.query.limit || 8;
         const offset = req.query.offset || 0;
         const total = document.count;
         const pageCount = Math.ceil(total / limit);
@@ -89,7 +89,7 @@ const Documents = {
       .catch(err => res.status(400).send(err));
     } else {
       const query = {
-        limit: req.query.limit || 6,
+        limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
           $or: [
@@ -107,7 +107,7 @@ const Documents = {
       Document
       .findAndCountAll(query)
       .then((document) => {
-        const limit = req.query.limit || 6;
+        const limit = req.query.limit || 8;
         const offset = req.query.offset || 0;
         const total = document.count;
         const pageCount = Math.ceil(total / limit);
@@ -269,7 +269,7 @@ const Documents = {
     let dbQuery;
     if (req.user.roleId === 1) {
       dbQuery = {
-        limit: req.query.limit || 6,
+        limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
           title: {
@@ -279,7 +279,7 @@ const Documents = {
       };
     } else {
       dbQuery = {
-        limit: req.query.limit || 6,
+        limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
           $and: {
@@ -305,7 +305,7 @@ const Documents = {
     }
     Document.findAndCountAll(dbQuery)
       .then((document) => {
-        const limit = req.query.limit || 6;
+        const limit = req.query.limit || 8;
         const offset = req.query.offset || 0;
         const total = document.count;
         const pageCount = Math.ceil(total / limit);
@@ -347,7 +347,7 @@ const Documents = {
         }
         Document
           .findAndCountAll({
-            limit: req.query.limit || 6,
+            limit: req.query.limit || 8,
             offset: req.query.offset || 0,
             where: {
               ownerId: user.id
@@ -355,7 +355,7 @@ const Documents = {
             order: [['updatedAt', 'DESC']]
           })
           .then((ownerDocuments) => {
-            const limit = req.query.limit || 6;
+            const limit = req.query.limit || 8;
             const offset = req.query.offset || 0;
             const total = ownerDocuments.count;
             const pageCount = Math.ceil(total / limit);

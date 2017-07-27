@@ -2,10 +2,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SignUpForm = ({
-  logged,
   error,
   onChange,
   onSubmit,
@@ -13,97 +12,91 @@ const SignUpForm = ({
   email,
   password,
   confirmPassword
-}) => {
-  if (logged) {
-    return <Redirect to="/document" />;
-  }
-  return (
-    <main>
+}) => (
+  <main>
+    <div className="section" />
+    <center>
+      <h5 className="indigo-text">Create a new account</h5>
       <div className="section" />
-      <center>
-        <h5 className="indigo-text">Create a new account</h5>
-        <div className="section" />
-        <div className="container">
-          <div
-            className="z-depth-1 grey lighten-4 row"
-            style={{
-              display: 'inline-block',
-              padding: '32px 48px 0px 48px',
-              border: '1px solid #EEE'
-            }}
-          >
-            <div className="row">
-              <form className="col s12" onSubmit={onSubmit}>
-                {error.message && Materialize.toast(error.message, 2000)}
-                <div className="input-field col s12">
-                  <input
-                    id="fullName"
-                    value={fullName}
-                    onChange={onChange}
-                    type="text"
-                    className="validate"
-                    name="fullName"
-                    required
-                  />
-                  <label htmlFor="fullName">Full Name</label>
-                </div>
-                <div className="input-field col s12">
-                  <input
-                    id="email"
-                    value={email}
-                    onChange={onChange}
-                    type="email"
-                    className="validate"
-                    name="email"
-                    required
-                  />
-                  <label htmlFor="email">Email</label>
-                </div>
-                <div className="input-field col s12">
-                  <input
-                    id="password"
-                    value={password}
-                    onChange={onChange}
-                    type="password"
-                    name="password"
-                    className="validate"
-                    required
-                  />
-                  <label htmlFor="password">Password</label>
-                </div>
+      <div className="container">
+        <div
+          className="z-depth-1 grey authForm lighten-4 row"
+        >
+          <div className="row">
+            <form className="col s12" onSubmit={onSubmit}>
+              {error.message && Materialize.toast(error.message, 2000)}
+              <div className="input-field col s12">
+                <input
+                  id="fullName"
+                  value={fullName}
+                  onChange={onChange}
+                  type="text"
+                  className="validate"
+                  name="fullName"
+                  required
+                />
+                <label htmlFor="fullName">Full Name</label>
+              </div>
+              <div className="input-field col s12">
+                <input
+                  id="email"
+                  value={email}
+                  onChange={onChange}
+                  type="email"
+                  className="validate"
+                  name="email"
+                  required
+                />
+                <label htmlFor="email">Email</label>
+              </div>
+              <div className="input-field col s12">
+                <input
+                  id="password"
+                  value={password}
+                  onChange={onChange}
+                  type="password"
+                  name="password"
+                  className="validate"
+                  required
+                />
+                <label htmlFor="password">Password</label>
+              </div>
 
-                <div className="input-field col s12">
-                  <input
-                    id="confirmPassword"
-                    value={confirmPassword}
-                    onChange={onChange}
-                    type="password"
-                    name="confirmPassword"
-                    className="validate"
-                    required
-                  />
-                  <label htmlFor="confirm password">Confirm Password</label>
+              <div className="input-field col s12">
+                <input
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={onChange}
+                  type="password"
+                  name="confirmPassword"
+                  className="validate"
+                  required
+                />
+                <label htmlFor="confirm password">Confirm Password</label>
+              </div>
+              <ul>
+                <li>
+                  <Link to="/login">Have an account? &ensp; Sign in</Link>
+                </li>
+              </ul>
+              <center>
+                <div className="row">
+                  <button
+                    type="submit"
+                    name="btn_signup"
+                    className="col s12 btn btn-large waves-effect indigo"
+                  >
+                    Sign Up
+                  </button>
                 </div>
-                <ul> <li><Link to="/login">Have an account? &ensp; Sign in</Link></li> </ul>
-                <center>
-                  <div className="row">
-                    <button
-                      type="submit"
-                      name="btn_signup"
-                      className="col s12 btn btn-large waves-effect indigo"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                </center>
-              </form>
-            </div>
+              </center>
+            </form>
           </div>
         </div>
-      </center>
-    </main>
-  );
-};
+      </div>
+    </center>
+  </main>
+);
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -112,7 +105,6 @@ SignUpForm.propTypes = {
   email: PropTypes.string.isRequired,
   fullName: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
-  logged: PropTypes.bool.isRequired,
 };
 
 export default SignUpForm;

@@ -12,7 +12,7 @@ describe('Document container component', () => {
     documentsFromReducer: {},
     pagination: { pageCount: 3 }
   };
-  const data = {
+  const page = {
     selected: 3,
   };
   const wrapper = shallow(<Documents {...props} />);
@@ -34,7 +34,7 @@ describe('Document container component', () => {
   it('should contain the method handlePageClick', () => {
     const handlePageClickSpy =
     jest.spyOn(wrapper.instance(), 'handlePageClick');
-    wrapper.instance().handlePageClick(data);
+    wrapper.instance().handlePageClick(page);
     expect(handlePageClickSpy).toHaveBeenCalledTimes(1);
   });
 });

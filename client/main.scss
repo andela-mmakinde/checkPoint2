@@ -34,7 +34,6 @@ h3 {
 
 .page-footer {
   width: 100%;
-  position: fixed;
   bottom: 0;
   padding: 0;
 }
@@ -51,17 +50,17 @@ h3 {
 }
 
 .input-field.user input[type=search]{
-  width: 70% !important;
+  width: 65% !important;
   margin: auto !important;
 }
 
 .input-field.user input[type=search]:focus{
  background: #e6e6e6  !important;
 }
-  // transform: translateX(100%) !important;
-  //  margin: auto !important;
+
 .searchForm {
-  display: inline-block !important;
+  width: 70% !important;
+  margin: 30px auto 0 auto !important;
 }
 
 .searchButton {
@@ -83,13 +82,13 @@ h3 {
 
 .userTable {
   margin: auto;
-  width: 80%;
+  width: 70% !important;
+  padding: 10px;
 }
 
 .documentForm {
   margin: 0 10px;
-  padding: 0px 50px;
-  // height: 400px;
+  padding: 0px 30px;
 }
 
 .card.small {
@@ -101,7 +100,6 @@ h3 {
   border-top: 1px solid #d3d3d3 !important;
   box-shadow: 0 1px 0 rgba(0,0,0,0.07) !important;
   margin-bottom: 20px !important;
-  // width: 208px !important;
   font-size: 12px;
 }
 
@@ -155,4 +153,14 @@ h3 {
 
 .myContents {
   min-height: 35em;
+}
+
+.authForm {
+  display: inline-block;
+  padding: 32px 48px 0px 48px;
+  border: 1px solid #EEE;
+}
+
+.titleField {
+  margin: 0 !important;
 }

@@ -15,7 +15,7 @@ describe('Users component', () => {
     documentsFromReducer: {},
     pagination: { pageCount: 3 }
   };
-  const data = {
+  const page = {
     selected: 3,
   };
 
@@ -41,13 +41,13 @@ describe('Users component', () => {
   it('should contain the method handlePageClick', () => {
     const handlePageClickSpy =
     jest.spyOn(wrapper.instance(), 'handlePageClick');
-    wrapper.instance().handlePageClick(data);
+    wrapper.instance().handlePageClick(page);
     expect(handlePageClickSpy).toHaveBeenCalledTimes(1);
   });
   it('should contain the method deleteDocument', () => {
     const deleteDocumentSpy =
     jest.spyOn(wrapper.instance(), 'deleteDocument');
-    wrapper.instance().deleteDocument(data);
+    wrapper.instance().deleteDocument(2);
     expect(deleteDocumentSpy).toHaveBeenCalledTimes(1);
   });
 });

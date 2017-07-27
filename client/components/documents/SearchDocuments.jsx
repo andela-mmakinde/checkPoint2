@@ -12,6 +12,7 @@ export class SearchDocuments extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.clearField = this.clearField.bind(this);
   }
 
   onChange(event) {
@@ -25,10 +26,19 @@ export class SearchDocuments extends React.Component {
     this.props.searchDocuments(this.state.searchQuery);
   }
 
+  clearField() {
+    this.setState({
+      searchQuery: ''
+    });
+  }
   render() {
     return (
       <span>
-        <SearchBar onSubmit={this.onSubmit} onChange={this.onChange} />
+        <SearchBar
+          onSubmit={this.onSubmit}
+          onChange={this.onChange}
+          clearField={this.clearField}
+        />
       </span>
     );
   }

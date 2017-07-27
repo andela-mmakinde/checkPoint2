@@ -2,81 +2,71 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const LoginForm = ({ onSubmit, onChange, error, password, email, logged }) => {
-  if (logged) {
-    return <Redirect to="/document" />;
-  }
-  return (
-    <div>
-      <div className="section" />
-      <main>
-        <center>
-          <h5 className="indigo-text">Login into your account</h5>
-          <div className="section" />
+const LoginForm = ({ onSubmit, onChange, error, password, email }) => (
+  <div>
+    <div className="section" />
+    <main>
+      <center>
+        <h5 className="indigo-text">Login into your account</h5>
+        <div className="section" />
 
-          <div className="container">
-            <div
-              className="z-depth-1 grey lighten-4 row"
-              style={{
-                display: 'inline-block',
-                padding: '32px 48px 0px 48px',
-                border: '1px solid #EEE'
-              }}
+        <div className="container">
+          <div
+            className="z-depth-1 grey authForm lighten-4 row"
+          >
+            {error.message && Materialize.toast(error.message, 2000)}
+            <form
+              className="col s12"
+              method="post"
+              onSubmit={onSubmit}
             >
-              {error.message && Materialize.toast(error.message, 2000)}
-              <form
-                className="col s12"
-                method="post"
-                onSubmit={onSubmit}
+
+              <div className="input-field col s12">
+                <input
+                  className="validate required"
+                  type="email"
+                  name="email"
+                  onChange={onChange}
+                  value={email}
+                  id="email"
+                  required
+                />
+                <label htmlFor="email">Enter your email</label>
+              </div>
+
+              <div className="input-field col s12">
+                <input
+                  className="validate required"
+                  type="password"
+                  onChange={onChange}
+                  value={password}
+                  name="password"
+                  id="password"
+                  required
+                />
+                <label htmlFor="password">Enter your password</label>
+              </div>
+              <button
+                type="submit"
+                name="btn_login"
+                className="col s12 btn btn-large waves-effect indigo"
               >
-
-                <div className="input-field col s12">
-                  <input
-                    className="validate required"
-                    type="email"
-                    name="email"
-                    onChange={onChange}
-                    value={email}
-                    id="email"
-                    required
-                  />
-                  <label htmlFor="email">Enter your email</label>
-                </div>
-
-                <div className="input-field col s12">
-                  <input
-                    className="validate required"
-                    type="password"
-                    onChange={onChange}
-                    value={password}
-                    name="password"
-                    id="password"
-                    required
-                  />
-                  <label htmlFor="password">Enter your password</label>
-                </div>
-                <button
-                  type="submit"
-                  name="btn_login"
-                  className="col s12 btn btn-large waves-effect indigo"
-                >
-                  Login
-                </button>
-              </form>
-            </div>
+                Login
+              </button>
+            </form>
           </div>
-          <ul>
-            <li>
-              <Link to="/signup">Create a new account </Link>
-            </li>
-          </ul>
-        </center>
-      </main>
-    </div>
-  );
-};
+        </div>
+        <ul>
+          <li>
+            <Link to="/signup">Create a new account </Link>
+          </li>
+        </ul>
+      </center>
+    </main>
+  </div>
+);
 
 LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
@@ -84,7 +74,6 @@ LoginForm.propTypes = {
   error: PropTypes.object.isRequired,
   password: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  logged: PropTypes.bool.isRequired,
 };
 
 export default LoginForm;

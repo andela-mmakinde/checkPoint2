@@ -1,6 +1,7 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import { userLoginRequest } from '../../actions/authActions';
 
@@ -38,6 +39,10 @@ export class LoginPage extends React.Component {
   }
 
   render() {
+    const { logged } = this.state;
+    if (logged) {
+      return <Redirect to="/document" />;
+    }
     return (
       <div className="dashboardBackground">
         <LoginForm
@@ -47,7 +52,6 @@ export class LoginPage extends React.Component {
           error={this.state.error}
           email={this.state.email}
           password={this.state.password}
-          logged={this.state.logged}
         />
       </div>
     );
