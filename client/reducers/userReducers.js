@@ -4,6 +4,13 @@ const initialState = {
   userData: [],
   pagination: {}
 };
+
+/**
+* Reducer for user-related actions.
+* @param {Object} state The old state of the application
+* @param {Object} action The dispatched action
+* @returns {Object} The new application state
+*/
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_ALL_USERS:

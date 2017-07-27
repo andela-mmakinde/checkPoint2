@@ -4,7 +4,16 @@ import { connect } from 'react-redux';
 import SearchBar from '../documents/SearchBar';
 import { searchDocuments } from '../../actions/documentActions';
 
+/**
+ * @export
+ * @class SearchDocuments
+ * @extends {React.Component}
+ */
 export class SearchDocuments extends React.Component {
+  /**
+   * Creates an instance of SearchDocuments.
+   * @memberOf SearchDocuments
+   */
   constructor() {
     super();
     this.state = {
@@ -15,12 +24,22 @@ export class SearchDocuments extends React.Component {
     this.clearField = this.clearField.bind(this);
   }
 
+  /**
+   * @param {object} event
+   * @returns {void}
+   * @memberOf SearchDocuments
+   */
   onChange(event) {
     this.setState({
       searchQuery: event.target.value
     });
   }
 
+  /**
+   * @param {object} event
+   * @returns {void}
+   * @memberOf SearchDocuments
+   */
   onSubmit(event) {
     event.preventDefault();
     this.props.searchDocuments(this.state.searchQuery);
@@ -31,6 +50,12 @@ export class SearchDocuments extends React.Component {
       searchQuery: ''
     });
   }
+
+
+  /**
+   * @returns {String} The HTML markup for the SearchBar
+   * @memberOf CreateDocument
+   */
   render() {
     return (
       <span>

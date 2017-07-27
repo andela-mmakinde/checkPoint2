@@ -11,7 +11,17 @@ import Pagination from '../Pagination';
 import SearchUsers from './SearchUsers';
 import UserCard from '../../components/users/UserCard';
 
+/**
+ * @export
+ * @class Users
+ * @extends {React.Component}
+ */
 export class Users extends React.Component {
+  /**
+   * Creates an instance of Users.
+   * @param {any} props
+   * @memberOf Users
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +33,12 @@ export class Users extends React.Component {
     this.handlePageClick = this.handlePageClick.bind(this);
   }
 
+  /**
+   * Initialize delete modal on component mount
+   * @method ComponentDidMount
+   * @return {void}
+   * @memberOf Users
+   */
   componentDidMount() {
     $('#deleteModal2').modal();
     this.props
@@ -39,13 +55,24 @@ export class Users extends React.Component {
       });
   }
 
+  /**
+   * Initializes when reducer gets updated with new props
+   * @param {any} nextProps
+   * @return {void}
+   * @memberOf Users
+   */
   componentWillReceiveProps(nextProps) {
     this.setState({
       allUsers: nextProps.allUsers,
       pageCount: nextProps.pagination.pageCount
     });
   }
-
+  /**
+   * handles click on change of page
+   * @param {object} page
+   * @returns {void}
+   * @memberOf Users
+   */
   handlePageClick(page) {
     const selected = page.selected;
     const limit = 5;
@@ -58,6 +85,11 @@ export class Users extends React.Component {
     });
   }
 
+  /**
+   * @param {any} id
+   * @returns {void}
+   * @memberOf Users
+   */
   deleteUser(id) {
     this.props.deleteUserRecord(id).then(() => {
       Materialize.toast('User deleted', 2000);
@@ -65,6 +97,10 @@ export class Users extends React.Component {
     });
   }
 
+  /**
+   * @returns {String} The HTML markup for the Users page
+   * @memberOf Users
+   */
   render() {
     const { allUsers } = this.state;
     return (
@@ -98,13 +134,11 @@ Users.propTypes = {
   allUsers: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
-function mapStateToProps(state) {
-  return {
-    allUsers: state.user.userData,
-    pagination: state.user.pagination,
-    currentUser: state.auth.user
-  };
-}
+const mapStateToProps = state => ({
+  allUsers: state.user.userData,
+  pagination: state.user.pagination,
+  currentUser: state.auth.user
+});
 
 export default connect(mapStateToProps, {
   getAllUsers,

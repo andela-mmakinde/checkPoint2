@@ -8,7 +8,17 @@ import Pagination from '../Pagination';
 import SearchDocuments from './SearchDocuments';
 import { myDocuments, deleteDocuments } from '../../actions/documentActions';
 
+/**
+ * @export
+ * @class UserDocuments
+ * @extends {React.Component}
+ */
 export class UserDocuments extends React.Component {
+  /**
+   * Creates an instance of UserDocuments.
+   * @param {any} props
+   * @memberOf UserDocuments
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -20,10 +30,22 @@ export class UserDocuments extends React.Component {
     this.handlePageClick = this.handlePageClick.bind(this);
   }
 
+  /**
+   * Gets all documents a user created on component mount
+   * @method ComponentDidMount
+   * @return {void}
+   * @memberOf UserDocuments
+   */
   componentDidMount() {
     this.props.myDocuments(this.props.currentUser.id);
   }
 
+  /**
+   * Initializes when reducer gets updated with new props
+   * @param {object} nextProps
+   * @return {void}
+   * @memberOf UserDocuments
+   */
   componentWillReceiveProps(nextProps) {
     const documents = nextProps.documentsFromReducer;
     const pagination = nextProps.pagination;
@@ -33,6 +55,12 @@ export class UserDocuments extends React.Component {
     });
   }
 
+ /**
+   * handles click on change of page
+   * @param {object} page
+   * @returns {void}
+   * @memberOf Documents
+   */
   handlePageClick(page) {
     const selected = page.selected;
     const limit = 8;
@@ -46,6 +74,11 @@ export class UserDocuments extends React.Component {
     });
   }
 
+  /**
+   * @param {number} id
+   * @returns {void}
+   * @memberOf UserDocuments
+   */
   deleteDocument(id) {
     this.props
       .deleteDocuments(id)
@@ -55,6 +88,10 @@ export class UserDocuments extends React.Component {
       });
   }
 
+  /**
+   * @returns {String} The HTML markup for the UserDocuments
+   * @memberOf UserDocuments
+   */
   render() {
     const { documents } = this.state;
     return (
@@ -63,7 +100,8 @@ export class UserDocuments extends React.Component {
         <div className="btn-container">
           <Link
             to="/create"
-            className="btn-floating btn-large waves-effect waves-light right indigo"
+            className={`btn-floating btn-large 
+            waves-effect waves-light right indigo`}
           >
             <i className="material-icons">
               add
@@ -111,13 +149,11 @@ UserDocuments.propTypes = {
   deleteDocuments: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    documentsFromReducer: state.documents.documentList,
-    currentUser: state.auth.user,
-    pagination: state.documents.pagination
-  };
-}
+const mapStateToProps = state => ({
+  documentsFromReducer: state.documents.documentList,
+  currentUser: state.auth.user,
+  pagination: state.documents.pagination
+});
 
 export default connect(mapStateToProps, { myDocuments, deleteDocuments })(
   UserDocuments

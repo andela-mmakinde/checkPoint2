@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * @class UserCard
+ * @extends {React.Component}
+ */
 class UserCard extends React.Component {
+  /**
+   * Creates an instance of UserCard.
+   * @param {any} props
+   * @memberOf UserCard
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -10,13 +19,29 @@ class UserCard extends React.Component {
     this.selectUser = this.selectUser.bind(this);
   }
 
+  /**
+   * Get all documents a user has access to on component mount
+   * @param {any} nextProps
+   * @return {void}
+   * @memberOf UserCard
+   */
   componentWillReceiveProps(nextProps) {
     this.setState({ allUsers: nextProps.allUsers, selectId: '' });
   }
 
+  /**
+   * @param {number} id
+   * @memberOf UserCard
+   * @return {void}
+   */
   selectUser(id) {
     this.setState({ selectId: id });
   }
+
+  /**
+   * @returns {String} The HTML markup for the DocumentForm
+   * @memberOf Documents
+   */
   render() {
     const { allUsers, selectId } = this.state;
     return (
@@ -60,12 +85,14 @@ class UserCard extends React.Component {
           <div className="modal-footer">
             <button
               onClick={() => this.props.deleteUser(selectId)}
-              className="modal-action modal-close waves-effect delete waves-green btn-flat"
+              className={`modal-action modal-close 
+              waves-effect delete waves-green btn-flat`}
             >
               Yes
             </button>
             <button
-              className="modal-action modal-close waves-effect waves-green btn-flat"
+              className={`modal-action modal-close 
+              waves-effect waves-green btn-flat`}
             >
               No
             </button>

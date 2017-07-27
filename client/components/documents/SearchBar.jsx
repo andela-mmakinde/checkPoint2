@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * SearchBar component.
+ * @returns {String} The HTML markup for the search input component
+ */
 const SearchBar = ({ onSubmit, onChange, clearField }) => (
   <form className="searchForm" onSubmit={onSubmit}>
     <div className="input-field document">

@@ -1,4 +1,4 @@
-/* global */
+/* global $ */
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -11,7 +11,17 @@ updateDocument,
 searchDocumentById,
 fetchAllUserDocument } from '../../actions/documentActions';
 
+/**
+ * @export
+ * @class EditDocument
+ * @extends {React.Component}
+ */
 export class EditDocument extends React.Component {
+  /**
+   * Creates an instance of EditDocument.
+   * @param {object} props
+   * @memberOf EditDocument
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +38,11 @@ export class EditDocument extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  /**
+   * Get all documents a user has access to on component mount
+   * @memberOf EditDocument
+   * @return {void}
+   */
   componentDidMount() {
     $('select').material_select();
     this.props.searchDocumentById(this.props.match.params.id).then(() => {
@@ -35,11 +50,18 @@ export class EditDocument extends React.Component {
         id: this.props.documentsFromReducer.id,
         access: this.props.documentsFromReducer.access,
         title: this.props.documentsFromReducer.title,
-        editorState: EditorState.createWithContent(convertFromHTML(this.props.documentsFromReducer.content)),
+        editorState:
+        EditorState.createWithContent(convertFromHTML(this
+          .props.documentsFromReducer.content)),
       });
     });
   }
 
+  /**
+   * @param {any} event
+   * @returns {void}
+   * @memberOf EditDocument
+   */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
@@ -47,13 +69,24 @@ export class EditDocument extends React.Component {
     });
   }
 
+  /**
+   * @param {string} editorState
+   * @returns {void}
+   * @memberOf CreateDocument
+   */
   onEditorStateChange(editorState) {
     this.setState({
       editorState,
       content: convertToHTML(editorState.getCurrentContent())
     });
   }
-
+  /**
+   * Makes an action call to edit a document
+   *
+   * @param {object} event
+   * @returns {void}
+   * @memberOf CreateDocument
+   */
   onSubmit(event) {
     event.preventDefault();
     this.setState({ error: {} });
@@ -74,6 +107,10 @@ export class EditDocument extends React.Component {
       });
   }
 
+  /**
+   * @returns {String} The HTML markup for the DocumentForm
+   * @memberOf CreateDocument
+   */
   render() {
     const { error, success, title, content, access, editorState } = this.state;
     const docObj = { title, content, access, editorState };
@@ -102,17 +139,16 @@ EditDocument.defaultProps = {
 };
 
 EditDocument.propTypes = {
-  documentsFromReducer: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  documentsFromReducer:
+  PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   updateDocument: PropTypes.func.isRequired,
   searchDocumentById: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    documentsFromReducer: state.documents.documentList,
-    currentUser: state.auth.user
-  };
-}
+const mapStateToProps = state => ({
+  documentsFromReducer: state.documents.documentList,
+  currentUser: state.auth.user
+});
 
 export default connect(mapStateToProps, {
   updateDocument, searchDocumentById, fetchAllUserDocument

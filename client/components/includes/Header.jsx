@@ -1,22 +1,49 @@
+/* global $ localStorage*/
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { logout } from '../../actions/authActions';
 
+/**
+ * @export
+ * @class Header
+ * @extends {React.Component}
+ */
 export class Header extends React.Component {
+  /**
+   * Creates an instance of Header.
+   * @param {object} props
+   * @memberOf Header
+   */
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
   }
+
+  /**
+   * Get all documents a user has access to on component mount
+   * @method ComponentDidMount
+   * @return {void}
+   * @memberOf Documents
+   */
   componentDidMount() {
     $('.dropdown-button').dropdown();
   }
+
+  /**
+   * @return {void}
+   * @memberOf Header
+   */
   logout() {
     localStorage.removeItem('token');
     this.setState({ logged: false });
   }
 
+  /**
+   * @returns {String} The HTML markup for the DocumentForm
+   * @memberOf CreateDocument
+   */
   render() {
     return (
       <nav>
@@ -36,8 +63,11 @@ export class Header extends React.Component {
                   </i>
               </Link>
             </li>
-            <li><Link id="updateProfile" to="/profile">Update Profile</Link></li>
-            {this.props.currentUser.roleId === 1 && <li><Link className="users" to="/user">Users</Link></li>}
+            <li>
+              <Link id="updateProfile" to="/profile">Update Profile</Link>
+            </li>
+            {this.props.currentUser.roleId === 1 &&
+            <li><Link className="users" to="/user">Users</Link></li>}
             <li><Link id="logout" to="" onClick={this.logout}>Logout</Link></li>
           </ul>
 
@@ -61,11 +91,9 @@ Header.propTypes = {
   currentUser: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    currentUser: state.auth.user
-  };
-}
+const mapStateToProps = state => ({
+  currentUser: state.auth.user
+});
 
 export default connect(mapStateToProps, {
   logout

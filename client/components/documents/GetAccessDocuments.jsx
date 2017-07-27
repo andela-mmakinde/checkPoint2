@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DocumentCard from './DocumentCard';
 
+/**
+ * GetAccessDocuments component.
+ * @returns {String} The HTML markup for the document card component
+ */
 const GetAccessDocuments = ({ documents, currentUser }) => (
   <div>
     <div className="container">
