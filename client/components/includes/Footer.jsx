@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * Footer component.
+ * @returns {String} The HTML markup for the Footer component
+ */
 const Footer = () => {
   const date = new Date().getFullYear();
   return (

@@ -1,17 +1,29 @@
+/* global $ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
 import { Link } from 'react-router-dom';
 
+/**
+ * @class DocumentCard
+ * @extends {React.Component}
+ */
 class DocumentCard extends React.Component {
+  /**
+   * Initialize select dropdown on component mount
+   * @memberOf DocumentCard
+   * @return {void}
+   */
   componentDidMount() {
     $('#deleteModal').modal();
   }
 
+  /**
+   * @returns {String} The HTML markup for the DocumentCard
+   * @memberOf DocumentCard
+   */
   render() {
-    const { document } = this.props;
-    const { deleteDocument } = this.props;
-    const { currentUser } = this.props;
+    const { document, deleteDocument, currentUser } = this.props;
     const modalId = `modal${this.props.id}`;
 
     return (
@@ -50,10 +62,14 @@ class DocumentCard extends React.Component {
               <div className="modal-footer">
                 <button
                   onClick={() => deleteDocument(document.id)}
-                  className="modal-action modal-close waves-effect delete waves-green btn-flat">
+                  className={`modal-action modal-close waves-effect delete
+                  waves-green btn-flat`}
+                >
                   Yes
                 </button>
-                <button className="modal-action modal-close waves-effect waves-green btn-flat">
+                <button className={`modal-action modal-close 
+                  waves-effect waves-green btn-flat`}
+                >
                   No
                 </button>
               </div>

@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
+/**
+ * @export
+ * @class SearchUsers
+ * @extends {React.Component}
+ */
 export default class SearchUsers extends React.Component {
+  /**
+   * Creates an instance of SearchUsers.
+   * @memberOf SearchUsers
+   */
   constructor() {
     super();
     this.state = {
@@ -12,17 +20,31 @@ export default class SearchUsers extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * @param {any} event
+   * @returns {void}
+   * @memberOf SearchUsers
+   */
   onChange(event) {
     this.setState({
       searchQuery: event.target.value
     });
   }
 
+  /**
+   * @param {any} event
+   * @returns {void}
+   * @memberOf SearchUsers
+   */
   onSubmit(event) {
     event.preventDefault();
     this.props.searchUserDb(this.state.searchQuery);
   }
 
+  /**
+   * @returns {String} The HTML markup for the DocumentForm
+   * @memberOf CreateDocument
+   */
   render() {
     return (
       <form className="input-field user" onSubmit={this.onSubmit}>

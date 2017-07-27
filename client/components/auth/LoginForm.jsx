@@ -4,6 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+/**
+ * LoginForm component.
+ * @returns {String} The HTML markup for the login component
+ */
 const LoginForm = ({ onSubmit, onChange, error, password, email }) => (
   <div>
     <div className="section" />

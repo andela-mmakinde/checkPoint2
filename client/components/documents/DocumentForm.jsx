@@ -4,6 +4,10 @@ import { Editor } from 'react-draft-wysiwyg';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+/**
+ * DocumentForm component.
+ * @returns {String} The HTML markup for the DocumentForm component
+ */
 const DocumentForm = ({
   docObj,
   onSubmit,

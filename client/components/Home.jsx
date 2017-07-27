@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Homepage component.
+ * @returns {String} The HTML markup for the home component
+ */
 const Home = () => (
   <div className="section homepage no-pad-bot" id="index-banner">
     <div className="container">

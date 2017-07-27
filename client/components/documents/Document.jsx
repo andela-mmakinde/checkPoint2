@@ -7,7 +7,17 @@ import SearchDocuments from './SearchDocuments';
 import GetAccessDocuments from './GetAccessDocuments';
 import { fetchAllUserDocument } from '../../actions/documentActions';
 
+/**
+ * @export
+ * @class Documents
+ * @extends {React.Component}
+ */
 export class Documents extends React.Component {
+  /**
+   * Creates an instance of Documents.
+   * @param {any} props
+   * @memberOf Documents
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +29,12 @@ export class Documents extends React.Component {
     this.handlePageClick = this.handlePageClick.bind(this);
   }
 
+  /**
+   * Get all documents a user has access to on component mount
+   * @method ComponentDidMount
+   * @return {void}
+   * @memberOf Documents
+   */
   componentDidMount() {
     this.props.fetchAllUserDocument().then(() => {
       this.setState({
@@ -27,6 +43,12 @@ export class Documents extends React.Component {
     });
   }
 
+  /**
+   * Initializes when reducer gets updated with new props
+   * @param {object} nextProps
+   * @return {void}
+   * @memberOf Documents
+   */
   componentWillReceiveProps(nextProps) {
     const documents = nextProps.documentsFromReducer;
     const pageCount = nextProps.pagination.pageCount;
@@ -36,6 +58,12 @@ export class Documents extends React.Component {
     });
   }
 
+  /**
+   * handles click on change of page
+   * @param {object} page
+   * @returns {void}
+   * @memberOf Documents
+   */
   handlePageClick(page) {
     const selected = page.selected;
     const limit = 8;
@@ -47,6 +75,10 @@ export class Documents extends React.Component {
       });
     });
   }
+  /**
+   * @returns {String} The HTML markup for the DocumentForm
+   * @memberOf Documents
+   */
   render() {
     return (
       <div>
@@ -54,7 +86,8 @@ export class Documents extends React.Component {
         <div className="btn-container">
           <Link
             to="/create"
-            className="btn-floating btn-large waves-effect waves-light right indigo"
+            className={`btn-floating btn-large
+            waves-effect waves-light right indigo`}
           >
             <i className="material-icons">
               add
@@ -88,18 +121,17 @@ Documents.defaultProps = {
 
 Documents.propTypes = {
   fetchAllUserDocument: PropTypes.func.isRequired,
-  documentsFromReducer: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  documentsFromReducer:
+  PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   pagination: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
-function mapStateToProps(state) {
-  return {
-    documentsFromReducer: state.documents.documentList,
-    pagination: state.documents.pagination,
-    currentUser: state.auth.user
-  };
-}
+const mapStateToProps = state => ({
+  documentsFromReducer: state.documents.documentList,
+  pagination: state.documents.pagination,
+  currentUser: state.auth.user
+});
 
 export default connect(mapStateToProps, {
   fetchAllUserDocument,

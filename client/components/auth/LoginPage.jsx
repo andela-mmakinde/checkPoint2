@@ -5,7 +5,18 @@ import { Redirect } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import { userLoginRequest } from '../../actions/authActions';
 
+/**
+ * @export
+ * @class LoginPage
+ * @extends {React.Component}
+ */
 export class LoginPage extends React.Component {
+  /**
+   * Creates an instance of LoginPage.
+   * @param {object} props
+   *
+   * @memberOf LoginPage
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +29,13 @@ export class LoginPage extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * Sets the state of inputs received from user
+   *
+   * @param {object} event
+   * @returns {void}
+   * @memberOf LoginPage
+   */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
@@ -25,6 +43,13 @@ export class LoginPage extends React.Component {
     });
   }
 
+  /**
+   * Makes an action call to log a user in
+   *
+   * @param {object} event
+   * @returns {void}
+   * @memberOf LoginPage
+   */
   onSubmit(event) {
     this.setState({ error: {} });
     event.preventDefault();
@@ -38,6 +63,10 @@ export class LoginPage extends React.Component {
       });
   }
 
+  /**
+   * @returns {String} The HTML markup for the LoginForm
+   * @memberOf LoginPage
+   */
   render() {
     const { logged } = this.state;
     if (logged) {
