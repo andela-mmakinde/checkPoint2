@@ -79,7 +79,7 @@ export class EditDocument extends React.Component {
     const docObj = { title, content, access, editorState };
 
     if (success) {
-      return <Redirect to="/docs" />;
+      return <Redirect to="/mydocuments" />;
     }
     return (
       <div>

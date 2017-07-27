@@ -35,7 +35,7 @@ module.exports = {
       .click('select option[value="Role"]')
       .click('.submit')
       .pause(1000)
-      .assert.urlEquals('http://localhost:5000/docs'),
+      .assert.urlEquals('http://localhost:5000/mydocuments'),
   'User should be able to retrieve all documents he/she created': browser =>
     browser
      .url('http://localhost:5000/document')
@@ -44,7 +44,7 @@ module.exports = {
       .pause(1000)
       .click('#myDocs')
       .pause(2000)
-      .assert.urlEquals('http://localhost:5000/docs'),
+      .assert.urlEquals('http://localhost:5000/mydocuments'),
   'User should be able to search documents': browser =>
     browser
       .url('http://localhost:5000/document')
@@ -56,7 +56,7 @@ module.exports = {
       .waitForElementVisible('.documentCard', 5000),
   'User should be able to edit a document successfully': browser =>
     browser
-     .url('http://localhost:5000/docs')
+     .url('http://localhost:5000/mydocuments')
       .waitForElementVisible('body', 5000)
       .pause(2000)
       .click('.edit')
@@ -70,12 +70,12 @@ module.exports = {
       .setValue('.public-DraftEditor-content', content)
       .click('.edit-Document')
       .pause(2000)
-      .url('http://localhost:5000/docs')
+      .url('http://localhost:5000/mydocuments')
       .waitForElementVisible('.documentCard', 5000)
       .assert.containsText('.title', newTitle),
   'User should be able to view document details': browser =>
     browser
-      .url('http://localhost:5000/docs')
+      .url('http://localhost:5000/mydocuments')
       .pause(1000)
       .waitForElementVisible('body', 5000)
       .click('#documentView')
@@ -84,7 +84,7 @@ module.exports = {
       .assert.containsText('.center', newTitle),
   'User should be able to delete a document successfully': browser =>
     browser
-     .url('http://localhost:5000/docs')
+     .url('http://localhost:5000/mydocuments')
       .waitForElementVisible('body', 5000)
       .click('.deleteModalTrigger')
       .pause(2000)

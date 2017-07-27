@@ -71,7 +71,7 @@ export class CreateDocument extends React.Component {
     };
 
     if (success) {
-      return <Redirect to="/docs" />;
+      return <Redirect to="/mydocuments" />;
     }
     return (
       <div>
