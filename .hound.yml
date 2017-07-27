@@ -4,3 +4,6 @@ eslint:
 
 eslint:
   ignore_file: .eslintignores
+
+jshint:
+  config_file: .jshintrc
