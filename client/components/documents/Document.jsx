@@ -36,8 +36,8 @@ export class Documents extends React.Component {
     });
   }
 
-  handlePageClick(data) {
-    const selected = data.selected;
+  handlePageClick(page) {
+    const selected = page.selected;
     const limit = 8;
     const offset = Math.ceil(selected * limit);
     this.setState({ offset });
@@ -61,18 +61,21 @@ export class Documents extends React.Component {
             </i>
           </Link>
         </div>
-      <div className="dashboardBackground">
-        <div>
-          <GetAccessDocuments
-            currentUser={this.props.currentUser}
-            documents={this.state.documents}
-          />
-        </div>
-        <div className="paginationContainer">
-          <Pagination handlePageClick={this.handlePageClick} pageCount={this.state.pageCount} />
+        <div className="dashboardBackground">
+          <div>
+            <GetAccessDocuments
+              currentUser={this.props.currentUser}
+              documents={this.state.documents}
+            />
+          </div>
+          <div className="paginationContainer">
+            <Pagination
+              handlePageClick={this.handlePageClick}
+              pageCount={this.state.pageCount}
+            />
+          </div>
         </div>
       </div>
-     </div>
     );
   }
 }

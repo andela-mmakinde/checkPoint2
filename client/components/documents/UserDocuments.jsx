@@ -33,12 +33,13 @@ export class UserDocuments extends React.Component {
     });
   }
 
-  handlePageClick(data) {
-    const selected = data.selected;
+  handlePageClick(page) {
+    const selected = page.selected;
     const limit = 8;
     const offset = Math.ceil(selected * limit);
     this.setState({ offset });
-    this.props.myDocuments(this.props.currentUser.id, offset, limit).then(() => {
+    this.props.myDocuments(this.props.currentUser.id, offset, limit)
+    .then(() => {
       this.setState({
         documents: this.props.documentsFromReducer
       });
@@ -85,7 +86,10 @@ export class UserDocuments extends React.Component {
             </div>
           </div>}
         <div className="paginationContainer">
-          <Pagination handlePageClick={this.handlePageClick} pageCount={this.state.pageCount} />
+          <Pagination
+            handlePageClick={this.handlePageClick}
+            pageCount={this.state.pageCount}
+          />
         </div>
       </div>
     );
@@ -100,7 +104,8 @@ UserDocuments.defaultProps = {
 
 UserDocuments.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  documentsFromReducer: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  documentsFromReducer:
+  PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   pagination: PropTypes.object.isRequired,
   myDocuments: PropTypes.func.isRequired,
   deleteDocuments: PropTypes.func.isRequired

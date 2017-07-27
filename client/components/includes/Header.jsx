@@ -43,7 +43,7 @@ export class Header extends React.Component {
 
           <div>
             <ul id="dropdown1" className="dropdown-content">
-              <li><Link id="myDocs" to="/docs">Owned by Me</Link></li>
+              <li><Link id="myDocs" to="/mydocuments">Owned by Me</Link></li>
               <li><Link to="/document">All documents</Link></li>
               <li>
                 <Link id="createNewDoc" to="/create">Create Document</Link>

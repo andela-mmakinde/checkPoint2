@@ -23,7 +23,7 @@ describe('login form component', () => {
 
   describe('renders', () => {
     it('renders as a div', () => {
-      expect(typeof wrapper.node.type).toEqual('function');
+      expect(wrapper.node.type).toEqual('div');
     });
   });
 });

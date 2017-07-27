@@ -1,3 +1,4 @@
+/* global Materialize $ */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -45,8 +46,8 @@ export class Users extends React.Component {
     });
   }
 
-  handlePageClick(data) {
-    const selected = data.selected;
+  handlePageClick(page) {
+    const selected = page.selected;
     const limit = 5;
     const offset = Math.ceil(selected * limit);
     this.setState({ offset });
@@ -69,10 +70,16 @@ export class Users extends React.Component {
     return (
       <div className="dashboardBackground">
         <h2 className="center">All Users</h2>
-        <SearchUsers className="searchUser" searchUserDb={this.props.searchUserDb} />
+        <SearchUsers
+          className="searchUser"
+          searchUserDb={this.props.searchUserDb}
+        />
         <UserCard allUsers={allUsers} deleteUser={this.deleteUser} />
         <div className="paginationContainer">
-          <Pagination pageCount={this.state.pageCount} handlePageClick={this.handlePageClick} />
+          <Pagination
+            pageCount={this.state.pageCount}
+            handlePageClick={this.handlePageClick}
+          />
         </div>
       </div>
     );
