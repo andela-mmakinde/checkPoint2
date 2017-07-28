@@ -4,7 +4,7 @@
 
 DOC-GARAGE allows users to create, edit, retrieve and delete documents. It allows you to search for a particular document by title.
 Pagination is added to allow for easy accessing of documents.
-And what else? Is is free!
+And what else? It is free!
 [Click here](http://docgarage.herokuapp.com/) to view the app on Heroku.
 
 ### Core Tecnologies
@@ -27,8 +27,7 @@ The user interface was built using [ReactJS]((http://reactjs.cn/react/docs) with
 ### API ENDPOINTS
 Access for the endpoints are restricted based on the Authorization token assigned to the user.
 Users are assigned a JWT on creating an account and login to the system, this token is therefore used to authorise access to the API endpoints.
-
-Visit api-docs for more info 
+For more info on using the api, click [here](http://docgarage.herokuapp.com/docs) for more info 
 
 
 ### Limitations

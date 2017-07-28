@@ -12,7 +12,9 @@ const Protect = ({ component: Component, ...rest }) => (
     localStorage.getItem('token') ? (
       <div>
         <ConnectedHeader />
-        <Component {...props} />
+        <div className="myContents">
+          <Component {...props} />
+        </div>
         <Footer />
       </div>
     ) : (
