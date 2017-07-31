@@ -6,13 +6,11 @@ import expect from 'expect';
 import * as actions from '../../actions/authActions';
 import mockLocalStorage from '../utils/mockLocalStorage';
 
+require('dotenv').config();
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const jsonToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-.eyJ1c2VyRGV0YWlscyI6eyJpZCI6MTQsImVtYWlsIjoidGVkZHlAYm9
-uZy5jb20iLCJyb2xlSWQiOjIsImZ1bGxOYW1lIjoiVGVkZHkgQm9uZyJ
-9LCJpYXQiOjE1MDA2MjUxMjUsImV4cCI6MTUwMDcxMTUyNX0
-.Ygdvz6SutNSZ0rwY8SCawSAhn1mrNV8Zf2aKSuMHHu8`;
+const jsonToken = process.env.jsonToken;
 window.localStorage = mockLocalStorage;
 
 describe('auth actions', () => {

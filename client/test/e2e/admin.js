@@ -15,8 +15,6 @@ module.exports = {
       .assert.urlEquals('http://localhost:5000/user'),
   'Admin should be able to delete a user': browser =>
     browser
-      .url('http://localhost:5000/user')
-      .waitForElementVisible('body', 5000)
       .click('#deleteModalTrigger')
       .pause(2000)
       .click('.delete')
@@ -24,14 +22,12 @@ module.exports = {
       .assert.containsText('.toast', 'User deleted'),
   'Admin should be able to search users': browser =>
     browser
-      .url('http://localhost:5000/user')
-      .waitForElementVisible('body', 5000)
       .clearValue('input[name=userSearch]')
       .setValue('input[name=userSearch]', 'ama')
       .keys(browser.Keys.ENTER)
       .pause(5000)
       .waitForElementVisible('.userTable', 2000)
       .pause(2000)
-      .assert.containsText('#userEmail', 'ama@la.com')
+      .assert.containsText('#userEmail', 'amaa@la.com')
       .end()
 };

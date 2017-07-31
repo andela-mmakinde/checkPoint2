@@ -27,8 +27,8 @@ The user interface was built using [ReactJS]((http://reactjs.cn/react/docs) with
 ### API ENDPOINTS
 Access for the endpoints are restricted based on the Authorization token assigned to the user.
 Users are assigned a JWT on creating an account and login to the system, this token is therefore used to authorise access to the API endpoints.
-For more info on using the api, click [here](http://docgarage.herokuapp.com/docs) for more info 
 
+For more info on using the api, click [here](http://docgarage.herokuapp.com/docs)
 
 ### Limitations
 Users cannot share documents with specific users, but can only make document public to make it available to all users
