@@ -104,14 +104,11 @@ h3 {
 .cancel {
   margin-right: 10px; }
 
-.paginationContainer {
-  margin-top: 20px !important; }
-
 .pagination {
   cursor: pointer; }
 
-.pagination :active {
-  background-color: indigo; }
+.pagination li.active {
+  background: #3f51b5; }
 
 .userprofile {
   background: #efefef !important; }
@@ -120,6 +117,25 @@ h3 {
   margin: 16px; }
 
 .myContents {
-  min-height: 35em; }
+  min-height: 78%; }
+
+.authForm {
+  display: inline-block;
+  padding: 32px 48px 0px 48px;
+  border: 1px solid #EEE; }
+
+.titleField {
+  margin: 0 !important; }
+
+@media (max-width: 480px) {
+  .myContents {
+    min-height: 60%em; } }
+
+.paginationContainer {
+  margin-left: 35%;
+  margin-top: 15px; }
+
+#cancel {
+  margin-right: 10px; }
 
 /*# sourceMappingURL=style.css.map*/
