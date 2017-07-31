@@ -30,6 +30,8 @@ module.exports = {
       .assert.urlEquals('http://localhost:5000/document'),
   'User log in without credentials': browser =>
     browser
+      .click('#logout')
+      .pause(2000)
       .url('http://localhost:5000/login')
       .waitForElementVisible('body', 5000)
       .setValue('input[name=email]', '')
@@ -37,7 +39,7 @@ module.exports = {
       .click('.btn-large')
       .pause(2000)
       .assert.urlEquals('http://localhost:5000/login'),
-  'User sign in success': browser =>
+  'Unregistered users should not be able to login': browser =>
     browser
       .url('http://localhost:5000/login')
       .waitForElementVisible('body', 5000)
@@ -47,6 +49,15 @@ module.exports = {
       .pause(2000)
       .waitForElementVisible('.toast', 5000)
       .assert.containsText('.toast', 'User record not found!'),
+  'User login success': browser =>
+    browser
+      .url('http://localhost:5000/login')
+      .waitForElementVisible('body', 5000)
+      .setValue('input[name=email]', 'ama@la.com')
+      .setValue('input[name=password]', 'amala')
+      .click('.btn-large')
+      .pause(2000)
+      .assert.urlEquals('http://localhost:5000/document'),
   'User should be able to update his fullname and email': browser =>
     browser
       .url('http://localhost:5000/document')
@@ -61,7 +72,7 @@ module.exports = {
       .pause(2000)
       .waitForElementVisible('.toast', 5000)
       .assert.containsText('.toast', 'Success'),
-  'User should receive an error it they try updating email to an exixting mail':
+  'User should receive an error it they try updating email to an existing mail':
   browser =>
     browser
       .url('http://localhost:5000/document')
