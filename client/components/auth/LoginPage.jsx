@@ -24,7 +24,6 @@ export class LoginPage extends React.Component {
       password: '',
       error: {},
       isLogged: false,
-      logged: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);

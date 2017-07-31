@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { updateUserDetails } from '../../actions/authActions';
 
 /**
@@ -86,8 +86,7 @@ export class UserProfile extends React.Component {
    * @memberOf CreateDocument
    */
   render() {
-    const { error } = this.state;
-    const { success } = this.state;
+    const { error, success } = this.state;
 
     if (success) {
       return <Redirect to="/document" />;
@@ -159,6 +158,7 @@ export class UserProfile extends React.Component {
                           value={this.state.password}
                           onChange={this.onChange}
                           id="password"
+                          required
                           type="password"
                           name="password"
                           className="validate"
@@ -170,6 +170,7 @@ export class UserProfile extends React.Component {
                           value={this.state.confirmPassword}
                           onChange={this.onChange}
                           id="confirmPassword"
+                          required
                           type="password"
                           name="confirmPassword"
                           className="validate"
@@ -188,6 +189,13 @@ export class UserProfile extends React.Component {
                       >
                         Save
                       </button>
+                      <Link
+                        to="/myDocuments"
+                        id="cancel"
+                        className="waves-effect waves-light btn right indigo"
+                      >
+                        Cancel
+                      </Link>
                     </div>
                   </form>
                 </div>
