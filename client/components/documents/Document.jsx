@@ -38,7 +38,7 @@ export class Documents extends React.Component {
   componentDidMount() {
     this.props.fetchAllUserDocument().then(() => {
       this.setState({
-        documents: this.props.documentsFromReducer
+        documents: this.props.documentList
       });
     });
   }
@@ -50,7 +50,7 @@ export class Documents extends React.Component {
    * @memberOf Documents
    */
   componentWillReceiveProps(nextProps) {
-    const documents = nextProps.documentsFromReducer;
+    const documents = nextProps.documentList;
     const pageCount = nextProps.pagination.pageCount;
     this.setState({
       documents,
@@ -71,7 +71,7 @@ export class Documents extends React.Component {
     this.setState({ offset });
     this.props.fetchAllUserDocument(offset, limit).then(() => {
       this.setState({
-        documents: this.props.documentsFromReducer
+        documents: this.props.documentList
       });
     });
   }
@@ -114,21 +114,21 @@ export class Documents extends React.Component {
 }
 
 Documents.defaultProps = {
-  documentsFromReducer: [],
+  documentList: [],
   currentUser: {},
   pagination: {}
 };
 
 Documents.propTypes = {
   fetchAllUserDocument: PropTypes.func.isRequired,
-  documentsFromReducer:
+  documentList:
   PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   pagination: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 const mapStateToProps = state => ({
-  documentsFromReducer: state.documents.documentList,
+  documentList: state.documents.documentList,
   pagination: state.documents.pagination,
   currentUser: state.auth.user
 });

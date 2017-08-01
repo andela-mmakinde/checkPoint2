@@ -17,7 +17,7 @@ export default class SearchUsers extends React.Component {
       searchQuery: ''
     };
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.clearField = this.clearField.bind(this);
   }
 
   /**
@@ -26,19 +26,23 @@ export default class SearchUsers extends React.Component {
    * @memberOf SearchUsers
    */
   onChange(event) {
+    const searchQuery = event.target.value;
     this.setState({
-      searchQuery: event.target.value
+      searchQuery
     });
+    this.props.searchUserDb(searchQuery);
   }
 
   /**
-   * @param {any} event
    * @returns {void}
    * @memberOf SearchUsers
    */
-  onSubmit(event) {
-    event.preventDefault();
-    this.props.searchUserDb(this.state.searchQuery);
+  clearField() {
+    const searchQuery = '';
+    this.setState({
+      searchQuery
+    });
+    this.props.searchUserDb(searchQuery);
   }
 
   /**
@@ -47,15 +51,23 @@ export default class SearchUsers extends React.Component {
    */
   render() {
     return (
-      <form className="input-field user" onSubmit={this.onSubmit}>
-        <div >
+      <form className="input-field user">
+        <div>
           <input
             id="search"
             type="search"
             name="userSearch"
             placeholder="Search Users"
+            value={this.state.searchQuery}
             onChange={this.onChange}
           />
+          <i
+            role="button"
+            className="material-icons"
+            onClick={this.clearField}
+          >
+            close
+          </i>
         </div>
       </form>
     );

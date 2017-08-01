@@ -24,7 +24,6 @@ module.exports = {
     browser
       .clearValue('input[name=userSearch]')
       .setValue('input[name=userSearch]', 'ama')
-      .keys(browser.Keys.ENTER)
       .pause(5000)
       .waitForElementVisible('.userTable', 2000)
       .pause(2000)

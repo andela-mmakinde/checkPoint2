@@ -9,16 +9,11 @@ describe('Users component', () => {
     currentUser: {},
     searchUserDb: jest.fn()
   };
-  const event = {
-    preventDefault: jest.fn()
-  };
   const wrapper = shallow(<SearchUsers {...props} />);
   it('renders as a div', () => {
     expect(wrapper.node.type).toEqual('form');
   });
-  const submitSpy = jest.spyOn(wrapper.instance(), 'onSubmit');
-  wrapper.instance().onSubmit(event);
-  expect(submitSpy).toHaveBeenCalledTimes(1);
+
   const spy = jest.spyOn(wrapper.instance(), 'onChange');
   wrapper.instance().onChange({
     target: {

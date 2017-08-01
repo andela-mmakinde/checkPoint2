@@ -275,7 +275,8 @@ const Documents = {
           title: {
             $iLike: `%${search}%`
           }
-        }
+        },
+        order: [['updatedAt', 'DESC']]
       };
     } else {
       dbQuery = {
@@ -300,7 +301,8 @@ const Documents = {
               roleId: req.user.roleId
             },
           ]
-        }
+        },
+        order: [['updatedAt', 'DESC']]
       };
     }
     Document.findAndCountAll(dbQuery)

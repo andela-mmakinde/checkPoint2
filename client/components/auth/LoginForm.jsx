@@ -29,7 +29,7 @@ const LoginForm = ({ onSubmit, onChange, error, password, email }) => (
 
               <div className="input-field col s12">
                 <input
-                  className="validate required"
+                  className="validate"
                   type="email"
                   name="email"
                   onChange={onChange}
@@ -42,7 +42,7 @@ const LoginForm = ({ onSubmit, onChange, error, password, email }) => (
 
               <div className="input-field col s12">
                 <input
-                  className="validate required"
+                  className="validate"
                   type="password"
                   onChange={onChange}
                   value={password}

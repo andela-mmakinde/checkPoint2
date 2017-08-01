@@ -139,7 +139,7 @@ EditDocument.propTypes = {
   PropTypes.shape({ id: '', access: '', title: '', content: '' }).isRequired,
   updateDocument: PropTypes.func.isRequired,
   searchDocumentById: PropTypes.func.isRequired,
-  match: PropTypes.shape({ params: { id: '' } }).isRequired,
+  match: PropTypes.shape({ params: '' }).isRequired
 };
 
 const mapStateToProps = state => ({

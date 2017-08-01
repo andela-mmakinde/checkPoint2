@@ -9,10 +9,10 @@ describe('Users component', () => {
     currentUser: {},
     myDocuments: jest.fn(() => Promise.resolve()),
     deleteDocuments: jest.fn(() => Promise.resolve()),
-    documentsFromReducer: {}
+    documentList: {}
   };
   const nextProps = {
-    documentsFromReducer: {},
+    documentList: {},
     pagination: { pageCount: 3 }
   };
   const page = {

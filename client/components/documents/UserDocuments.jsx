@@ -47,7 +47,7 @@ export class UserDocuments extends React.Component {
    * @memberOf UserDocuments
    */
   componentWillReceiveProps(nextProps) {
-    const documents = nextProps.documentsFromReducer;
+    const documents = nextProps.documentList;
     const pagination = nextProps.pagination;
     this.setState({
       documents,
@@ -69,7 +69,7 @@ export class UserDocuments extends React.Component {
     this.props.myDocuments(this.props.currentUser.id, offset, limit)
     .then(() => {
       this.setState({
-        documents: this.props.documentsFromReducer
+        documents: this.props.documentList
       });
     });
   }
@@ -136,13 +136,13 @@ export class UserDocuments extends React.Component {
 
 
 UserDocuments.defaultProps = {
-  documentsFromReducer: {},
+  documentList: {},
   pagination: {}
 };
 
 UserDocuments.propTypes = {
   currentUser: PropTypes.shape({ id: '' }).isRequired,
-  documentsFromReducer:
+  documentList:
   PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   pagination: PropTypes.shape({ pageCount: '' }).isRequired,
   myDocuments: PropTypes.func.isRequired,
@@ -150,7 +150,7 @@ UserDocuments.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  documentsFromReducer: state.documents.documentList,
+  documentList: state.documents.documentList,
   currentUser: state.auth.user,
   pagination: state.documents.pagination
 });
