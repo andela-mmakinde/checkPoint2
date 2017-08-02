@@ -65,6 +65,10 @@ const Documents = {
             {
               access: 'Role',
             },
+            {
+              access: 'Private',
+              ownerId: req.user.id,
+            },
           ]
         },
         order: [['updatedAt', 'DESC']]
@@ -99,6 +103,10 @@ const Documents = {
             {
               access: 'Role',
               roleId: req.user.roleId,
+            },
+            {
+              access: 'Private',
+              ownerId: req.user.id,
             },
           ]
         },
@@ -266,41 +274,45 @@ const Documents = {
    */
   search(req, res) {
     const search = req.query.q;
+    const pageType = req.query.pageType;
     let dbQuery;
-    if (req.user.roleId === 1) {
+    if (pageType === 'myDocuments') {
       dbQuery = {
         limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
           title: {
             $iLike: `%${search}%`
-          }
-        }
+          },
+          ownerId: req.user.id
+        },
+        order: [['updatedAt', 'DESC']]
       };
     } else {
       dbQuery = {
         limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
-          $and: {
-            title: {
-              $iLike: `%${search}%`
-            }
+          title: {
+            $iLike: `%${search}%`
           },
           $or: [
-            {
-              access: 'Private',
-              ownerId: req.user.id
-            },
             {
               access: 'Public',
             },
             {
               access: 'Role',
-              roleId: req.user.roleId
+              roleId: {
+                $gte: req.user.roleId
+              },
+            },
+            {
+              access: 'Private',
+              ownerId: req.user.id,
             },
           ]
-        }
+        },
+        order: [['updatedAt', 'DESC']]
       };
     }
     Document.findAndCountAll(dbQuery)

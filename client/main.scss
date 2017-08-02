@@ -121,21 +121,9 @@ h3 {
   font-size: 20px;
 }
 
-// .dashboardBackground {
-//   background-color: #e6e6e6 !important;
-//   min-height: 100%;
-//   background-repeat: no-repeat;
-// }
-
 .cancel {
   margin-right: 10px;
 }
-
-// .paginationContainer {
-//   // margin-top: 20px !important;
-//   margin: 0 auto !important;
-//   width: 100%;
-// }
 
 .pagination {
   cursor: pointer;
@@ -154,7 +142,7 @@ h3 {
 }
 
 .myContents {
-  min-height: 78%;
+  min-height: 85%;
 }
 
 .authForm {
@@ -167,11 +155,9 @@ h3 {
   margin: 0 !important;
 }
 
-@media (max-width: 480px) { 
-  .myContents {
-    min-height: 60%em;
-  }
-}
+// @media (max-width: 480px) { 
+  
+// }
 
 .paginationContainer {
   margin-left: 35%;
@@ -180,4 +166,15 @@ h3 {
 
 #cancel {
   margin-right: 10px;
+}
+
+.notFound {
+  margin-left: 40%;
+  margin-top: 50px;
+}
+
+@media only screen and (max-width : 480px) {
+  .myContents {
+    min-height: 100%;
+  }
 }

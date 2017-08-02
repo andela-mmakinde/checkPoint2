@@ -47,7 +47,10 @@ export class Header extends React.Component {
     return (
       <nav>
         <div className="col s12 nav-wrapper indigo">
-          <Link to="/document" className="brand-logo">DOC-GARAGE</Link>
+          <Link
+            to="/document"
+            className="brand-logo hide-on-small-only"
+          >DOC-GARAGE</Link>
           <ul id="nav-mobile" className="right ">
             <li>
               <Link

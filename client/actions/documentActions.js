@@ -100,11 +100,18 @@ export function deleteDocuments(id) {
  *
  * @export
  * @param {string} searchQuery
+ * @param {string} pageType
  * @returns {object} dispatch object
  */
-export function searchDocuments(searchQuery) {
+export function searchDocuments(searchQuery, pageType) {
   return dispatch =>
-    axios.get(`/api/v1/search/documents?q=${searchQuery}`).then((res) => {
+    axios.get('/api/v1/search/documents', {
+      params: {
+        q: searchQuery,
+        pageType
+      }
+    })
+    .then((res) => {
       const documents = res.data.document;
       const pagination = res.data.pagination;
       dispatch(searchDocs({ documents, pagination }));
