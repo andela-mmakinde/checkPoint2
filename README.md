@@ -11,7 +11,7 @@ And what else? It is free!
 -----------
 The application was developed with [NodeJs](https://nodejs.org/en/docs/) while using [Express](http://expressjs.com) for routing.
 The [Postgres](http://postgresql.com) database was used with [sequelize](http://sequelizejs.com) as the ORM.
-The user interface was built using [ReactJS]((http://reactjs.cn/react/docs) with the [Redux](http://redux.js.org/) architecture.
+The user interface was built using [ReactJS](http://reactjs.cn/react/docs) with the [Redux](http://redux.js.org/) architecture.
 [Webpack](https://webpack.js.org/configuration/) was used to bundle modules and [Babel](http://babeljs.io) was used to transpile all code to es5
 
 ### Installation
