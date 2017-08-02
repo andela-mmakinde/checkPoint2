@@ -10,12 +10,7 @@ module.exports = {
   },
 
   test: {
-    // use_env_variable: 'dmsTest',
-    // dialect: 'postgres',
-    username: 'andeladeveloper',
-    password: null,
-    database: 'DMS_TESTS',
-    host: '127.0.0.1',
+    use_env_variable: 'dmsTest',
     dialect: 'postgres',
     logging: false
   },
