@@ -15,7 +15,9 @@ describe('Edit Document component', () => {
   const event = {
     preventDefault: jest.fn()
   };
-
+  // const editorState = {
+  //   getCurrentContent: jest.fn()
+  // };
   const wrapper = shallow(<EditDocument {...props} />);
 
   it('changes the title when the on change function is called', () => {
@@ -45,6 +47,14 @@ describe('Edit Document component', () => {
     expect(wrapper.state('access')).toEqual('Public');
     expect(spy).toHaveBeenCalledTimes(2);
   });
+
+  // it('changes the state of content when the onEditorStateChange is called',
+  // () => {
+  //   const spy = jest.spyOn(wrapper.instance(), 'onEditorStateChange');
+  //   wrapper.instance().onEditorStateChange(editorState);
+  //   expect(wrapper.state('access')).toEqual('Public');
+  //   expect(spy).toHaveBeenCalledTimes(1);
+  // });
 
   it('contains a componentDidMount function', () => {
     const componentDidMountSpy =

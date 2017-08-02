@@ -13,7 +13,6 @@ describe('Create Document component', () => {
   const event = {
     preventDefault: jest.fn()
   };
-
   const wrapper = shallow(<CreateDocument {...props} />);
 
   it('changes the title when the on change function is called', () => {
@@ -32,12 +31,14 @@ describe('Create Document component', () => {
     wrapper.instance().onSubmit(event);
     expect(submitSpy).toHaveBeenCalledTimes(1);
   });
+
   it('should contain the method componentDidMount', () => {
     const componentDidMountSpy =
     jest.spyOn(wrapper.instance(), 'componentDidMount');
     wrapper.instance().componentDidMount();
     expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
   });
+
   it('changes the acces type when the on change function is called', () => {
     const spy = jest.spyOn(wrapper.instance(), 'onChange');
     wrapper.instance().onChange({

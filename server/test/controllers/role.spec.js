@@ -24,7 +24,7 @@ describe('Role', () => {
     });
   });
 
-  describe('/POST roles', () => {
+  describe('/POST /api/v1/role', () => {
     it('should fail without title field', (done) => {
       chai.request(app)
         .post('/api/v1/role')
@@ -81,7 +81,7 @@ describe('Role', () => {
     });
   });
 
-  describe('/VIEW role', () => {
+  describe('/GET /api/v1/roles', () => {
     it('should get list of roles', (done) => {
       chai.request(app)
         .get('/api/v1/roles')
@@ -95,7 +95,7 @@ describe('Role', () => {
     });
   });
 
-  describe('/UPDATE roles', () => {
+  describe('/PUT /api/v1/roles/:id', () => {
     it('should update role', (done) => {
       chai.request(app)
         .put('/api/v1/roles/3')
@@ -123,7 +123,7 @@ describe('Role', () => {
     });
   });
 
-  describe('/GET role', () => {
+  describe('/GET /api/v1/roles/:id', () => {
     it('should get role', (done) => {
       chai.request(app)
       .get('/api/v1/roles/3')
@@ -147,7 +147,7 @@ describe('Role', () => {
     });
   });
 
-  describe('/DELETE role', () => {
+  describe('/DELETE /api/v1/roles/:id', () => {
     it('should delete role', (done) => {
       chai.request(app)
       .delete('/api/v1/roles/3')

@@ -28,13 +28,13 @@ describe('USER controller', () => {
       });
   });
 
-  describe('/POST users', () => {
+  describe('/POST /api/v1/users', () => {
     it('should fail without email field', (done) => {
       chai.request(app)
         .post('/api/v1/users')
         .send(mockData.incompleteUserData)
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
           res.body.message.should.eql('Enter all required field');
@@ -81,7 +81,7 @@ describe('USER controller', () => {
         .post('/api/v1/users')
         .send(mockData.invalidEmail)
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(400);
           res.body.should.have.property('message')
           .eql('Email is not rightly formatted');
           done();
@@ -92,7 +92,7 @@ describe('USER controller', () => {
         .post('/api/v1/users')
         .send(mockData.passwordMismatch)
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(400);
           res.body.should.have.property('message')
           .eql('Password doesn\'t match');
           done();
@@ -100,8 +100,8 @@ describe('USER controller', () => {
     });
   });
 
-  describe('/GET users', () => {
-    it('should get list of users', (done) => {
+  describe('/GET /api/v1/users', () => {
+    it('should get list of all registered users', (done) => {
       chai.request(app)
         .get('/api/v1/users')
         .set('x-access-token', adminToken)
@@ -121,19 +121,6 @@ describe('USER controller', () => {
           res.should.have.status(200);
           res.body.should.have.property('user');
           res.body.should.have.property('pagination');
-          res.body.user.length.should.be.eql(2);
-          done();
-        });
-    });
-    it('should limit users based on offset', (done) => {
-      chai.request(app)
-        .get('/api/v1/users/?offset=2')
-        .set('x-access-token', adminToken)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('user');
-          res.body.should.have.property('pagination');
-          res.body.pagination.should.be.a('object');
           res.body.user.length.should.be.eql(2);
           done();
         });
@@ -177,15 +164,15 @@ describe('USER controller', () => {
           done();
         });
     });
-    it('should fail without email in the request', (done) => {
+    it('should fail when no data object is sent', (done) => {
       chai.request(app)
         .post('/api/v1/users/login')
-        .send({ password: 'andela' })
+        .send({})
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql(
-            'Enter all required field');
+          res.body.should.have.property('message');
+          res.body.message.should.eql('Enter all required field');
           done();
         });
     });
@@ -205,7 +192,7 @@ describe('USER controller', () => {
     });
   });
 
-  describe('/PUT user:id', () => {
+  describe('/PUT /api/v1/users/:id', () => {
     it('should allow user to update his/her password', (done) => {
       chai.request(app)
         .put('/api/v1/users/5')
@@ -237,7 +224,7 @@ describe('USER controller', () => {
     });
   });
 
-  describe('/GET user:id', () => {
+  describe('/GET /api/v1/users/:id', () => {
     it('should allow admin to view user', (done) => {
       chai.request(app)
         .get('/api/v1/users/2')
@@ -261,7 +248,7 @@ describe('USER controller', () => {
     });
   });
 
-  describe('/GET search/users', () => {
+  describe('/GET /api/v1/search/users', () => {
     it('only admin should search all users based on email', (done) => {
       chai.request(app)
         .get('/api/v1/search/users?q=ma')
@@ -273,7 +260,6 @@ describe('USER controller', () => {
           done();
         });
     });
-
     it('user should not be able to search for other users', (done) => {
       chai.request(app)
         .get('/api/v1/search/users?q=ma')
@@ -288,7 +274,7 @@ describe('USER controller', () => {
     });
   });
 
-  describe('/POST /users/logout', () => {
+  describe('/POST /api/v1/users/logout', () => {
     it('successfully logs a user out', (done) => {
       chai.request(app).post('/api/v1/users/logout')
       .end((err, res) => {
@@ -299,7 +285,7 @@ describe('USER controller', () => {
     });
   });
 
-  describe('/DELETE user:id', () => {
+  describe('/DELETE /api/v1/users/', () => {
     it('admin should be able to delete user account', (done) => {
       chai.request(app)
         .delete('/api/v1/users/4')
@@ -311,7 +297,6 @@ describe('USER controller', () => {
           done();
         });
     });
-
     it('request should fail if user not found', (done) => {
       chai.request(app)
         .delete('/api/v1/users/4')
