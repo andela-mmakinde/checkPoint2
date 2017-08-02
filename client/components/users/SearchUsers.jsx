@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import preventSubmit from '../../utilities/preventSubmit';
 
 /**
  * @export
@@ -16,7 +17,6 @@ export default class SearchUsers extends React.Component {
     this.state = {
       searchQuery: ''
     };
-    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.clearField = this.clearField.bind(this);
   }
@@ -33,15 +33,6 @@ export default class SearchUsers extends React.Component {
       searchQuery
     });
     this.props.searchUserDb(searchQuery);
-  }
-
-  /**
-   * @param {object} event
-   * @returns {void}
-   * @memberOf SearchUsers
-   */
-  onSubmit(event) {
-    event.preventDefault();
   }
 
   /**
@@ -62,7 +53,7 @@ export default class SearchUsers extends React.Component {
    */
   render() {
     return (
-      <form className="input-field user" onSubmit={this.onSubmit}>
+      <form className="input-field user" onSubmit={preventSubmit}>
         <div>
           <input
             id="search"
