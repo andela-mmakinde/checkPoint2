@@ -102,10 +102,12 @@ export class Documents extends React.Component {
             />
           </div>
           <div className="paginationContainer">
-            <Pagination
-              handlePageClick={this.handlePageClick}
-              pageCount={this.state.pageCount}
-            />
+            {this.state.documents.length > 0 ?
+              <Pagination
+                handlePageClick={this.handlePageClick}
+                pageCount={this.state.pageCount}
+              />
+           : ''}
           </div>
         </div>
       </div>

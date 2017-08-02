@@ -26,8 +26,8 @@ const Documents = {
       .then((existingdocumentTitle) => {
         if (existingdocumentTitle !== null) {
           return res
-            .status(409)
-            .send({ message: 'A document with this title already exists!' });
+          .status(409)
+          .send({ message: 'A document with this title already exists!' });
         }
         return Document
           .create({
@@ -52,10 +52,9 @@ const Documents = {
    * @returns {Response} response object
    */
   listAll(req, res) {
+    let query;
     if (req.user.roleId === 1) {
-      Document
-      .findAndCountAll({
-        limit: req.query.limit || 8,
+      query = { limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
           $or: [
@@ -72,27 +71,9 @@ const Documents = {
           ]
         },
         order: [['updatedAt', 'DESC']]
-      })
-      .then((document) => {
-        const limit = req.query.limit || 8;
-        const offset = req.query.offset || 0;
-        const total = document.count;
-        const pageCount = Math.ceil(total / limit);
-        const currentPage = Math.floor(offset / limit) + 1;
-        const pageSize = total - offset > limit ? limit : total - offset;
-        res.status(200).send({
-          document: document.rows,
-          pagination: {
-            total,
-            pageCount,
-            currentPage,
-            pageSize
-          }
-        });
-      })
-      .catch(err => res.status(400).send(err));
+      };
     } else {
-      const query = {
+      query = {
         limit: req.query.limit || 8,
         offset: req.query.offset || 0,
         where: {
@@ -112,7 +93,8 @@ const Documents = {
         },
         order: [['updatedAt', 'DESC']]
       };
-      Document
+    }
+    Document
       .findAndCountAll(query)
       .then((document) => {
         const limit = req.query.limit || 8;
@@ -132,7 +114,6 @@ const Documents = {
         });
       })
       .catch(err => res.status(400).send(err));
-    }
   },
 
   /**
@@ -187,7 +168,7 @@ const Documents = {
             });
         }
       })
-      .catch(error => res.status(404).send(error));
+      .catch(error => res.status(400).send(error));
   },
 
   /**

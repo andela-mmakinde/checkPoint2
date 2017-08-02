@@ -15,7 +15,6 @@ describe('Edit Document component', () => {
   const event = {
     preventDefault: jest.fn()
   };
-
   const wrapper = shallow(<EditDocument {...props} />);
 
   it('changes the title when the on change function is called', () => {

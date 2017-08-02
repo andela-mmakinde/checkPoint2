@@ -111,10 +111,10 @@ export class Users extends React.Component {
         />
         <UserCard allUsers={allUsers} deleteUser={this.deleteUser} />
         <div className="paginationContainer">
-          <Pagination
+          {allUsers.length > 0 ? <Pagination
             pageCount={this.state.pageCount}
             handlePageClick={this.handlePageClick}
-          />
+          /> : ''}
         </div>
       </div>
     );

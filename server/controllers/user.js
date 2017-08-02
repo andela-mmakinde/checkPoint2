@@ -18,15 +18,15 @@ const Users = {
     !req.body.password ||
     !req.body.confirmPassword ||
     !req.body.fullName) {
-      return res.status(401).json({ message: 'Enter all required field' });
+      return res.status(400).json({ message: 'Enter all required field' });
     }
     if (!emailRegex.test(req.body.email)) {
-      return res.status(401).json({
+      return res.status(400).json({
         message: 'Email is not rightly formatted'
       });
     }
     if (req.body.password !== req.body.confirmPassword) {
-      return res.status(401).json({ message: 'Password doesn\'t match' });
+      return res.status(400).json({ message: 'Password doesn\'t match' });
     }
     User.findOne({
       where: {
@@ -128,9 +128,10 @@ const Users = {
               where: { email: { $iLike: `%${req.body.email}%` } },
             }).then((existingUser) => {
               if (existingUser !== null) {
-                res.status(409).send({ message: 'Another user with this email already exist' });
+                res.status(409).send({ message:
+                  'Another user with this email already exist' });
               }
-            });
+            }).catch(error => res.status(500).send(error));
           }
           const fieldsToUpdate = {
             password: password || user.password,
@@ -152,7 +153,7 @@ const Users = {
             .catch(error => res.status(400).send(error));
         }
       })
-        .catch(error => res.status(400).send(error));
+      .catch(error => res.status(400).send(error));
   },
 
   /**
@@ -165,7 +166,7 @@ const Users = {
    */
   login(req, res) {
     if (!req.body.email || !req.body.password) {
-      return res.status(401).json({ message: 'Enter all required field' });
+      return res.status(400).json({ message: 'Enter all required field' });
     }
     User.findOne({
       where: {
@@ -178,7 +179,8 @@ const Users = {
             message: 'User record not found!'
           });
         }
-        if (existingUser.verifyPassword(existingUser.password, req.body.password)) {
+        if (existingUser.verifyPassword(
+          existingUser.password, req.body.password)) {
           const userDetails = {
             id: existingUser.id,
             email: existingUser.email,

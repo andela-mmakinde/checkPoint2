@@ -13,10 +13,14 @@ module.exports = (app) => {
 
 // Users & Admin
   app.put('/api/v1/users/:id', Authorisation.checkToken, Users.update);
-  app.get('/api/v1/users/:id', Authorisation.checkToken, Authorisation.isAdmin, Users.retrieveOne);
+  app.get('/api/v1/users/:id',
+  Authorisation.checkToken, Authorisation.isAdmin, Users.retrieveOne);
 
 // Admins only
-  app.get('/api/v1/search/users', Authorisation.checkToken, Authorisation.isAdmin, Users.search);
-  app.get('/api/v1/users', Authorisation.checkToken, Authorisation.isAdmin, Users.list);
-  app.delete('/api/v1/users/:id', Authorisation.checkToken, Authorisation.isAdmin, Users.delete);
+  app.get('/api/v1/search/users',
+  Authorisation.checkToken, Authorisation.isAdmin, Users.search);
+  app.get('/api/v1/users',
+  Authorisation.checkToken, Authorisation.isAdmin, Users.list);
+  app.delete('/api/v1/users/:id',
+  Authorisation.checkToken, Authorisation.isAdmin, Users.delete);
 };

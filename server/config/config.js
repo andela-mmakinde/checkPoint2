@@ -12,6 +12,7 @@ module.exports = {
   test: {
     use_env_variable: 'dmsTest',
     dialect: 'postgres',
+    logging: false
   },
 
   production: {

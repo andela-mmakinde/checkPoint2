@@ -9,13 +9,14 @@ describe('Document container component', () => {
     fetchAllUserDocument,
   };
   const nextProps = {
-    documentsFromReducer: {},
+    documentList: [{}],
     pagination: { pageCount: 3 }
   };
   const page = {
     selected: 3,
   };
   const wrapper = shallow(<Documents {...props} />);
+
   it('should contain the method componentDidMount', () => {
     const componentDidMountSpy =
     jest.spyOn(wrapper.instance(), 'componentDidMount');
@@ -23,13 +24,14 @@ describe('Document container component', () => {
     expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should contain the method componentWillReceiveProps', () => {
+  it(`should contain the method componentWillReceiveProps
+   which sets new props to state on call`, () => {
     const componentWillReceivePropsSpy =
     jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
     wrapper.instance().componentWillReceiveProps(nextProps);
+    expect(wrapper.instance().state.documents).toEqual([{}]);
     expect(componentWillReceivePropsSpy).toHaveBeenCalledTimes(1);
   });
-
 
   it('should contain the method handlePageClick', () => {
     const handlePageClickSpy =

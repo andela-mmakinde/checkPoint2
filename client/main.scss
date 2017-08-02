@@ -49,9 +49,9 @@ h3 {
   background: white !important;
 }
 
-.input-field.user input[type=search]{
-  width: 65% !important;
-  margin: auto !important;
+.input-field.user {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .input-field.user input[type=search]:focus{

@@ -55,11 +55,18 @@ describe('DOCUMENT controller', () => {
       .end((err, res) => {
         privateRoleDocumentData = res.body.document;
         res.should.have.status(201);
+      });
+    chai.request(app)
+      .post('/api/v1/documents')
+      .send(mockData.document5)
+      .set('x-access-token', testAdminToken)
+      .end((err, res) => {
+        res.should.have.status(201);
         done();
       });
   });
 
-  describe('/POST documents', () => {
+  describe('/POST /api/v1/documents', () => {
     it('should allow users to create a new document', (done) => {
       chai.request(app)
         .post('/api/v1/documents')
@@ -100,8 +107,8 @@ describe('DOCUMENT controller', () => {
     });
   });
 
-  describe('/GET documents', () => {
-    it('for a user, should list all documents he has access to', (done) => {
+  describe('/GET /api/v1/documents ', () => {
+    it('should list all documents a user has access to', (done) => {
       chai.request(app)
       .get('/api/v1/documents')
       .set('x-access-token', testUserToken)
@@ -109,10 +116,11 @@ describe('DOCUMENT controller', () => {
         res.should.have.status(200);
         res.body.should.have.property('document');
         res.body.should.have.property('pagination');
+        res.body.document.length.should.be.eql(4);
         done();
       });
     });
-    it('should limit list of documents', (done) => {
+    it('should limit list of documents a user can see at a time', (done) => {
       chai.request(app)
         .get('/api/v1/documents/?limit=2')
         .set('x-access-token', testUserToken)
@@ -124,8 +132,8 @@ describe('DOCUMENT controller', () => {
           done();
         });
     });
-    it(`for an admin, should list all documents 
-    in the database except private documents`, (done) => {
+    it(`should list all documents 
+    in the database for an admin, except private documents`, (done) => {
       chai.request(app)
       .get('/api/v1/documents')
       .set('x-access-token', testAdminToken)
@@ -133,6 +141,7 @@ describe('DOCUMENT controller', () => {
         res.should.have.status(200);
         res.body.should.have.property('document');
         res.body.should.have.property('pagination');
+        res.body.document.length.should.be.eql(5);
         done();
       });
     });
@@ -270,7 +279,7 @@ describe('DOCUMENT controller', () => {
       .set('x-access-token', testAdminToken)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.pagination.should.have.property('total').eql(3);
+        res.body.pagination.should.have.property('total').eql(4);
         done();
       });
     });

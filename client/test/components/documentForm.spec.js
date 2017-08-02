@@ -9,7 +9,6 @@ describe('Home page component', () => {
   const error = {
     message: 'Take sorry na'
   };
-  // create props
   const props = {
     editorState: {},
     onChange: jest.fn(),

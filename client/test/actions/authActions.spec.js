@@ -27,7 +27,6 @@ describe('auth actions', () => {
       }
     });
     const store = mockStore({});
-
     const loggedInUser = {
       id: 14,
       email: 'teddy@bong.com',
