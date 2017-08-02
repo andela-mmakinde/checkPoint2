@@ -1,3 +1,4 @@
+/*global Materialize */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -5,7 +6,8 @@ import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import ConnectedSearchDocuments from './SearchDocuments';
 import GetAccessDocuments from './GetAccessDocuments';
-import { fetchAllUserDocument } from '../../actions/documentActions';
+import { fetchAllUserDocument,
+  deleteDocuments } from '../../actions/documentActions';
 
 /**
  * @export
@@ -27,6 +29,7 @@ export class Documents extends React.Component {
       singleDocument: {},
     };
     this.handlePageClick = this.handlePageClick.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
   }
 
   /**
@@ -75,6 +78,21 @@ export class Documents extends React.Component {
       });
     });
   }
+
+  /**
+   * @param {number} id
+   * @returns {void}
+   * @memberOf UserDocuments
+   */
+  deleteDocument(id) {
+    this.props
+      .deleteDocuments(id)
+      .then(() => {
+        this.props.fetchAllUserDocument();
+        Materialize.toast('Document deleted', 2000);
+      });
+  }
+
   /**
    * @returns {String} The HTML markup for the DocumentForm
    * @memberOf Documents
@@ -99,6 +117,7 @@ export class Documents extends React.Component {
             <GetAccessDocuments
               currentUser={this.props.currentUser}
               documents={this.state.documents}
+              deleteDocument={this.deleteDocument}
             />
           </div>
           <div className="paginationContainer">
@@ -127,6 +146,7 @@ Documents.propTypes = {
   PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   pagination: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  deleteDocuments: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -136,5 +156,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchAllUserDocument,
+  fetchAllUserDocument, deleteDocuments
 })(Documents);

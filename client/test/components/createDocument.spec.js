@@ -15,7 +15,7 @@ describe('Create Document component', () => {
   };
   const wrapper = shallow(<CreateDocument {...props} />);
 
-  it('changes the title when the on change function is called', () => {
+  it('changes the title when the onChange function is called', () => {
     const spy = jest.spyOn(wrapper.instance(), 'onChange');
     wrapper.instance().onChange({
       target: {
