@@ -8,18 +8,22 @@ import DocumentCard from './DocumentCard';
  */
 const GetAccessDocuments = ({ documents, currentUser }) => (
   <div>
-    <div className="container">
-      <div className="row">
-        {documents.map(docs => (
-          <DocumentCard
-            key={docs.id}
-            id={docs.id}
-            document={docs}
-            currentUser={currentUser}
-          />
-        ))}
+    {documents.length > 0 ? (
+      <div className="container">
+        <div className="row">
+          {documents.map(docs => (
+            <DocumentCard
+              key={docs.id}
+              id={docs.id}
+              document={docs}
+              currentUser={currentUser}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    ) : (
+      <h3 className="notFound">No document found</h3>
+    )}
   </div>
 );
 

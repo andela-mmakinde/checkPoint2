@@ -48,6 +48,7 @@ export class CreateDocument extends React.Component {
    * @memberOf CreateDocument
    */
   onChange(event) {
+    this.setState({ error: {} });
     this.setState({
       [event.target.name]: event.target.value,
       error: {}
@@ -62,7 +63,8 @@ export class CreateDocument extends React.Component {
   onEditorStateChange(editorState) {
     this.setState({
       editorState,
-      content: convertToHTML(editorState.getCurrentContent())
+      content: convertToHTML(editorState.getCurrentContent()),
+      error: {}
     });
   }
 

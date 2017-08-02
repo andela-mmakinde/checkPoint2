@@ -47,38 +47,41 @@ class UserCard extends React.Component {
     const { allUsers, selectId } = this.state;
     return (
       <div>
-
-        <table className="userTable striped responsive-table">
-          <thead>
-            <tr>
-              <th>E-mail</th>
-              <th>User Id</th>
-              <th>Role Id</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allUsers.map(users => (
-              <tr key={users.id}>
-                <td id="userEmail">{users.email}</td>
-                <td>{users.id}</td>
-                <td>{users.roleId}</td>
-                <td>
-                  <a id="deleteModalTrigger" href="#deleteModal2">
-                    <i
-                      tabIndex="0"
-                      className="material-icons"
-                      role="button"
-                      onClick={() => this.selectUser(users.id)}
-                    >
-                      delete
-                    </i>
-                  </a>
-                </td>
+        {allUsers.length > 0 ? (
+          <table className="userTable striped responsive-table">
+            <thead>
+              <tr>
+                <th>E-mail</th>
+                <th>User Id</th>
+                <th>Role Id</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {allUsers.map(users => (
+                <tr key={users.id}>
+                  <td id="userEmail">{users.email}</td>
+                  <td>{users.id}</td>
+                  <td>{users.roleId}</td>
+                  <td>
+                    <a id="deleteModalTrigger" href="#deleteModal2">
+                      <i
+                        tabIndex="0"
+                        className="material-icons"
+                        role="button"
+                        onClick={() => this.selectUser(users.id)}
+                      >
+                        delete
+                      </i>
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <h3 className="notFound"> No user found </h3>
+        )}
 
         <div id="deleteModal2" className="modal">
           <div className="modal-content">

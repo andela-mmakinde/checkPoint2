@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
  * SearchBar component.
  * @returns {String} The HTML markup for the search input component
  */
-const SearchBar = ({ clearField, onChange, searchQuery }) => (
-  <form className="searchForm">
+const SearchBar = ({ clearField, onChange, onSubmit, searchQuery }) => (
+  <form className="searchForm" onSubmit={onSubmit}>
     <div className="input-field document">
       <input
         id="search"
@@ -27,6 +27,7 @@ SearchBar.propTypes = {
   clearField: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default SearchBar;

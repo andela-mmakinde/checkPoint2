@@ -18,10 +18,12 @@ export class SearchDocuments extends React.Component {
   constructor() {
     super();
     this.state = {
-      searchQuery: ''
+      searchQuery: '',
+      pageType: ''
     };
     this.onChange = this.onChange.bind(this);
     this.clearField = this.clearField.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   /**
@@ -30,11 +32,21 @@ export class SearchDocuments extends React.Component {
    * @memberOf SearchDocuments
    */
   onChange(event) {
+    event.preventDefault();
     const searchQuery = event.target.value;
     this.setState({
-      searchQuery
+      searchQuery,
     });
-    this.props.searchDocuments(searchQuery);
+    this.props.searchDocuments(searchQuery, this.props.pageType);
+  }
+
+  /**
+   * @param {object} event
+   * @returns {void}
+   * @memberOf SearchDocuments
+   */
+  onSubmit(event) {
+    event.preventDefault();
   }
 
   /**
@@ -46,7 +58,7 @@ export class SearchDocuments extends React.Component {
     this.setState({
       searchQuery
     });
-    this.props.searchDocuments(searchQuery);
+    this.props.searchDocuments(searchQuery, this.props.pageType);
   }
 
   /**
@@ -60,6 +72,7 @@ export class SearchDocuments extends React.Component {
           onChange={this.onChange}
           clearField={this.clearField}
           searchQuery={this.state.searchQuery}
+          onSubmit={this.onSubmit}
         />
       </span>
     );
@@ -68,6 +81,7 @@ export class SearchDocuments extends React.Component {
 
 SearchDocuments.propTypes = {
   searchDocuments: PropTypes.func.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 export default connect(null, {

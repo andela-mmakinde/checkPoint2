@@ -21,7 +21,7 @@ export class Documents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: [],
+      documents: this.props.documentList,
       offset: 0,
       pageCount: 0,
       singleDocument: {},
@@ -82,7 +82,7 @@ export class Documents extends React.Component {
   render() {
     return (
       <div>
-        <div><ConnectedSearchDocuments /></div>
+        <div><ConnectedSearchDocuments pageType={'allDocuments'} /></div>
         <div className="btn-container">
           <Link
             to="/create"

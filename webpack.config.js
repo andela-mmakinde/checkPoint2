@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   context: path.join(__dirname, 'client'),
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client',    
     './app.jsx'
@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         test: /\.(woff2?|jpe?g|png|gif|ico)$/,
-        use: 'file-loader?name=./assets/images/[name].[ext]'
+        use: 'file-loader?name=./images/[name].[ext]'
       },
       {
         test: /\.scss$/,
@@ -45,7 +45,7 @@ module.exports = {
     tls: 'empty',
   },
   output: {
-    path: `${__dirname}/client/`,
+    path: `${__dirname}/client/public`,
     filename: 'bundle.js',
     publicPath: '/'
   },

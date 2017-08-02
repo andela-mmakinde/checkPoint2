@@ -5,9 +5,9 @@
 
   <testsuite name="admin"
     errors="0" failures="0" hostname="" id="" package="admin" skipped="0"
-    tests="3" time="21.93" timestamp="Sun, 30 Jul 2017 18:59:06 GMT">
+    tests="3" time="20.03" timestamp="Tue, 01 Aug 2017 10:06:11 GMT">
   
-    <testcase name="Admin should be able to view a list of all users" classname="admin" time="11.36" assertions="4">
+    <testcase name="Admin should be able to view a list of all users" classname="admin" time="10.10" assertions="4">
 
     
 
@@ -18,14 +18,14 @@
     
     </testcase>
   
-    <testcase name="Admin should be able to delete a user" classname="admin" time="2.872" assertions="2">
+    <testcase name="Admin should be able to delete a user" classname="admin" time="2.413" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="Admin should be able to search users" classname="admin" time="7.700" assertions="2">
+    <testcase name="Admin should be able to search users" classname="admin" time="7.517" assertions="2">
 
     
 

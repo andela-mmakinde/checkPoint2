@@ -22,7 +22,7 @@ export class UserDocuments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: '',
+      documents: this.props.documentList,
       offset: 0,
       pageCount: 0,
     };
@@ -96,7 +96,7 @@ export class UserDocuments extends React.Component {
     const { documents } = this.state;
     return (
       <div className="dashboardBackground">
-        <div><ConnectedSearchDocuments /></div>
+        <div><ConnectedSearchDocuments pageType={'myDocuments'} /></div>
         <div className="btn-container">
           <Link
             to="/create"
@@ -108,9 +108,8 @@ export class UserDocuments extends React.Component {
             </i>
           </Link>
         </div>
-        {!documents.length
-          ? <span />
-          : <div className="container">
+        {documents.length > 0
+          ? <div className="container">
             <div className="row">
               {documents.map(docs => (
                 <DocumentCard
@@ -122,13 +121,13 @@ export class UserDocuments extends React.Component {
                 />
                 ))}
             </div>
-          </div>}
-        <div className="paginationContainer">
-          <Pagination
-            handlePageClick={this.handlePageClick}
-            pageCount={this.state.pageCount}
-          />
-        </div>
+            <div className="paginationContainer">
+              <Pagination
+                handlePageClick={this.handlePageClick}
+                pageCount={this.state.pageCount}
+              />
+            </div>
+          </div> : <h3 className="notFound">No documents found</h3>}
       </div>
     );
   }
