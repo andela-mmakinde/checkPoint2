@@ -1,0 +1,180 @@
+body {
+  min-height: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.header {
+  font-weight: 500;
+  font-size: 43px !important;
+  margin-top: 100px !important;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.homepage {
+  position: relative;
+  height: 100% !important;
+}
+
+.homepage :after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('./components/images/garage1.jpg');
+  width: 100% !important;
+  opacity: 0.6;
+  z-index: -1;
+  min-height: 100%;
+  background-size: cover !important;
+}
+
+.page-footer {
+  width: 100%;
+  bottom: 0;
+  padding: 0;
+}
+
+.input-field.document input[type=search] {
+  margin: 13px 20px 0 0 !important;
+  border-radius: 10px;
+  background: #efefef !important;
+  height: 40px !important;
+}
+
+.input-field.document input[type=search]:focus  {
+  background: white !important;
+}
+
+.input-field.user {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.input-field.user input[type=search]:focus{
+ background: #e6e6e6  !important;
+}
+
+.searchForm {
+  width: 70% !important;
+  margin: 30px auto 0 auto !important;
+}
+
+.searchButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0 4px;
+    line-height: 0;
+}
+
+.brand-logo {
+  padding-left: 10px !important;
+}
+
+.header {
+  margin-top: 35px;
+}
+
+.userTable {
+  margin: auto;
+  width: 70% !important;
+  padding: 10px;
+}
+
+.documentForm {
+  margin: 0 10px;
+  padding: 0px 30px;
+}
+
+.card.small {
+  background: #efefef !important;
+  max-height: 200px;
+  border-bottom: 1px solid #c4c4c4 !important;
+  border-left: 1px solid #d3d3d3 !important;
+  border-right: 1px solid #d3d3d3 !important;
+  border-top: 1px solid #d3d3d3 !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.07) !important;
+  margin-bottom: 20px !important;
+  font-size: 12px;
+}
+
+.card-title {
+  font-size: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.rdw-editor-main {
+    border: 1px solid #F1F1F1;
+    padding: 0 20px;
+    height: 40% !important;   
+}
+
+.welcomeUser {
+  margin: 15px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.cancel {
+  margin-right: 10px;
+}
+
+.pagination {
+  cursor: pointer;
+}
+
+.pagination li.active {
+  background: #3f51b5;
+}
+
+.userprofile {
+  background: #efefef !important;
+}
+
+.btn-container {
+  margin: 16px;
+}
+
+.myContents {
+  min-height: 85%;
+}
+
+.authForm {
+  display: inline-block;
+  padding: 32px 48px 0px 48px;
+  border: 1px solid #EEE;
+}
+
+.titleField {
+  margin: 0 !important;
+}
+
+// @media (max-width: 480px) { 
+  
+// }
+
+.paginationContainer {
+  margin-left: 35%;
+  margin-top: 15px;
+}
+
+#cancel {
+  margin-right: 10px;
+}
+
+.notFound {
+  margin-left: 40%;
+  margin-top: 50px;
+}
+
+@media only screen and (max-width : 480px) {
+  .myContents {
+    min-height: 100%;
+  }
+}

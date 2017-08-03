@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="7">
+
+  <testsuite name="documents"
+    errors="0" failures="0" hostname="" id="" package="documents" skipped="0"
+    tests="7" time="49.17" timestamp="Tue, 01 Aug 2017 10:06:32 GMT">
+  
+    <testcase name="User should receive an error message if any field is left unfilled" classname="documents" time="14.81" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to create document successfully" classname="documents" time="2.177" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to retrieve all documents he/she created" classname="documents" time="4.000" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to search documents" classname="documents" time="5.880" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to edit a document successfully" classname="documents" time="15.48" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to view document details" classname="documents" time="3.500" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to delete a document successfully" classname="documents" time="3.321" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

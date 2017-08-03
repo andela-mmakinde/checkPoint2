@@ -1,0 +1,20 @@
+{
+  "require": [
+    "babel-register"
+  ],
+  "include": [
+    "server/**/*.js"
+  ],
+  "all": true,
+  "exclude": [
+    "**/test/",
+    "**/seeders/",
+    "**/migrations/"
+  ],
+  "reporter": [
+    "text",
+    "lcov"
+  ],
+  "sourceMap": false,
+  "instrument": true
+}

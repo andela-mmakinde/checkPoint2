@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="9">
+
+  <testsuite name="user"
+    errors="0" failures="0" hostname="" id="" package="user" skipped="0"
+    tests="9" time="30.73" timestamp="Tue, 01 Aug 2017 10:07:21 GMT">
+  
+    <testcase name="User sign up without credentials" classname="user" time="5.780" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User sign up success" classname="user" time="3.647" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User log in without credentials" classname="user" time="4.608" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Unregistered users should not be able to login" classname="user" time="2.792" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User login success" classname="user" time="2.654" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to update his fullname and email" classname="user" time="3.340" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should receive an error it they try updating email to an existing mail" classname="user" time="3.202" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be able to update his password" classname="user" time="3.250" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User should be returned to the home screen on Logout" classname="user" time="1.454" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

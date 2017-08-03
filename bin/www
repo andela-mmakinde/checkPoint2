@@ -1,0 +1,30 @@
+import http from 'http';
+import webpack from 'webpack';
+import express from 'express';
+import path from 'path';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from '../webpack.config';
+import app from '../server/app';
+
+const port = process.env.PORT || 5000;
+
+// compiler for webpack
+const compiler = webpack(webpackConfig);
+
+// import webpack into express server
+app.use(webpackMiddleware(compiler));
+app.use(webpackHotMiddleware(compiler, {
+  hot: true,
+  publicPath: webpackConfig.output.publicPath,
+  noInfo: true,
+}));
+app.use(express.static(path.join(__dirname, '../client/public')));
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '../client/index.html'))
+);
+
+const server = http.createServer(app);
+
+server.listen(port)
+console.log('Server listening on port', port);
