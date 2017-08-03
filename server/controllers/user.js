@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt-nodejs';
 import { User } from '../models';
+import pagination from '../helpers/pagination';
+
 
 const createToken = user => jwt.sign(user, 'secret', { expiresIn: '24h' });
 const Users = {
@@ -67,6 +69,8 @@ const Users = {
    * @returns {Response} response object
    */
   list(req, res) {
+    const limit = req.query.limit || 5;
+    const offset = req.query.offset || 0;
     return User
       .findAndCountAll({
         where: {
@@ -75,24 +79,14 @@ const Users = {
           }
         },
         attributes: { exclude: ['password'] },
-        limit: req.query.limit || 5,
-        offset: req.query.offset || 0,
+        limit,
+        offset,
       }).then((user) => {
-        const limit = req.query.limit || 5;
-        const offset = req.query.offset || 0;
-        const total = user.count;
-        const pageCount = Math.ceil(total / limit);
-        const currentPage = Math.floor(offset / limit) + 1;
-        const pageSize = total - offset > limit ? limit : total - offset;
-        res.status(200).send({
+        const response = {
           user: user.rows,
-          pagination: {
-            total,
-            pageCount,
-            currentPage,
-            pageSize
-          }
-        });
+          pagination: pagination(user.count, limit, offset)
+        };
+        res.status(200).send(response);
       })
         .catch(err => res.status(400).send(err));
   },
@@ -271,28 +265,20 @@ const Users = {
    */
   search(req, res) {
     const search = req.query.q;
+    const limit = req.query.limit || 5;
+    const offset = req.query.offset || 0;
     User.findAndCountAll({
       where: { email: { $iLike: `%${search}%` }, roleId: { $ne: 1 } },
       attributes: { exclude: ['password'] },
-      limit: req.query.limit || 5,
-      offset: req.query.offset || 0,
+      limit,
+      offset,
     })
       .then((user) => {
-        const limit = req.query.limit || 5;
-        const offset = req.query.offset || 0;
-        const total = user.count;
-        const pageCount = Math.ceil(total / limit);
-        const currentPage = Math.floor(offset / limit) + 1;
-        const pageSize = total - offset > limit ? limit : total - offset;
-        res.status(200).send({
+        const response = {
           user: user.rows,
-          pagination: {
-            total,
-            pageCount,
-            currentPage,
-            pageSize
-          }
-        });
+          pagination: pagination(user.count, limit, offset)
+        };
+        res.status(200).send(response);
       })
       .catch(error => res.status(400).send(error));
   },

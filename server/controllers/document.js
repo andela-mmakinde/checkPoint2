@@ -1,4 +1,5 @@
 import { User, Document } from '../models';
+import pagination from '../helpers/pagination';
 
 
 const Documents = {
@@ -53,9 +54,12 @@ const Documents = {
    */
   listAll(req, res) {
     let query;
+    const limit = req.query.limit || 8;
+    const offset = req.query.offset || 0;
     if (req.user.roleId === 1) {
-      query = { limit: req.query.limit || 8,
-        offset: req.query.offset || 0,
+      query = {
+        limit,
+        offset,
         where: {
           $or: [
             {
@@ -74,8 +78,8 @@ const Documents = {
       };
     } else {
       query = {
-        limit: req.query.limit || 8,
-        offset: req.query.offset || 0,
+        limit,
+        offset,
         where: {
           $or: [
             {
@@ -97,21 +101,11 @@ const Documents = {
     Document
       .findAndCountAll(query)
       .then((document) => {
-        const limit = req.query.limit || 8;
-        const offset = req.query.offset || 0;
-        const total = document.count;
-        const pageCount = Math.ceil(total / limit);
-        const currentPage = Math.floor(offset / limit) + 1;
-        const pageSize = total - offset > limit ? limit : total - offset;
-        res.status(200).send({
+        const response = {
           document: document.rows,
-          pagination: {
-            total,
-            pageCount,
-            currentPage,
-            pageSize
-          }
-        });
+          pagination: pagination(document.count, limit, offset)
+        };
+        res.status(200).send(response);
       })
       .catch(err => res.status(400).send(err));
   },
@@ -256,11 +250,11 @@ const Documents = {
   search(req, res) {
     const search = req.query.q;
     const pageType = req.query.pageType;
+    const limit = req.query.limit || 8;
+    const offset = req.query.offset || 0;
     let dbQuery;
     if (pageType === 'myDocuments') {
       dbQuery = {
-        limit: req.query.limit || 8,
-        offset: req.query.offset || 0,
         where: {
           title: {
             $iLike: `%${search}%`
@@ -271,8 +265,8 @@ const Documents = {
       };
     } else {
       dbQuery = {
-        limit: req.query.limit || 8,
-        offset: req.query.offset || 0,
+        limit,
+        offset,
         where: {
           title: {
             $iLike: `%${search}%`
@@ -298,21 +292,11 @@ const Documents = {
     }
     Document.findAndCountAll(dbQuery)
       .then((document) => {
-        const limit = req.query.limit || 8;
-        const offset = req.query.offset || 0;
-        const total = document.count;
-        const pageCount = Math.ceil(total / limit);
-        const currentPage = Math.floor(offset / limit) + 1;
-        const pageSize = total - offset > limit ? limit : total - offset;
-        res.status(200).send({
+        const response = {
           document: document.rows,
-          pagination: {
-            total,
-            pageCount,
-            currentPage,
-            pageSize
-          }
-        });
+          pagination: pagination(document.count, limit, offset)
+        };
+        res.status(200).send(response);
       })
     .catch(error => res.status(400).send(error));
   },
@@ -326,6 +310,8 @@ const Documents = {
    * @returns {object} response object
    */
   getMine(req, res) {
+    const limit = req.query.limit || 8;
+    const offset = req.query.offset || 0;
     User
       .findOne({
         where: {
@@ -340,29 +326,19 @@ const Documents = {
         }
         Document
           .findAndCountAll({
-            limit: req.query.limit || 8,
-            offset: req.query.offset || 0,
+            limit,
+            offset,
             where: {
               ownerId: user.id
             },
             order: [['updatedAt', 'DESC']]
           })
           .then((ownerDocuments) => {
-            const limit = req.query.limit || 8;
-            const offset = req.query.offset || 0;
-            const total = ownerDocuments.count;
-            const pageCount = Math.ceil(total / limit);
-            const currentPage = Math.floor(offset / limit) + 1;
-            const pageSize = total - offset > limit ? limit : total - offset;
-            res.status(200).send({
+            const response = {
               myDocuments: ownerDocuments.rows,
-              pagination: {
-                total,
-                pageCount,
-                currentPage,
-                pageSize
-              }
-            });
+              pagination: pagination(ownerDocuments.count, limit, offset)
+            };
+            res.status(200).send(response);
           });
       });
   }
