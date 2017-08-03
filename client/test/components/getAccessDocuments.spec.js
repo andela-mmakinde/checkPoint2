@@ -1,4 +1,4 @@
-/* global expect */
+/* global jest expect */
 
 import React from 'react';
 import { shallow } from 'enzyme';
@@ -8,6 +8,7 @@ describe('GetAccessDocuments component', () => {
   const props = {
     currentUser: {},
     documents: [],
+    deleteDocument: jest.fn()
   };
 
   describe('renders', () => {

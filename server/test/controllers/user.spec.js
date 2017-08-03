@@ -1,10 +1,9 @@
-import chai from 'chai';
+import chai, { should } from 'chai';
 import chaiHttp from 'chai-http';
 import mockData from '../mockData';
 import app from '../../app';
 
-const should = chai.should();
-
+should();
 chai.use(chaiHttp);
 
 describe('USER controller', () => {
@@ -41,7 +40,7 @@ describe('USER controller', () => {
           done();
         });
     });
-    it('should save user info', (done) => {
+    it('should create a new user', (done) => {
       chai.request(app)
         .post('/api/v1/users')
         .send(mockData.user3)
@@ -54,7 +53,8 @@ describe('USER controller', () => {
           done();
         });
     });
-    it('should return a token', (done) => {
+    it('should return a response containing an encrypted user information',
+    (done) => {
       chai.request(app)
         .post('/api/v1/users')
         .send(mockData.user4)
@@ -95,42 +95,6 @@ describe('USER controller', () => {
           res.should.have.status(400);
           res.body.should.have.property('message')
           .eql('Password doesn\'t match');
-          done();
-        });
-    });
-  });
-
-  describe('/GET /api/v1/users', () => {
-    it('should get list of all registered users', (done) => {
-      chai.request(app)
-        .get('/api/v1/users')
-        .set('x-access-token', adminToken)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('user');
-          res.body.should.have.property('pagination');
-          res.body.user.length.should.be.eql(4);
-          done();
-        });
-    });
-    it('should limit list of users', (done) => {
-      chai.request(app)
-        .get('/api/v1/users/?limit=2')
-        .set('x-access-token', adminToken)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('user');
-          res.body.should.have.property('pagination');
-          res.body.user.length.should.be.eql(2);
-          done();
-        });
-    });
-    it('should return an error if the token supplied is not Admin', (done) => {
-      chai.request(app)
-        .get('/api/v1/users')
-        .set('x-access-token', userToken)
-        .end((err, res) => {
-          res.should.have.status(401);
           done();
         });
     });
@@ -192,6 +156,42 @@ describe('USER controller', () => {
     });
   });
 
+  describe('/GET /api/v1/users', () => {
+    it('should return an error if the token supplied is not Admin', (done) => {
+      chai.request(app)
+        .get('/api/v1/users')
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          res.should.have.status(401);
+          done();
+        });
+    });
+    it('should get list of all registered users', (done) => {
+      chai.request(app)
+        .get('/api/v1/users')
+        .set('x-access-token', adminToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('user');
+          res.body.should.have.property('pagination');
+          res.body.user.length.should.be.eql(4);
+          done();
+        });
+    });
+    it('should limit list of users', (done) => {
+      chai.request(app)
+        .get('/api/v1/users/?limit=2')
+        .set('x-access-token', adminToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('user');
+          res.body.should.have.property('pagination');
+          res.body.user.length.should.be.eql(2);
+          done();
+        });
+    });
+  });
+
   describe('/PUT /api/v1/users/:id', () => {
     it('should allow user to update his/her password', (done) => {
       chai.request(app)
@@ -225,7 +225,8 @@ describe('USER controller', () => {
   });
 
   describe('/GET /api/v1/users/:id', () => {
-    it('should allow admin to view user', (done) => {
+    it('should get the details of a user based on the id supplied',
+    (done) => {
       chai.request(app)
         .get('/api/v1/users/2')
         .set('x-access-token', adminToken)
@@ -249,7 +250,7 @@ describe('USER controller', () => {
   });
 
   describe('/GET /api/v1/search/users', () => {
-    it('only admin should search all users based on email', (done) => {
+    it('admin should be able to search all users based on email', (done) => {
       chai.request(app)
         .get('/api/v1/search/users?q=ma')
         .set('x-access-token', adminToken)

@@ -101,7 +101,7 @@ export class CreateDocument extends React.Component {
    */
   render() {
     const { error, success, title, content, access, editorState } = this.state;
-    const docObj = {
+    const document = {
       title,
       content,
       access,
@@ -119,7 +119,7 @@ export class CreateDocument extends React.Component {
           onChange={this.onChange}
           updateAccessState={this.updateAccessState}
           onEditorStateChange={this.onEditorStateChange}
-          docObj={docObj}
+          document={document}
         />
       </div>
     );

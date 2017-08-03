@@ -1,10 +1,11 @@
-import chai from 'chai';
+import chai, { should } from 'chai';
 import chaiHttp from 'chai-http';
 import mockData from '../mockData';
 import app from '../../app';
 
+should();
 chai.use(chaiHttp);
-const should = chai.should();
+// const should = chai.should();
 
 describe('DOCUMENT controller', () => {
   let publicDocumentData;
@@ -148,7 +149,7 @@ describe('DOCUMENT controller', () => {
   });
 
   describe('/GET documents/:id', () => {
-    it('should search for documents based on the id provided', (done) => {
+    it('should get a document based on the id provided', (done) => {
       chai.request(app)
       .get(`/api/v1/documents/${publicDocumentData.id}`)
       .set('x-access-token', testUserToken)

@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import preventSubmit from '../../utilities/preventSubmit';
+
 
 /**
  * SearchBar component.
  * @returns {String} The HTML markup for the search input component
  */
-const SearchBar = ({ clearField, onChange, onSubmit, searchQuery }) => (
-  <form className="searchForm" onSubmit={onSubmit}>
+const SearchBar = ({ clearField, onChange, searchQuery }) => (
+  <form className="searchForm" onSubmit={preventSubmit}>
     <div className="input-field document">
       <input
         id="search"
@@ -27,7 +29,6 @@ SearchBar.propTypes = {
   clearField: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
 };
 
 export default SearchBar;

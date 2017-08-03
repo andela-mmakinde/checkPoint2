@@ -16,7 +16,7 @@ describe('Home page component', () => {
     updateAccessState: jest.fn(),
     onTitleChange: jest.fn(),
     onEditorStateChange: jest.fn(),
-    docObj: {
+    document: {
       title: '123455',
       access: 'Public'
     },
@@ -28,7 +28,7 @@ describe('Home page component', () => {
     it('should have a password field with the same value as props \'password\'',
     () => {
       const title = wrapper.find('#title').props();
-      expect(title.value).toEqual(props.docObj.title);
+      expect(title.value).toEqual(props.document.title);
     });
   });
 });
