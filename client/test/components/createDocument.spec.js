@@ -15,7 +15,8 @@ describe('Create Document component', () => {
   };
   const wrapper = shallow(<CreateDocument {...props} />);
 
-  it('changes the title when the onChange function is called', () => {
+  it('sets the state of title when the user types in data into the title field',
+  () => {
     const spy = jest.spyOn(wrapper.instance(), 'onChange');
     wrapper.instance().onChange({
       target: {
@@ -26,12 +27,6 @@ describe('Create Document component', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('contains an onSubmit function', () => {
-    const submitSpy = jest.spyOn(wrapper.instance(), 'onSubmit');
-    wrapper.instance().onSubmit(event);
-    expect(submitSpy).toHaveBeenCalledTimes(1);
-  });
-
   it('should contain the method componentDidMount', () => {
     const componentDidMountSpy =
     jest.spyOn(wrapper.instance(), 'componentDidMount');
@@ -39,7 +34,7 @@ describe('Create Document component', () => {
     expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('changes the acces type when the on change function is called', () => {
+  it('sets the state of access when the user selects an access type', () => {
     const spy = jest.spyOn(wrapper.instance(), 'onChange');
     wrapper.instance().onChange({
       target: {
@@ -48,5 +43,11 @@ describe('Create Document component', () => {
     });
     expect(wrapper.state('access')).toEqual('Public');
     expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  it('contains an onSubmit method', () => {
+    const submitSpy = jest.spyOn(wrapper.instance(), 'onSubmit');
+    wrapper.instance().onSubmit(event);
+    expect(submitSpy).toHaveBeenCalledTimes(1);
   });
 });
