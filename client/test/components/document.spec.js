@@ -5,8 +5,10 @@ import { Documents } from '../../components/documents/Document';
 
 describe('Document container component', () => {
   const fetchAllUserDocument = jest.fn(() => Promise.resolve());
+  const deleteDocuments = jest.fn();
   const props = {
     fetchAllUserDocument,
+    deleteDocuments
   };
   const nextProps = {
     documentList: [{}],

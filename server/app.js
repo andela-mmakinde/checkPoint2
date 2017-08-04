@@ -14,7 +14,7 @@ const app = express();
 app.use(logger('dev'));
 
 // parse incoming requests
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 documents(app);

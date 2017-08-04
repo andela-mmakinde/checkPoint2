@@ -113,7 +113,7 @@ export class EditDocument extends React.Component {
    */
   render() {
     const { error, success, title, content, access, editorState } = this.state;
-    const docObj = { title, content, access, editorState };
+    const document = { title, content, access, editorState };
 
     if (success) {
       return <Redirect to="/mydocuments" />;
@@ -126,7 +126,7 @@ export class EditDocument extends React.Component {
           onChange={this.onChange}
           onEditorStateChange={this.onEditorStateChange}
           editorState={this.state.editorState}
-          docObj={docObj}
+          document={document}
         />
       </div>
     );

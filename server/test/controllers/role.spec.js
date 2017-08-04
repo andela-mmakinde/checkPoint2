@@ -1,9 +1,9 @@
-import chai from 'chai';
+import chai, { should } from 'chai';
 import chaiHttp from 'chai-http';
 import mockData from '../mockData';
 import app from '../../app';
 
-const should = chai.should();
+should();
 chai.use(chaiHttp);
 
 describe('Role', () => {
@@ -124,7 +124,7 @@ describe('Role', () => {
   });
 
   describe('/GET /api/v1/roles/:id', () => {
-    it('should get role', (done) => {
+    it('should get role by the id provided', (done) => {
       chai.request(app)
       .get('/api/v1/roles/3')
       .set('x-access-token', adminToken)
@@ -148,7 +148,7 @@ describe('Role', () => {
   });
 
   describe('/DELETE /api/v1/roles/:id', () => {
-    it('should delete role', (done) => {
+    it('should delete role based on the id provided', (done) => {
       chai.request(app)
       .delete('/api/v1/roles/3')
       .set('x-access-token', adminToken)

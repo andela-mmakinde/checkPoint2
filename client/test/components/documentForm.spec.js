@@ -16,19 +16,20 @@ describe('Home page component', () => {
     updateAccessState: jest.fn(),
     onTitleChange: jest.fn(),
     onEditorStateChange: jest.fn(),
-    docObj: {
+    document: {
       title: '123455',
       access: 'Public'
     },
     error,
   };
 
-  describe('renders', () => {
-    const wrapper = shallow(<DocumentForm {...props} />);
-    it('should have a password field with the same value as props \'password\'',
-    () => {
-      const title = wrapper.find('#title').props();
-      expect(title.value).toEqual(props.docObj.title);
-    });
+  const wrapper = shallow(<DocumentForm {...props} />);
+  it('renders as a div', () => {
+    expect(wrapper.node.type).toEqual('div');
+  });
+  it('should have a title field with the same value as props \'title\'',
+  () => {
+    const title = wrapper.find('#title').props();
+    expect(title.value).toEqual(props.document.title);
   });
 });
