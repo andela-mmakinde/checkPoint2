@@ -21,7 +21,7 @@ describe('login form component', () => {
 
   const wrapper = shallow(<LoginForm {...props} />);
 
-  describe('renders', () => {
+  describe('Login Form', () => {
     it('renders as a div', () => {
       expect(wrapper.node.type).toEqual('div');
     });
