@@ -16,9 +16,5 @@ describe('GetAccessDocuments component', () => {
     it('should render as a div', () => {
       expect(wrapper.node.type).toEqual('div');
     });
-    it('should have a password field with the same value as props \'password\'',
-    () => {
-      expect(wrapper.node.type).toEqual('div');
-    });
   });
 });
