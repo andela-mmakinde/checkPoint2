@@ -6,7 +6,7 @@ import DocumentCard from './DocumentCard';
  * GetAccessDocuments component.
  * @returns {String} The HTML markup for the document card component
  */
-const GetAccessDocuments = ({ documents, currentUser }) => (
+const GetAccessDocuments = ({ documents, currentUser, deleteDocument }) => (
   <div>
     {documents.length > 0 ? (
       <div className="container">
@@ -17,6 +17,7 @@ const GetAccessDocuments = ({ documents, currentUser }) => (
               id={docs.id}
               document={docs}
               currentUser={currentUser}
+              deleteDocument={deleteDocument}
             />
           ))}
         </div>
@@ -34,7 +35,8 @@ GetAccessDocuments.defaultProps = {
 
 GetAccessDocuments.propTypes = {
   currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  documents: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  documents: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  deleteDocument: PropTypes.func.isRequired
 };
 
 export default GetAccessDocuments;

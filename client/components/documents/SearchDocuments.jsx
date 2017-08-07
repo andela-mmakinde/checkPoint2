@@ -23,7 +23,6 @@ export class SearchDocuments extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.clearField = this.clearField.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   /**
@@ -38,15 +37,6 @@ export class SearchDocuments extends React.Component {
       searchQuery,
     });
     this.props.searchDocuments(searchQuery, this.props.pageType);
-  }
-
-  /**
-   * @param {object} event
-   * @returns {void}
-   * @memberOf SearchDocuments
-   */
-  onSubmit(event) {
-    event.preventDefault();
   }
 
   /**
@@ -72,7 +62,6 @@ export class SearchDocuments extends React.Component {
           onChange={this.onChange}
           clearField={this.clearField}
           searchQuery={this.state.searchQuery}
-          onSubmit={this.onSubmit}
         />
       </span>
     );

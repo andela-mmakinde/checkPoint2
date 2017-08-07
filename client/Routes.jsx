@@ -8,6 +8,7 @@ import ConnectedCreateDocument from './components/documents/CreateDocument';
 import ConnectedEditDocument from './components/documents/EditDocument';
 import ConnectedUsers from './components/users/Users';
 import Home from './components/Home';
+import NotFound from './components/NotFound';
 import ConnectedUserDocuments from './components/documents/UserDocuments';
 import Protect from './components/Protect';
 
@@ -23,7 +24,7 @@ const Routes = () => (
       <Protect path="/user" component={ConnectedUsers} />
       <Protect path="/create" component={ConnectedCreateDocument} />
       <Protect path="/edit/:id" component={ConnectedEditDocument} />
-      <Route path="*" component={() => <h1>Page not found</h1>} />
+      <Protect path="*" component={NotFound} />
     </Switch>
   </BrowserRouter>
 );

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
  * @returns {String} The HTML markup for the DocumentForm component
  */
 const DocumentForm = ({
-  docObj,
+  document,
   onSubmit,
   onChange,
   onEditorStateChange,
@@ -22,7 +22,7 @@ const DocumentForm = ({
           id="title"
           name="title"
           onChange={onChange}
-          value={docObj.title}
+          value={document.title}
           type="text"
           className="validate titleField"
           placeholder="Enter document title"
@@ -37,7 +37,7 @@ const DocumentForm = ({
           name="access"
           onChange={onChange}
           className="browser-default titleField"
-          value={docObj.access}
+          value={document.access}
         >
           <option value="" disabled>Select document access</option>
           <option value="Public">Public</option>
@@ -48,7 +48,7 @@ const DocumentForm = ({
     </div>
     <Editor
       onEditorStateChange={onEditorStateChange}
-      editorState={docObj.editorState}
+      editorState={document.editorState}
       toolbarClassName="home-toolbar"
       wrapperClassName="home-wrapper"
       editorClassName="home-editor"
@@ -73,7 +73,7 @@ DocumentForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onEditorStateChange: PropTypes.func.isRequired,
   error: PropTypes.shape({ message: '' }).isRequired,
-  docObj: PropTypes.shape({
+  document: PropTypes.shape({
     title: '',
     access: ''
   }).isRequired,
